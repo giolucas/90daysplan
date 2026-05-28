@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plano 90 Dias</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0f1117; }
+  button { font-family: inherit; }
+  ::-webkit-scrollbar { display: none; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+
+const COLORS = {
+  bg: "#0f1117", card: "#1a1d27", cardBorder: "#2a2d3a",
+  accent: "#f97316", accentLight: "#fb923c", green: "#22c55e",
+  blue: "#3b82f6", purple: "#a855f7", text: "#f1f5f9",
+  muted: "#94a3b8", dim: "#64748b",
+};
+
+const weekMenu = [
+  { day: "Segunda", meals: [
+    { time: "07:00", name: "Café da manhã", items: ["3 ovos mexidos", "2 fatias de pão integral", "1 banana", "Café sem açúcar"] },
+    { time: "10:00", name: "Lanche", items: ["200g iogurte grego natural", "1 col. whey protein (opcional)", "Punhado de castanhas"] },
+    { time: "13:00", name: "Almoço", items: ["200g frango grelhado", "150g arroz integral", "Feijão (concha)", "Salada verde à vontade + azeite"] },
+    { time: "16:00", name: "Pré-treino", items: ["1 banana", "1 col. pasta de amendoim"] },
+    { time: "20:00", name: "Jantar", items: ["200g tilápia ou atum grelhado", "Brócolis no vapor", "2 batatas-doces médias"] },
+  ]},
+  { day: "Terça", meals: [
+    { time: "07:00", name: "Café da manhã", items: ["Omelete 3 ovos + queijo cottage", "1 fatia pão integral", "Laranja ou kiwi"] },
+    { time: "10:00", name: "Lanche", items: ["Mix de oleaginosas (30g)", "1 maçã"] },
+    { time: "13:00", name: "Almoço", items: ["200g carne vermelha magra (patinho)", "Purê de mandioca (porção)", "Salada de tomate e cebola"] },
+    { time: "16:00", name: "Lanche", items: ["200ml leite + cacau em pó", "2 torradas integrais"] },
+    { time: "20:00", name: "Jantar", items: ["200g peito de frango", "Quinoa (150g cozido)", "Espinafre refogado"] },
+  ]},
+  { day: "Quarta", meals: [
+    { time: "07:00", name: "Café da manhã", items: ["Vitamina: whey + aveia + leite + banana", "1 fatia pão integral com ovo cozido"] },
+    { time: "10:00", name: "Lanche", items: ["Iogurte grego + granola sem açúcar (30g)", "1 tangerina"] },
+    { time: "13:00", name: "Almoço", items: ["200g salmão grelhado", "Arroz integral (150g)", "Aspargos ou abobrinha grelhada"] },
+    { time: "16:00", name: "Pré-treino", items: ["1 banana + 1 tâmara", "Café pré-treino ou água com limão"] },
+    { time: "20:00", name: "Jantar", items: ["Omelete 4 claras + 1 gema", "Salada de folhas com atum", "1 fatia pão integral"] },
+  ]},
+  { day: "Quinta", meals: [
+    { time: "07:00", name: "Café da manhã", items: ["3 ovos + aveia (50g) + mel", "Chá verde ou café"] },
+    { time: "10:00", name: "Lanche", items: ["Queijo cottage (100g)", "Cenoura baby ou pepino"] },
+    { time: "13:00", name: "Almoço", items: ["200g frango desfiado", "Macarrão integral (100g seco)", "Molho de tomate caseiro", "Salada"] },
+    { time: "16:00", name: "Lanche", items: ["Whey protein com água ou leite", "1 fruta"] },
+    { time: "20:00", name: "Jantar", items: ["200g peixe branco assado", "Legumes assados (cenoura, chuchu, cebola)", "1 batata-doce"] },
+  ]},
+  { day: "Sexta", meals: [
+    { time: "07:00", name: "Café da manhã", items: ["Tapioca 2 unid. + frango desfiado + queijo", "Café sem açúcar", "1 fruta"] },
+    { time: "10:00", name: "Lanche", items: ["Iogurte grego + 1 col. mel + frutas vermelhas"] },
+    { time: "13:00", name: "Almoço", items: ["200g carne moída refogada", "Arroz + feijão", "Couve refogada"] },
+    { time: "16:00", name: "Pré-treino", items: ["1 banana + café ou chá"] },
+    { time: "20:00", name: "Jantar", items: ["200g frango grelhado", "Salada grande com azeite e limão", "1 batata-doce"] },
+  ]},
+  { day: "Sábado", meals: [
+    { time: "08:00", name: "Café da manhã", items: ["Omelete caprichado (4 ovos, tomate, cebola)", "2 fatias pão integral", "Suco de laranja natural (200ml)"] },
+    { time: "11:00", name: "Lanche", items: ["Mix de frutas com granola", "Iogurte grego"] },
+    { time: "13:30", name: "Almoço livre", items: ["⭐ Refeição livre controlada", "Ex: churrasco + salada", "Evite bebida alcoólica em excesso"] },
+    { time: "19:00", name: "Jantar leve", items: ["Sopa de legumes com frango", "1 fatia pão integral"] },
+  ]},
+  { day: "Domingo", meals: [
+    { time: "08:00", name: "Café da manhã", items: ["Panqueca de aveia + banana + ovo (2 unid)", "Café com leite"] },
+    { time: "12:30", name: "Almoço em família", items: ["Proteína magra à escolha", "Arroz, feijão, salada", "Uma sobremesa pequena ok"] },
+    { time: "19:00", name: "Jantar", items: ["Omelete simples ou sanduíche de atum", "Suco de maracujá sem açúcar"] },
+  ]},
+];
+
+const workouts = [
+  { day: "Segunda", label: "PEITO + TRÍCEPS", color: COLORS.accent, exercises: [
+    { name: "Supino reto com barra", sets: "4x10-12", rest: "90s", tip: "Escápulas retraídas, barra desce no esterno" },
+    { name: "Supino inclinado com halteres", sets: "3x12", rest: "75s", tip: "Ângulo 30-45°, foco na parte superior" },
+    { name: "Crucifixo na máquina (peck deck)", sets: "3x15", rest: "60s", tip: "Controle o movimento de volta" },
+    { name: "Tríceps pulley corda", sets: "4x12", rest: "60s", tip: "Cotovelo fixo ao lado do corpo" },
+    { name: "Tríceps testa com barra", sets: "3x12", rest: "75s", tip: "Não abra os cotovelos" },
+    { name: "Mergulho no banco", sets: "3x falha", rest: "60s", tip: "Pernas esticadas para intensificar" },
+  ]},
+  { day: "Terça", label: "COSTAS + BÍCEPS", color: COLORS.blue, exercises: [
+    { name: "Puxada frontal aberta", sets: "4x10-12", rest: "90s", tip: "Puxe com o cotovelo, não com a mão" },
+    { name: "Remada curvada com barra", sets: "4x10", rest: "90s", tip: "Coluna neutra, core ativado" },
+    { name: "Remada unilateral com haltere", sets: "3x12", rest: "75s", tip: "Apoio no banco, rotação do torso" },
+    { name: "Pullover na polia", sets: "3x15", rest: "60s", tip: "Sente o alongamento do grande dorsal" },
+    { name: "Rosca direta com barra", sets: "4x12", rest: "60s", tip: "Sem embalar o corpo" },
+    { name: "Rosca martelo com haltere", sets: "3x12", rest: "60s", tip: "Cotovelo fixo, foco no braquial" },
+  ]},
+  { day: "Quarta", label: "PERNAS (FOCO QUADRÍCEPS)", color: COLORS.green, exercises: [
+    { name: "Agachamento livre", sets: "4x10-12", rest: "120s", tip: "Desça até 90°+, joelhos alinhados" },
+    { name: "Leg press 45°", sets: "4x12-15", rest: "90s", tip: "Pés na largura dos ombros" },
+    { name: "Cadeira extensora", sets: "3x15", rest: "60s", tip: "Isometria de 1s no topo" },
+    { name: "Hack squat ou afundo", sets: "3x12 cada", rest: "75s", tip: "Passada longa, joelho não passa a ponta do pé" },
+    { name: "Panturrilha em pé (máquina)", sets: "4x20", rest: "45s", tip: "Amplitude completa, pause no fundo" },
+  ]},
+  { day: "Quinta", label: "OMBRO + ABDÔMEN", color: COLORS.purple, exercises: [
+    { name: "Desenvolvimento com halteres", sets: "4x10-12", rest: "90s", tip: "Cuidado com a lombar, core firme" },
+    { name: "Elevação lateral", sets: "4x15", rest: "60s", tip: "Leve inclinação para frente, cotovelo levemente flexionado" },
+    { name: "Elevação frontal alternada", sets: "3x12", rest: "60s", tip: "Até a altura dos ombros" },
+    { name: "Encolhimento com halteres", sets: "3x15", rest: "60s", tip: "Pausa no topo" },
+    { name: "Prancha abdominal", sets: "4x45s", rest: "30s", tip: "Core contraído, não levante o quadril" },
+    { name: "Crunch bicicleta", sets: "3x20", rest: "30s", tip: "Cotovelo toca o joelho oposto" },
+    { name: "Abdominal infra (elevação de pernas)", sets: "3x15", rest: "45s", tip: "Lombar colada no chão" },
+  ]},
+  { day: "Sexta", label: "PERNAS (FOCO POSTERIOR + GLÚTEO)", color: "#10b981", exercises: [
+    { name: "Stiff com barra", sets: "4x12", rest: "90s", tip: "Coluna neutra, sente o alongamento do isquio" },
+    { name: "Cadeira flexora", sets: "4x12-15", rest: "75s", tip: "Não solte rápido na volta" },
+    { name: "Mesa flexora", sets: "3x12", rest: "75s", tip: "Alternativa à cadeira" },
+    { name: "Agachamento sumô com haltere", sets: "3x15", rest: "75s", tip: "Pés bem abertos, foco no glúteo" },
+    { name: "Elevação pélvica (hip thrust)", sets: "4x15", rest: "75s", tip: "Isometria de 2s no topo" },
+    { name: "Panturrilha sentado (máquina)", sets: "3x20", rest: "45s", tip: "Foco no sóleo" },
+  ]},
+  { day: "Sábado", label: "CARDIO + MOBILIDADE", color: "#f59e0b", exercises: [
+    { name: "Esteira — caminhada rápida ou corrida leve", sets: "30-40 min", rest: "—", tip: "Zona de queima de gordura: 65-75% FC máx (~118-135 bpm)" },
+    { name: "Elíptico ou bicicleta ergométrica", sets: "20 min (opcional)", rest: "—", tip: "Bom para recuperação ativa" },
+    { name: "Alongamento geral + foam roller", sets: "15 min", rest: "—", tip: "Foco em quadríceps, isquio, panturrilha, lombar" },
+  ]},
+  { day: "Domingo", label: "DESCANSO ATIVO", color: COLORS.dim, exercises: [
+    { name: "Caminhada leve 30 min (opcional)", sets: "—", rest: "—", tip: "Ao ar livre de preferência" },
+    { name: "Alongamento e respiração", sets: "15 min", rest: "—", tip: "Yoga, pilates leve ou simples alongamento" },
+  ]},
+];
+
+const tips = [
+  { icon: "💧", title: "Hidratação", text: "3–3,5 litros de água/dia. Essencial para metabolismo e performance." },
+  { icon: "😴", title: "Sono", text: "7–9h de sono. É onde acontece 70% da recuperação muscular e regulação do cortisol (o hormônio da barriga)." },
+  { icon: "⏱️", title: "Progressão", text: "Aumente carga ou repetições a cada 2 semanas. Sem progressão = sem resultado." },
+  { icon: "🧬", title: "Proteína", text: "Alvo mínimo: 160–175g/dia. Para você (100kg), isso é crucial para preservar músculo enquanto perde gordura." },
+  { icon: "🚫", title: "Evite", text: "Açúcar refinado, ultra-processados, álcool em excesso e jejum extremo (corta músculo e aumenta cortisol)." },
+  { icon: "📊", title: "Progresso", text: "Meça cintura toda semana, peso na sexta de manhã em jejum. Tire foto do espelho a cada 4 semanas." },
+];
+
+function App() {
+  const [activeTab, setActiveTab] = React.useState("cardapio");
+  const [selectedDay, setSelectedDay] = React.useState(0);
+  const [expandedMeal, setExpandedMeal] = React.useState(null);
+  const [expandedExercise, setExpandedExercise] = React.useState(null);
+
+  const days = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"];
+  const currentMenu = weekMenu[selectedDay];
+  const currentWorkout = workouts[selectedDay];
+
+  return (
+    <div style={{ minHeight: "100vh", background: COLORS.bg, color: COLORS.text, fontFamily: "'Segoe UI', system-ui, sans-serif", maxWidth: 480, margin: "0 auto", paddingBottom: 80 }}>
+      <div style={{ background: "linear-gradient(135deg, #1a1d27 0%, #0f1117 100%)", borderBottom: `1px solid ${COLORS.cardBorder}`, padding: "20px 16px 16px", position: "sticky", top: 0, zIndex: 50 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 4 }}>
+          <div style={{ width: 36, height: 36, borderRadius: 10, background: `linear-gradient(135deg, ${COLORS.accent}, ${COLORS.accentLight})`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}>🏋️</div>
+          <div>
+            <div style={{ fontWeight: 700, fontSize: 16 }}>Plano 90 Dias</div>
+            <div style={{ color: COLORS.muted, fontSize: 11 }}>41 anos · 100kg · 1,95m · Recomposição Corporal</div>
+          </div>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 8, marginTop: 12 }}>
+          {[{ label: "Calorias", value: "2.100", unit: "kcal", color: COLORS.accent }, { label: "Proteína", value: "175", unit: "g", color: COLORS.green }, { label: "Carbs", value: "200", unit: "g", color: COLORS.blue }, { label: "Gordura", value: "65", unit: "g", color: COLORS.purple }].map(m => (
+            <div key={m.label} style={{ background: COLORS.card, border: `1px solid ${COLORS.cardBorder}`, borderRadius: 8, padding: "6px 8px", textAlign: "center" }}>
+              <div style={{ color: m.color, fontWeight: 700, fontSize: 14 }}>{m.value}<span style={{ fontSize: 9, color: COLORS.muted }}>{m.unit}</span></div>
+              <div style={{ color: COLORS.dim, fontSize: 10 }}>{m.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div style={{ display: "flex", background: COLORS.card, margin: "12px 16px", borderRadius: 10, border: `1px solid ${COLORS.cardBorder}`, overflow: "hidden" }}>
+        {[{ key: "cardapio", label: "🥗 Cardápio" }, { key: "treino", label: "💪 Treino" }, { key: "dicas", label: "⭐ Dicas" }].map(t => (
+          <button key={t.key} onClick={() => setActiveTab(t.key)} style={{ flex: 1, padding: "10px 6px", background: activeTab === t.key ? COLORS.accent : "transparent", color: activeTab === t.key ? "#fff" : COLORS.muted, border: "none", cursor: "pointer", fontWeight: activeTab === t.key ? 700 : 400, fontSize: 12 }}>
+            {t.label}
+          </button>
+        ))}
+      </div>
+
+      {(activeTab === "cardapio" || activeTab === "treino") && (
+        <div style={{ display: "flex", gap: 6, padding: "0 16px 12px", overflowX: "auto" }}>
+          {days.map((d, i) => (
+            <button key={d} onClick={() => { setSelectedDay(i); setExpandedMeal(null); setExpandedExercise(null); }} style={{ flexShrink: 0, padding: "6px 12px", borderRadius: 20, border: `1px solid ${selectedDay === i ? COLORS.accent : COLORS.cardBorder}`, background: selectedDay === i ? COLORS.accent : COLORS.card, color: selectedDay === i ? "#fff" : COLORS.muted, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>
+              {d}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {activeTab === "cardapio" && (
+        <div style={{ padding: "0 16px" }}>
+          <div style={{ fontSize: 13, fontWeight: 700, color: COLORS.muted, marginBottom: 10, textTransform: "uppercase", letterSpacing: 1 }}>{currentMenu.day} — {currentMenu.meals.length} refeições</div>
+          {currentMenu.meals.map((meal, i) => (
+            <div key={i} onClick={() => setExpandedMeal(expandedMeal === i ? null : i)} style={{ background: COLORS.card, border: `1px solid ${expandedMeal === i ? COLORS.accent : COLORS.cardBorder}`, borderRadius: 12, marginBottom: 8, overflow: "hidden", cursor: "pointer" }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 14px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                  <div style={{ background: expandedMeal === i ? COLORS.accent : "#2a2d3a", borderRadius: 6, padding: "3px 7px", fontSize: 11, fontWeight: 600, color: expandedMeal === i ? "#fff" : COLORS.dim }}>{meal.time}</div>
+                  <div style={{ fontWeight: 600, fontSize: 14 }}>{meal.name}</div>
+                </div>
+                <div style={{ color: COLORS.dim }}>{expandedMeal === i ? "▲" : "▼"}</div>
+              </div>
+              {expandedMeal === i && (
+                <div style={{ padding: "0 14px 12px", borderTop: `1px solid ${COLORS.cardBorder}` }}>
+                  {meal.items.map((item, j) => (
+                    <div key={j} style={{ display: "flex", gap: 8, padding: "6px 0", borderBottom: j < meal.items.length - 1 ? `1px solid ${COLORS.cardBorder}` : "none" }}>
+                      <span style={{ color: COLORS.accent, fontSize: 12, marginTop: 2 }}>●</span>
+                      <span style={{ fontSize: 13 }}>{item}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+          {selectedDay === 5 && (
+            <div style={{ background: "#1a1d27", border: `1px solid ${COLORS.accent}44`, borderRadius: 10, padding: 12 }}>
+              <div style={{ color: COLORS.accent, fontWeight: 700, fontSize: 12, marginBottom: 4 }}>⭐ REFEED SEMANAL</div>
+              <div style={{ color: COLORS.muted, fontSize: 12, lineHeight: 1.6 }}>Sábado é seu dia de maior flexibilidade. Uma refeição livre ajuda na adesão e pode auxiliar na regulação hormonal (leptina). Não precisa ser perfeito, mas evite exageros.</div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {activeTab === "treino" && (
+        <div style={{ padding: "0 16px" }}>
+          <div style={{ background: COLORS.card, border: `1px solid ${currentWorkout.color}55`, borderRadius: 12, padding: "12px 14px", marginBottom: 12, borderLeft: `3px solid ${currentWorkout.color}` }}>
+            <div style={{ color: currentWorkout.color, fontWeight: 800, fontSize: 15 }}>{currentWorkout.label}</div>
+            <div style={{ color: COLORS.muted, fontSize: 12, marginTop: 2 }}>{currentWorkout.exercises.length} exercícios · SmartFit</div>
+          </div>
+          {currentWorkout.exercises.map((ex, i) => (
+            <div key={i} onClick={() => setExpandedExercise(expandedExercise === i ? null : i)} style={{ background: COLORS.card, border: `1px solid ${expandedExercise === i ? currentWorkout.color : COLORS.cardBorder}`, borderRadius: 10, marginBottom: 8, overflow: "hidden", cursor: "pointer" }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "11px 14px" }}>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontWeight: 600, fontSize: 13 }}>{ex.name}</div>
+                  <div style={{ display: "flex", gap: 8, marginTop: 4 }}>
+                    <span style={{ background: `${currentWorkout.color}22`, color: currentWorkout.color, borderRadius: 5, padding: "2px 7px", fontSize: 11, fontWeight: 600 }}>{ex.sets}</span>
+                    {ex.rest !== "—" && <span style={{ background: "#2a2d3a", color: COLORS.dim, borderRadius: 5, padding: "2px 7px", fontSize: 11 }}>⏱ {ex.rest}</span>}
+                  </div>
+                </div>
+                <div style={{ color: COLORS.dim }}>💡</div>
+              </div>
+              {expandedExercise === i && (
+                <div style={{ padding: "8px 14px 12px", borderTop: `1px solid ${COLORS.cardBorder}`, color: COLORS.muted, fontSize: 12, lineHeight: 1.6 }}>
+                  <span style={{ color: currentWorkout.color }}>Dica: </span>{ex.tip}
+                </div>
+              )}
+            </div>
+          ))}
+          {selectedDay < 5 && (
+            <div style={{ background: "#1a1d27", border: `1px solid ${COLORS.cardBorder}`, borderRadius: 10, padding: 12, marginTop: 4 }}>
+              <div style={{ color: COLORS.muted, fontSize: 12, lineHeight: 1.6 }}>🔥 <strong style={{ color: COLORS.text }}>Aquecimento:</strong> 5 min de elíptico + 2 séries leves (50% da carga) de cada exercício principal antes de começar.</div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {activeTab === "dicas" && (
+        <div style={{ padding: "0 16px" }}>
+          <div style={{ background: `linear-gradient(135deg, ${COLORS.accent}22, ${COLORS.purple}11)`, border: `1px solid ${COLORS.accent}44`, borderRadius: 14, padding: 16, marginBottom: 14 }}>
+            <div style={{ fontWeight: 800, fontSize: 16, marginBottom: 6 }}>🎯 Seu Objetivo</div>
+            <div style={{ color: COLORS.muted, fontSize: 13, lineHeight: 1.7 }}><strong style={{ color: COLORS.text }}>Déficit calórico moderado</strong> (~500 kcal/dia abaixo do gasto). Com treino de força + cardio estratégico, você pode perder <strong style={{ color: COLORS.accent }}>~1kg de gordura/semana</strong> enquanto preserva ou ganha músculo.</div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginTop: 12 }}>
+              {[{ label: "Meta 90 dias", value: "−8 a −12kg gordura" }, { label: "Frequência", value: "5x/semana musculação" }, { label: "Cardio", value: "2–3x/semana" }, { label: "Revisão", value: "A cada 4 semanas" }].map(s => (
+                <div key={s.label} style={{ background: COLORS.card, borderRadius: 8, padding: "8px 10px", border: `1px solid ${COLORS.cardBorder}` }}>
+                  <div style={{ color: COLORS.dim, fontSize: 10 }}>{s.label}</div>
+                  <div style={{ fontWeight: 700, fontSize: 12, marginTop: 2 }}>{s.value}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+          {tips.map((tip, i) => (
+            <div key={i} style={{ background: COLORS.card, border: `1px solid ${COLORS.cardBorder}`, borderRadius: 10, padding: "12px 14px", marginBottom: 8, display: "flex", gap: 12, alignItems: "flex-start" }}>
+              <div style={{ fontSize: 22, flexShrink: 0 }}>{tip.icon}</div>
+              <div>
+                <div style={{ fontWeight: 700, fontSize: 13, marginBottom: 4 }}>{tip.title}</div>
+                <div style={{ color: COLORS.muted, fontSize: 12, lineHeight: 1.6 }}>{tip.text}</div>
+              </div>
+            </div>
+          ))}
+          <div style={{ background: COLORS.card, border: `1px solid ${COLORS.cardBorder}`, borderRadius: 10, padding: 14, marginTop: 4 }}>
+            <div style={{ fontWeight: 700, fontSize: 13, marginBottom: 8, color: COLORS.accent }}>⚠️ Consulte um profissional</div>
+            <div style={{ color: COLORS.muted, fontSize: 12, lineHeight: 1.6 }}>Este plano é um guia geral. Para resultados seguros e personalizados, consulte um <strong style={{ color: COLORS.text }}>nutrólogo ou nutricionista</strong> e um <strong style={{ color: COLORS.text }}>educador físico</strong>. Exames de sangue periódicos (a cada 6 meses) são recomendados.</div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+ReactDOM.render(<App />, document.getElementById("root"));
+</script>
+</body>
+</html>
