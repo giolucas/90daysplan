@@ -25,6 +25,130 @@ const C = {
   muted:"#94a3b8",dim:"#64748b"
 };
 
+const Icons = {
+  barbell: (color) => (
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+      <rect x="2" y="16" width="4" height="4" rx="1" fill={color} opacity="0.9"/>
+      <rect x="6" y="14" width="3" height="8" rx="1" fill={color}/>
+      <rect x="9" y="17" width="18" height="2" rx="1" fill={color} opacity="0.7"/>
+      <rect x="27" y="14" width="3" height="8" rx="1" fill={color}/>
+      <rect x="30" y="16" width="4" height="4" rx="1" fill={color} opacity="0.9"/>
+    </svg>
+  ),
+  dumbbell: (color) => (
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+      <rect x="3" y="15" width="5" height="6" rx="2" fill={color} opacity="0.9"/>
+      <rect x="8" y="17" width="5" height="2" rx="1" fill={color} opacity="0.7"/>
+      <rect x="13" y="15" width="4" height="6" rx="2" fill={color}/>
+      <rect x="19" y="15" width="4" height="6" rx="2" fill={color}/>
+      <rect x="23" y="17" width="5" height="2" rx="1" fill={color} opacity="0.7"/>
+      <rect x="28" y="15" width="5" height="6" rx="2" fill={color} opacity="0.9"/>
+    </svg>
+  ),
+  machine: (color) => (
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+      <rect x="6" y="6" width="24" height="20" rx="3" stroke={color} strokeWidth="2" fill="none"/>
+      <rect x="10" y="10" width="16" height="8" rx="2" fill={color} opacity="0.3"/>
+      <rect x="14" y="26" width="3" height="5" rx="1" fill={color} opacity="0.7"/>
+      <rect x="19" y="26" width="3" height="5" rx="1" fill={color} opacity="0.7"/>
+      <circle cx="18" cy="14" r="3" fill={color} opacity="0.8"/>
+    </svg>
+  ),
+  cable: (color) => (
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+      <rect x="14" y="2" width="8" height="20" rx="2" stroke={color} strokeWidth="2" fill="none"/>
+      <path d="M18 22 Q10 28 8 34" stroke={color} strokeWidth="2" strokeLinecap="round" fill="none"/>
+      <circle cx="8" cy="34" r="2" fill={color}/>
+      <rect x="16" y="6" width="4" height="3" rx="1" fill={color} opacity="0.5"/>
+      <rect x="16" y="11" width="4" height="3" rx="1" fill={color} opacity="0.5"/>
+      <rect x="16" y="16" width="4" height="3" rx="1" fill={color} opacity="0.5"/>
+    </svg>
+  ),
+  legpress: (color) => (
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+      <rect x="2" y="20" width="32" height="6" rx="2" fill={color} opacity="0.3" stroke={color} strokeWidth="1.5"/>
+      <path d="M8 20 L14 8" stroke={color} strokeWidth="2.5" strokeLinecap="round"/>
+      <path d="M14 8 L22 8" stroke={color} strokeWidth="2.5" strokeLinecap="round"/>
+      <circle cx="22" cy="8" r="3" fill={color} opacity="0.8"/>
+      <rect x="4" y="26" width="5" height="8" rx="2" fill={color} opacity="0.6"/>
+    </svg>
+  ),
+  treadmill: (color) => (
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+      <rect x="4" y="22" width="28" height="5" rx="2" fill={color} opacity="0.4" stroke={color} strokeWidth="1.5"/>
+      <path d="M8 22 L12 10" stroke={color} strokeWidth="2" strokeLinecap="round"/>
+      <path d="M12 10 L24 10" stroke={color} strokeWidth="2"/>
+      <path d="M24 10 L28 22" stroke={color} strokeWidth="2" strokeLinecap="round"/>
+      <circle cx="8" cy="28" r="3" stroke={color} strokeWidth="1.5" fill="none"/>
+      <circle cx="28" cy="28" r="3" stroke={color} strokeWidth="1.5" fill="none"/>
+    </svg>
+  ),
+  mat: (color) => (
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+      <rect x="4" y="12" width="28" height="12" rx="4" fill={color} opacity="0.3" stroke={color} strokeWidth="1.5"/>
+      <path d="M8 18 L28 18" stroke={color} strokeWidth="1.5" strokeDasharray="3 2" opacity="0.6"/>
+      <path d="M4 16 Q6 12 8 16" stroke={color} strokeWidth="1.5" fill="none" opacity="0.5"/>
+      <path d="M28 16 Q30 12 32 16" stroke={color} strokeWidth="1.5" fill="none" opacity="0.5"/>
+    </svg>
+  ),
+  foam: (color) => (
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+      <ellipse cx="18" cy="20" rx="14" ry="8" fill={color} opacity="0.3" stroke={color} strokeWidth="1.5"/>
+      <ellipse cx="18" cy="16" rx="14" ry="8" fill={color} opacity="0.5" stroke={color} strokeWidth="1.5"/>
+      <line x1="10" y1="13" x2="10" y2="19" stroke={color} strokeWidth="1" opacity="0.5"/>
+      <line x1="14" y1="11" x2="14" y2="21" stroke={color} strokeWidth="1" opacity="0.5"/>
+      <line x1="18" y1="10" x2="18" y2="22" stroke={color} strokeWidth="1" opacity="0.5"/>
+      <line x1="22" y1="11" x2="22" y2="21" stroke={color} strokeWidth="1" opacity="0.5"/>
+      <line x1="26" y1="13" x2="26" y2="19" stroke={color} strokeWidth="1" opacity="0.5"/>
+    </svg>
+  ),
+  pullupbar: (color) => (
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+      <rect x="2" y="8" width="32" height="4" rx="2" fill={color} opacity="0.8"/>
+      <rect x="4" y="4" width="4" height="8" rx="2" fill={color} opacity="0.6"/>
+      <rect x="28" y="4" width="4" height="8" rx="2" fill={color} opacity="0.6"/>
+      <path d="M14 12 L14 24" stroke={color} strokeWidth="2" strokeLinecap="round" opacity="0.7"/>
+      <path d="M22 12 L22 24" stroke={color} strokeWidth="2" strokeLinecap="round" opacity="0.7"/>
+      <path d="M12 24 Q14 28 16 24" stroke={color} strokeWidth="1.5" fill="none" opacity="0.5"/>
+      <path d="M20 24 Q22 28 24 24" stroke={color} strokeWidth="1.5" fill="none" opacity="0.5"/>
+    </svg>
+  ),
+  hipthrust: (color) => (
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+      <rect x="2" y="24" width="12" height="8" rx="2" fill={color} opacity="0.4" stroke={color} strokeWidth="1.5"/>
+      <path d="M14 28 Q18 20 26 20" stroke={color} strokeWidth="2.5" strokeLinecap="round" fill="none"/>
+      <path d="M26 20 L32 26" stroke={color} strokeWidth="2.5" strokeLinecap="round"/>
+      <circle cx="20" cy="14" r="4" fill={color} opacity="0.7"/>
+      <rect x="16" y="19" width="8" height="3" rx="1" fill={color} opacity="0.5"/>
+    </svg>
+  ),
+  bodyweight: (color) => (
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+      <circle cx="18" cy="7" r="4" fill={color} opacity="0.9"/>
+      <path d="M18 11 L18 22" stroke={color} strokeWidth="2.5" strokeLinecap="round"/>
+      <path d="M18 15 L11 20" stroke={color} strokeWidth="2.5" strokeLinecap="round"/>
+      <path d="M18 15 L25 20" stroke={color} strokeWidth="2.5" strokeLinecap="round"/>
+      <path d="M18 22 L13 32" stroke={color} strokeWidth="2.5" strokeLinecap="round"/>
+      <path d="M18 22 L23 32" stroke={color} strokeWidth="2.5" strokeLinecap="round"/>
+    </svg>
+  ),
+};
+
+function getIcon(name) {
+  const n = name.toLowerCase();
+  if (n.includes("barra") && !n.includes("haltere") && !n.includes("pulley")) return "barbell";
+  if (n.includes("haltere") || n.includes("halter")) return "dumbbell";
+  if (n.includes("pulley") || n.includes("polia") || n.includes("cable")) return "cable";
+  if (n.includes("leg press") || n.includes("hack squat")) return "legpress";
+  if (n.includes("cadeira") || n.includes("máquina") || n.includes("mesa") || n.includes("peck deck") || n.includes("panturrilha")) return "machine";
+  if (n.includes("hip thrust") || n.includes("pélvica")) return "hipthrust";
+  if (n.includes("puxada") || n.includes("pullover")) return "pullupbar";
+  if (n.includes("esteira") || n.includes("elíptico") || n.includes("bicicleta")) return "treadmill";
+  if (n.includes("prancha") || n.includes("crunch") || n.includes("abdominal") || n.includes("elevação de pernas")) return "mat";
+  if (n.includes("foam roller") || n.includes("alongamento")) return "foam";
+  return "bodyweight";
+}
+
 const weekMenu = [
   {day:"Segunda",meals:[
     {time:"07:00",name:"Café da manhã",items:["3 ovos mexidos","2 fatias de pão integral","1 banana","Café sem açúcar"]},
@@ -75,7 +199,7 @@ const weekMenu = [
 ];
 
 const workouts = [
-  {day:"Segunda",label:"PEITO + TRÍCEPS",color:C.accent,exercises:[
+  {day:"Segunda",label:"PEITO + TRÍCEPS",color:"#f97316",exercises:[
     {name:"Supino reto com barra",sets:"4x10-12",rest:"90s",tip:"Escápulas retraídas, barra desce no esterno"},
     {name:"Supino inclinado com halteres",sets:"3x12",rest:"75s",tip:"Ângulo 30-45°, foco na parte superior"},
     {name:"Crucifixo na máquina (peck deck)",sets:"3x15",rest:"60s",tip:"Controle o movimento de volta"},
@@ -83,7 +207,7 @@ const workouts = [
     {name:"Tríceps testa com barra",sets:"3x12",rest:"75s",tip:"Não abra os cotovelos"},
     {name:"Mergulho no banco",sets:"3x falha",rest:"60s",tip:"Pernas esticadas para intensificar"},
   ]},
-  {day:"Terça",label:"COSTAS + BÍCEPS",color:C.blue,exercises:[
+  {day:"Terça",label:"COSTAS + BÍCEPS",color:"#3b82f6",exercises:[
     {name:"Puxada frontal aberta",sets:"4x10-12",rest:"90s",tip:"Puxe com o cotovelo, não com a mão"},
     {name:"Remada curvada com barra",sets:"4x10",rest:"90s",tip:"Coluna neutra, core ativado"},
     {name:"Remada unilateral com haltere",sets:"3x12",rest:"75s",tip:"Apoio no banco, rotação do torso"},
@@ -91,14 +215,14 @@ const workouts = [
     {name:"Rosca direta com barra",sets:"4x12",rest:"60s",tip:"Sem embalar o corpo"},
     {name:"Rosca martelo com haltere",sets:"3x12",rest:"60s",tip:"Cotovelo fixo, foco no braquial"},
   ]},
-  {day:"Quarta",label:"PERNAS (FOCO QUADRÍCEPS)",color:C.green,exercises:[
+  {day:"Quarta",label:"PERNAS (FOCO QUADRÍCEPS)",color:"#22c55e",exercises:[
     {name:"Agachamento livre",sets:"4x10-12",rest:"120s",tip:"Desça até 90°+, joelhos alinhados"},
     {name:"Leg press 45°",sets:"4x12-15",rest:"90s",tip:"Pés na largura dos ombros"},
     {name:"Cadeira extensora",sets:"3x15",rest:"60s",tip:"Isometria de 1s no topo"},
     {name:"Hack squat ou afundo",sets:"3x12 cada",rest:"75s",tip:"Passada longa, joelho não passa a ponta do pé"},
     {name:"Panturrilha em pé (máquina)",sets:"4x20",rest:"45s",tip:"Amplitude completa, pause no fundo"},
   ]},
-  {day:"Quinta",label:"OMBRO + ABDÔMEN",color:C.purple,exercises:[
+  {day:"Quinta",label:"OMBRO + ABDÔMEN",color:"#a855f7",exercises:[
     {name:"Desenvolvimento com halteres",sets:"4x10-12",rest:"90s",tip:"Cuidado com a lombar, core firme"},
     {name:"Elevação lateral",sets:"4x15",rest:"60s",tip:"Leve inclinação para frente, cotovelo levemente flexionado"},
     {name:"Elevação frontal alternada",sets:"3x12",rest:"60s",tip:"Até a altura dos ombros"},
@@ -120,7 +244,7 @@ const workouts = [
     {name:"Elíptico ou bicicleta ergométrica",sets:"20 min (opcional)",rest:"—",tip:"Bom para recuperação ativa"},
     {name:"Alongamento geral + foam roller",sets:"15 min",rest:"—",tip:"Foco em quadríceps, isquio, panturrilha, lombar"},
   ]},
-  {day:"Domingo",label:"DESCANSO ATIVO",color:C.dim,exercises:[
+  {day:"Domingo",label:"DESCANSO ATIVO",color:"#64748b",exercises:[
     {name:"Caminhada leve 30 min (opcional)",sets:"—",rest:"—",tip:"Ao ar livre de preferência"},
     {name:"Alongamento e respiração",sets:"15 min",rest:"—",tip:"Yoga, pilates leve ou simples alongamento"},
   ]},
@@ -138,7 +262,6 @@ const tips = [
 const SK = "plano90_progress";
 const load = () => { try { const r=localStorage.getItem(SK); return r?JSON.parse(r):{}; } catch{return{};} };
 const save = d => { try{localStorage.setItem(SK,JSON.stringify(d));}catch{} };
-
 const exK = (d,i) => `ex_${d}_${i}`;
 const dayK = d => `day_${d}`;
 
@@ -156,8 +279,8 @@ function App() {
 
   const exDone = (d,i) => !!prog[exK(d,i)];
   const dayDone = d => !!prog[dayK(d)];
-  const done = d => workouts[d].exercises.filter((_,i)=>exDone(d,i)).length;
-  const total = d => workouts[d].exercises.length;
+  const doneCount = d => workouts[d].exercises.filter((_,i)=>exDone(d,i)).length;
+  const totalCount = d => workouts[d].exercises.length;
   const weekDone = labels.filter((_,i)=>dayDone(i)).length;
 
   const celebrate = () => { setToast(true); setTimeout(()=>setToast(false),2500); };
@@ -177,8 +300,6 @@ function App() {
     if(!dn)celebrate();
     setProg(n);save(n);
   };
-
-  const s = (obj) => Object.assign({},obj);
 
   return (
     <div style={{minHeight:"100vh",background:C.bg,color:C.text,fontFamily:"'Segoe UI',system-ui,sans-serif",maxWidth:480,margin:"0 auto",paddingBottom:80,position:"relative"}}>
@@ -221,7 +342,7 @@ function App() {
       {(tab==="cardapio"||tab==="treino")&&(
         <div style={{display:"flex",gap:6,padding:"0 16px 12px",overflowX:"auto",scrollbarWidth:"none"}}>
           {labels.map((d,i)=>{
-            const dn=dayDone(i), pt=!dn&&done(i)>0;
+            const dn=dayDone(i),pt=!dn&&doneCount(i)>0;
             return(
               <button key={d} onClick={()=>{setDay(i);setExMeal(null);setExEx(null);}} style={{flexShrink:0,padding:"6px 12px",borderRadius:20,border:`1px solid ${day===i?C.accent:dn?C.green:pt?C.accent+"88":C.border}`,background:day===i?C.accent:dn?C.green+"22":C.card,color:day===i?"#fff":dn?C.green:C.muted,fontSize:12,fontWeight:600,cursor:"pointer",position:"relative"}}>
                 {dn&&<span style={{fontSize:8,marginRight:3}}>✓</span>}{d}
@@ -277,14 +398,14 @@ function App() {
               </div>
               <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:4}}>
                 <div style={{background:dayDone(day)?C.green+"22":C.card,border:`1.5px solid ${dayDone(day)?C.green:wk.color}`,borderRadius:10,padding:"4px 12px",minWidth:56,textAlign:"center"}}>
-                  <span style={{color:dayDone(day)?C.green:wk.color,fontWeight:800,fontSize:18}}>{done(day)}</span>
-                  <span style={{color:C.dim,fontSize:14}}>/{total(day)}</span>
+                  <span style={{color:dayDone(day)?C.green:wk.color,fontWeight:800,fontSize:18}}>{doneCount(day)}</span>
+                  <span style={{color:C.dim,fontSize:14}}>/{totalCount(day)}</span>
                 </div>
                 <div style={{color:C.dim,fontSize:10}}>exercícios</div>
               </div>
             </div>
             <div style={{background:"#2a2d3a",borderRadius:6,height:6,overflow:"hidden",marginBottom:10}}>
-              <div style={{background:dayDone(day)?C.green:wk.color,height:"100%",borderRadius:6,width:`${(done(day)/total(day))*100}%`,transition:"width 0.3s ease"}}/>
+              <div style={{background:dayDone(day)?C.green:wk.color,height:"100%",borderRadius:6,width:`${(doneCount(day)/totalCount(day))*100}%`,transition:"width 0.3s ease"}}/>
             </div>
             <button onClick={()=>toggleDay(day)} style={{width:"100%",padding:"8px",borderRadius:8,border:`1.5px solid ${dayDone(day)?C.green:wk.color}`,background:dayDone(day)?C.green+"22":"transparent",color:dayDone(day)?C.green:wk.color,fontWeight:700,fontSize:13,cursor:"pointer"}}>
               {dayDone(day)?"✓ Treino concluído — desfazer":"Marcar treino como concluído"}
@@ -293,20 +414,25 @@ function App() {
 
           {wk.exercises.map((ex,i)=>{
             const dn=exDone(day,i);
+            const iconType=getIcon(ex.name);
+            const iconColor=dn?C.dim:wk.color;
             return(
               <div key={i} style={{background:C.card,border:`1px solid ${exEx===i?wk.color:dn?C.green+"55":C.border}`,borderRadius:10,marginBottom:8,overflow:"hidden"}}>
-                <div style={{display:"flex",alignItems:"center",padding:"11px 14px",gap:10}}>
+                <div style={{display:"flex",alignItems:"center",padding:"10px 12px",gap:8}}>
                   <div onClick={e=>{e.stopPropagation();toggleEx(day,i);}} style={{flexShrink:0,width:24,height:24,borderRadius:6,border:`2px solid ${dn?C.green:C.dim}`,background:dn?C.green:"transparent",display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",transition:"all 0.15s"}}>
                     {dn&&<span style={{color:"#fff",fontSize:13,lineHeight:1}}>✓</span>}
                   </div>
+                  <div style={{flexShrink:0,width:40,height:40,borderRadius:8,background:dn?"#1e2030":`${wk.color}15`,border:`1px solid ${dn?C.border:wk.color+"33"}`,display:"flex",alignItems:"center",justifyContent:"center"}}>
+                    {Icons[iconType](iconColor)}
+                  </div>
                   <div style={{flex:1}} onClick={()=>setExEx(exEx===i?null:i)}>
-                    <div style={{fontWeight:600,fontSize:13,color:dn?C.dim:C.text,textDecoration:dn?"line-through":"none"}}>{ex.name}</div>
-                    <div style={{display:"flex",gap:8,marginTop:4}}>
+                    <div style={{fontWeight:600,fontSize:13,color:dn?C.dim:C.text,textDecoration:dn?"line-through":"none",lineHeight:1.3}}>{ex.name}</div>
+                    <div style={{display:"flex",gap:6,marginTop:4,flexWrap:"wrap"}}>
                       <span style={{background:`${wk.color}22`,color:wk.color,borderRadius:5,padding:"2px 7px",fontSize:11,fontWeight:600}}>{ex.sets}</span>
                       {ex.rest!=="—"&&<span style={{background:"#2a2d3a",color:C.dim,borderRadius:5,padding:"2px 7px",fontSize:11}}>⏱ {ex.rest}</span>}
                     </div>
                   </div>
-                  <div onClick={()=>setExEx(exEx===i?null:i)} style={{color:C.dim,cursor:"pointer"}}>💡</div>
+                  <div onClick={()=>setExEx(exEx===i?null:i)} style={{color:C.dim,cursor:"pointer",fontSize:16}}>💡</div>
                 </div>
                 {exEx===i&&(
                   <div style={{padding:"8px 14px 12px",borderTop:`1px solid ${C.border}`,color:C.muted,fontSize:12,lineHeight:1.6}}>
@@ -332,11 +458,11 @@ function App() {
             <div style={{fontWeight:700,fontSize:13,marginBottom:8}}>📅 Semana atual</div>
             <div style={{display:"flex",gap:6,justifyContent:"space-between"}}>
               {labels.map((d,i)=>{
-                const dn=dayDone(i),pt=!dn&&done(i)>0;
+                const dn=dayDone(i),pt=!dn&&doneCount(i)>0;
                 return(
                   <div key={d} style={{flex:1,textAlign:"center"}}>
                     <div style={{width:"100%",aspectRatio:"1",borderRadius:6,background:dn?C.green+"33":pt?C.accent+"22":"#2a2d3a",border:`1.5px solid ${dn?C.green:pt?C.accent+"88":C.border}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,marginBottom:4}}>
-                      {dn?<span style={{color:C.green}}>✓</span>:pt?<span style={{color:C.accent,fontSize:10}}>{done(i)}/{total(i)}</span>:<span style={{color:C.dim,fontSize:10}}>—</span>}
+                      {dn?<span style={{color:C.green}}>✓</span>:pt?<span style={{color:C.accent,fontSize:10}}>{doneCount(i)}/{totalCount(i)}</span>:<span style={{color:C.dim,fontSize:10}}>—</span>}
                     </div>
                     <div style={{fontSize:9,color:C.dim}}>{d}</div>
                   </div>
@@ -372,7 +498,7 @@ function App() {
             </div>
           ))}
 
-          <div style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:10,padding:14,marginTop:4}}>
+          <div style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:10,padding:14,marginTop:4,marginBottom:4}}>
             <div style={{fontWeight:700,fontSize:13,marginBottom:8,color:C.accent}}>⚠️ Consulte um profissional</div>
             <div style={{color:C.muted,fontSize:12,lineHeight:1.6}}>Este plano é um guia geral. Para resultados seguros e personalizados, consulte um <strong style={{color:C.text}}>nutrólogo ou nutricionista</strong> e um <strong style={{color:C.text}}>educador físico</strong>. Exames de sangue periódicos (a cada 6 meses) são recomendados.</div>
           </div>
