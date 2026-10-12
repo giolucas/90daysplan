@@ -77,12 +77,34 @@
   .back { display: inline-block; color: var(--muted); font-size: 0.9rem; text-decoration: none; margin-bottom: 14px; }
   .back:hover { color: var(--fg); }
   .back:focus-visible { outline: 2px solid var(--g-ic); outline-offset: 2px; border-radius: 4px; }
+  /* Checklist do dia */
+  .today { background: var(--card); border-radius: 16px; padding: 14px 16px; margin-bottom: 14px; }
+  .today-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+  .today-label { font-size: 0.95rem; color: var(--muted); }
+  .today-label strong { color: var(--fg); font-weight: 600; }
+  .today-count { font-size: 1.25rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .today-count small { font-size: 0.85rem; font-weight: 500; color: var(--faint); }
+  .bar { height: 6px; border-radius: 6px; background: var(--line); overflow: hidden; margin: 10px 0 12px; }
+  .bar-fill { height: 100%; width: 0; border-radius: 6px; background: var(--g-ic); transition: width .3s ease; }
+  .day-btn { width: 100%; padding: 10px; border-radius: 10px; border: 1.5px solid var(--g-ic); background: transparent; color: var(--g-ic); font: inherit; font-weight: 600; font-size: 0.95rem; cursor: pointer; }
+  .day-btn.is-done { background: var(--g-bg); color: var(--g-fg); border-color: var(--g-bg); }
+  .day-btn:focus-visible { outline: 2px solid var(--g-ic); outline-offset: 2px; }
+  .last { font-size: 0.8rem; color: var(--faint); margin-top: 8px; text-align: center; }
+  .head { display: flex; align-items: center; padding-left: 14px; }
+  .head > .row { padding-left: 12px; }
+  .check { flex: 0 0 auto; width: 26px; height: 26px; border-radius: 8px; border: 2px solid var(--faint); background: transparent; color: var(--panel); display: grid; place-items: center; cursor: pointer; padding: 0; transition: background .15s, border-color .15s; }
+  .check svg { width: 16px; height: 16px; opacity: 0; }
+  .check[aria-checked="true"] { background: var(--g-ic); border-color: var(--g-ic); }
+  .check[aria-checked="true"] svg { opacity: 1; }
+  .check:focus-visible { outline: 2px solid var(--g-ic); outline-offset: 2px; }
+  .card.is-done .name { color: var(--muted); text-decoration: line-through; }
+  .card.is-done .badge, .card.is-done .ic { opacity: .5; }
   .divider { border: 0; border-top: 1px solid var(--line); margin: 22px 0 16px; }
   .tips { list-style: none; display: flex; flex-direction: column; gap: 10px; color: var(--muted); font-size: 1rem; }
   .tips li { display: flex; gap: 12px; align-items: center; }
   .tips svg { flex: 0 0 auto; width: 22px; height: 22px; color: var(--warm); }
 
-  @media (prefers-reduced-motion: reduce) { .chev { transition: none; } }
+  @media (prefers-reduced-motion: reduce) { .chev, .bar-fill, .check { transition: none; } }
 </style>
 </head>
 <body>
@@ -97,8 +119,18 @@
     <svg class="ic" style="color:var(--g-ic);width:40px;height:40px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 6.5v11M17.5 6.5v11M3.5 9v6M20.5 9v6M6.5 12h11"/></svg>
   </header>
 
+  <section class="today" aria-label="Checklist de hoje">
+    <div class="today-top">
+      <span class="today-label">Hoje · <strong id="today-date"></strong></span>
+      <span class="today-count" id="today-count">0<small>/10</small></span>
+    </div>
+    <div class="bar"><div class="bar-fill" id="bar-fill"></div></div>
+    <button type="button" class="day-btn" id="day-btn">Marcar treino como concluído</button>
+    <p class="last" id="last-done"></p>
+  </section>
+
   <div class="list">
-    <div class="card"><div class="row">
+    <div class="card" data-item="aquec" data-name="Aquecimento"><div class="row">
       <svg class="ic lead-ic" style="color:var(--warm)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
       <div class="text"><div class="name">Aquecimento 8-10 min</div><div class="meta">Bike ou caminhada leve + 1 série leve</div></div>
     </div></div>
@@ -108,7 +140,7 @@
   <div class="section-label">Core (no final)</div>
   <div class="list">
     <div id="core-list" class="list"></div>
-    <div class="card"><div class="row">
+    <div class="card" data-item="caminhada" data-name="Caminhada"><div class="row">
       <svg class="ic lead-ic" style="color:var(--walk)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="13" cy="4" r="1.6"/><path d="M11 21l2-6-2.5-2.5 1-4.5L14 10l3 1M9.5 11.5 8 8.5l3.5-.5M13 15l2.5 6"/></svg>
       <div class="text"><div class="name">Caminhada 20-30 min</div><div class="meta">Ritmo moderado, consegue conversar</div></div>
     </div></div>
@@ -333,6 +365,8 @@
     list.forEach(function (ex) {
       var card = document.createElement('div');
       card.className = 'card t-' + ex.t;
+      card.setAttribute('data-item', 'ex' + ex.n);
+      card.setAttribute('data-name', ex.name);
       var btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'row';
@@ -351,6 +385,83 @@
 
   render(EX.main, 'main-list');
   render(EX.core, 'core-list');
+
+  /* Checklist do dia: marcações valem só para a data de hoje; dias concluídos ficam no histórico. */
+  var PREFIX = 'treino-bracos-tronco:';
+  function read(key, fallback) { try { var v = localStorage.getItem(PREFIX + key); return v ? JSON.parse(v) : fallback; } catch (e) { return fallback; } }
+  function write(key, val) { try { localStorage.setItem(PREFIX + key, JSON.stringify(val)); } catch (e) {} }
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function dateKey(d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+  function fmt(key) {
+    var p = key.split('-');
+    return new Date(+p[0], +p[1] - 1, +p[2]).toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: '2-digit' });
+  }
+
+  var today = dateKey(new Date());
+  var checked = read('dia:' + today, {});
+  var history = read('historico', []);
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.card[data-item]'));
+  var TOTAL = cards.length;
+  var TICK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+
+  cards.forEach(function (card) {
+    var id = card.getAttribute('data-item');
+    var row = card.querySelector('.row');
+    var head = document.createElement('div');
+    head.className = 'head';
+    var box = document.createElement('button');
+    box.type = 'button';
+    box.className = 'check';
+    box.setAttribute('role', 'checkbox');
+    box.setAttribute('aria-label', 'Feito: ' + card.getAttribute('data-name'));
+    box.innerHTML = TICK;
+    box.addEventListener('click', function () {
+      if (checked[id]) delete checked[id]; else checked[id] = true;
+      sync();
+    });
+    card.insertBefore(head, row);
+    head.appendChild(box);
+    head.appendChild(row);
+  });
+
+  document.getElementById('day-btn').addEventListener('click', function () {
+    var allDone = cards.every(function (c) { return checked[c.getAttribute('data-item')]; });
+    checked = {};
+    if (!allDone) cards.forEach(function (c) { checked[c.getAttribute('data-item')] = true; });
+    sync();
+  });
+
+  function sync() {
+    var done = 0;
+    cards.forEach(function (card) {
+      var on = !!checked[card.getAttribute('data-item')];
+      if (on) done++;
+      card.classList.toggle('is-done', on);
+      card.querySelector('.check').setAttribute('aria-checked', on ? 'true' : 'false');
+    });
+    var complete = done === TOTAL;
+    history = history.filter(function (d) { return d !== today; });
+    if (complete) history.push(today);
+    history.sort();
+    write('dia:' + today, checked);
+    write('historico', history);
+
+    document.getElementById('today-count').innerHTML = done + '<small>/' + TOTAL + '</small>';
+    document.getElementById('bar-fill').style.width = (done / TOTAL * 100) + '%';
+    var btn = document.getElementById('day-btn');
+    btn.textContent = complete ? '✓ Treino de hoje concluído · desfazer' : 'Marcar treino como concluído';
+    btn.classList.toggle('is-done', complete);
+
+    var past = history.filter(function (d) { return d !== today; });
+    var parts = [];
+    if (past.length) parts.push('Último antes de hoje: ' + fmt(past[past.length - 1]));
+    if (history.length) parts.push(history.length + (history.length === 1 ? ' treino concluído' : ' treinos concluídos'));
+    document.getElementById('last-done').textContent = parts.join(' · ');
+    document.getElementById('last-done').hidden = !parts.length;
+  }
+
+  document.getElementById('today-date').textContent = fmt(today);
+  sync();
 })();
 </script>
 </body>
