@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Treino de braços e tronco</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  /* Layout: one stacked column of workout cards; tapping a card opens its sheet (drawing + cues) inline. */
+  :root {
+    --bg: #f3f3f1; --panel: #ffffff; --card: #ecece8; --sheet: #f8f8f6; --line: #d9d9d3;
+    --fg: #17181b; --muted: #62646b; --faint: #8b8d93;
+    --g-bg: #cfe8dc; --g-fg: #1f5a42; --g-ic: #2f8a63;
+    --p-bg: #dcd8fb; --p-fg: #3a3290; --p-ic: #5b51c9;
+    --c-bg: #f5d5c7; --c-fg: #7a2f16; --c-ic: #c2603d;
+    --warm: #c98318; --walk: #3f74c9;
+    --font: 'Figtree', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+    --bg: #141417; --panel: #18191d; --card: #222328; --sheet: #1a1b1f; --line: #33343a;
+    --fg: #f3f3f1; --muted: #a4a5ab; --faint: #75767d;
+    --g-bg: #23463a; --g-fg: #bfe6d3; --g-ic: #7fcfa8;
+    --p-bg: #3b3487; --p-fg: #d6d1ff; --p-ic: #aba2f2;
+    --c-bg: #6b2e1c; --c-fg: #f6c6b2; --c-ic: #e89a7d;
+    --warm: #e3a24b; --walk: #8fb4ef; color-scheme: dark;
+  } }
+  :root[data-theme="dark"] {
+    --bg: #141417; --panel: #18191d; --card: #222328; --sheet: #1a1b1f; --line: #33343a;
+    --fg: #f3f3f1; --muted: #a4a5ab; --faint: #75767d;
+    --g-bg: #23463a; --g-fg: #bfe6d3; --g-ic: #7fcfa8;
+    --p-bg: #3b3487; --p-fg: #d6d1ff; --p-ic: #aba2f2;
+    --c-bg: #6b2e1c; --c-fg: #f6c6b2; --c-ic: #e89a7d;
+    --warm: #e3a24b; --walk: #8fb4ef; color-scheme: dark;
+  }
+
+  body { background: var(--bg); color: var(--fg); font-family: var(--font); font-size: 16px; padding: 20px 16px 40px; }
+  .wrap { max-width: 560px; margin: 0 auto; background: var(--panel); border-radius: 22px; padding: 26px 20px 24px; }
+  header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 20px; }
+  h1 { font-size: 1.65rem; font-weight: 600; letter-spacing: -0.01em; line-height: 1.15; text-wrap: balance; }
+  .sub { color: var(--muted); margin-top: 4px; font-size: 0.95rem; }
+  .hint { color: var(--faint); font-size: 0.8rem; margin-top: 8px; }
+
+  .list { display: flex; flex-direction: column; gap: 10px; }
+  .section-label { color: var(--muted); font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; margin: 26px 0 12px; }
+
+  .card { background: var(--card); border-radius: 16px; }
+  .row { display: flex; align-items: center; gap: 12px; padding: 14px 16px; width: 100%; background: none; border: 0; color: inherit; font: inherit; text-align: left; }
+  button.row { cursor: pointer; border-radius: 16px; }
+  button.row:focus-visible { outline: 2px solid var(--g-ic); outline-offset: 2px; }
+  .badge { flex: 0 0 auto; width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; font-size: 1.05rem; font-weight: 500; font-variant-numeric: tabular-nums; }
+  .text { flex: 1 1 auto; min-width: 0; }
+  .name { font-size: 1.1rem; font-weight: 500; }
+  .meta { color: var(--muted); font-size: 0.95rem; margin-top: 2px; }
+  .ic { flex: 0 0 auto; width: 26px; height: 26px; }
+  .lead-ic { width: 26px; height: 26px; margin: 0 2px; }
+
+  .t-g .badge { background: var(--g-bg); color: var(--g-fg); } .t-g .ic, .t-g .fig-accent { color: var(--g-ic); }
+  .t-p .badge { background: var(--p-bg); color: var(--p-fg); } .t-p .ic, .t-p .fig-accent { color: var(--p-ic); }
+  .t-c .badge { background: var(--c-bg); color: var(--c-fg); } .t-c .ic, .t-c .fig-accent { color: var(--c-ic); }
+
+  .chev { flex: 0 0 auto; width: 16px; height: 16px; color: var(--faint); transition: transform .2s ease; }
+  .card.is-open .chev { transform: rotate(180deg); }
+
+  /* Ficha do exercício (accordion inline, igual Odisseia Etílica) */
+  .sheet { position: relative; margin: 0 12px 12px; background: var(--sheet); border: 1px solid var(--line); border-radius: 12px; padding: 14px 14px 16px; }
+  .close { position: absolute; top: 10px; right: 10px; width: 28px; height: 28px; border-radius: 50%; border: 0; background: var(--card); color: var(--fg); font: inherit; font-size: 1.15rem; font-weight: 700; line-height: 1; cursor: pointer; display: grid; place-items: center; }
+  .close:focus-visible { outline: 2px solid var(--g-ic); outline-offset: 2px; }
+  .fig { display: block; width: 100%; max-width: 360px; height: auto; margin: 4px auto 6px; color: var(--faint); }
+  .fig-cap { text-align: center; font-size: 0.78rem; color: var(--faint); letter-spacing: 0.04em; text-transform: uppercase; }
+  .blk { font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 14px 0 6px; }
+  .steps { padding-left: 1.2em; display: flex; flex-direction: column; gap: 4px; font-size: 0.95rem; line-height: 1.45; }
+  .note { font-size: 0.92rem; line-height: 1.45; color: var(--fg); }
+  .note.warn { color: var(--muted); }
+
+  .divider { border: 0; border-top: 1px solid var(--line); margin: 22px 0 16px; }
+  .tips { list-style: none; display: flex; flex-direction: column; gap: 10px; color: var(--muted); font-size: 1rem; }
+  .tips li { display: flex; gap: 12px; align-items: center; }
+  .tips svg { flex: 0 0 auto; width: 22px; height: 22px; color: var(--warm); }
+
+  @media (prefers-reduced-motion: reduce) { .chev { transition: none; } }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <div>
+      <h1>Treino de braços e tronco</h1>
+      <p class="sub">3 séries de 10-12 reps</p>
+      <p class="hint">Toque num exercício para ver a máquina e como executar.</p>
+    </div>
+    <svg class="ic" style="color:var(--g-ic);width:40px;height:40px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 6.5v11M17.5 6.5v11M3.5 9v6M20.5 9v6M6.5 12h11"/></svg>
+  </header>
+
+  <div class="list">
+    <div class="card"><div class="row">
+      <svg class="ic lead-ic" style="color:var(--warm)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+      <div class="text"><div class="name">Aquecimento 8-10 min</div><div class="meta">Bike ou caminhada leve + 1 série leve</div></div>
+    </div></div>
+    <div id="main-list" class="list"></div>
+  </div>
+
+  <div class="section-label">Core (no final)</div>
+  <div class="list">
+    <div id="core-list" class="list"></div>
+    <div class="card"><div class="row">
+      <svg class="ic lead-ic" style="color:var(--walk)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="13" cy="4" r="1.6"/><path d="M11 21l2-6-2.5-2.5 1-4.5L14 10l3 1M9.5 11.5 8 8.5l3.5-.5M13 15l2.5 6"/></svg>
+      <div class="text"><div class="name">Caminhada 20-30 min</div><div class="meta">Ritmo moderado, consegue conversar</div></div>
+    </div></div>
+  </div>
+
+  <hr class="divider">
+  <ul class="tips">
+    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Treinar 2-3h após refeição grande</li>
+    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 8h10a3 3 0 1 0-3-3M3 12h15a3 3 0 1 1-3 3M3 16h8"/></svg>Soltar o ar no esforço, sem prender</li>
+    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5h6v2M12 11v5M9.5 13.5h5"/></svg>Levar a bombinha de resgate</li>
+    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg>Fez 12 reps nas 3 séries? Suba 2-5% a carga</li>
+  </ul>
+</main>
+
+<script>
+(function () {
+  /* Desenhos: máquina/chão em cinza (currentColor), corpo e parte que se move na cor do grupo (.fig-accent). */
+  function mk(id, color) { return '<marker id="' + id + '" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" style="fill:var(' + color + ')"/></marker>'; }
+  var DEF = '<defs>' + mk('ah-g', '--g-ic') + mk('ah-p', '--p-ic') + mk('ah-c', '--c-ic') + '</defs>';
+  function svg(inner, label, vb) {
+    return '<svg class="fig" viewBox="' + (vb || '0 0 240 150') + '" role="img" aria-label="' + label + '" fill="none" stroke-linecap="round" stroke-linejoin="round">' + DEF + inner + '</svg>';
+  }
+  var M = 'stroke="currentColor" stroke-width="3"';            // máquina
+  var B = 'class="fig-accent" stroke="currentColor" stroke-width="6"'; // corpo
+  var A = 'class="fig-accent" stroke="currentColor" stroke-width="2.5" marker-end="url(#ah)"'; // seta de movimento
+  var G = 'class="fig-accent" stroke="currentColor" stroke-width="4" stroke-dasharray="3 6" opacity=".55"'; // posição inicial
+  var HEAD = function (x, y, r) { return '<circle class="fig-accent" cx="' + x + '" cy="' + y + '" r="' + (r || 9) + '" fill="currentColor" stroke="none"/>'; };
+  var FLOOR = '<path d="M10 140H230" stroke="currentColor" stroke-width="2" opacity=".5"/>';
+
+  var DRAW = {
+    supino: svg(
+      FLOOR +
+      '<rect x="18" y="22" width="28" height="116" rx="4" ' + M + '/>' +
+      '<path d="M24 44h16M24 56h16M24 68h16M24 80h16" ' + M + ' stroke-width="2"/>' +
+      '<path d="M46 132H200" ' + M + '/>' +
+      '<path d="M68 100l6-60" ' + M + ' stroke-width="9" opacity=".6"/>' +
+      '<path d="M66 108h50M90 108v24" ' + M + ' stroke-width="7" opacity=".6"/>' +
+      '<path d="M40 26Q110 4 150 58" ' + M + '/>' +
+      '<path d="M150 50v18" ' + M + ' stroke-width="7"/>' +
+      '<path d="M84 100L88 54" ' + B + '/>' + HEAD(91, 40) +
+      '<path d="M88 58L120 66L148 60" ' + B + ' stroke-width="5"/>' +
+      '<path d="M86 102H124L126 134" ' + B + '/>' +
+      '<path d="M162 59H192" ' + A + '/>',
+      'Supino máquina: pessoa sentada empurra as alavancas para frente'),
+
+    pulley: svg(
+      FLOOR +
+      '<rect x="110" y="8" width="20" height="130" rx="3" ' + M + '/>' +
+      '<circle cx="120" cy="16" r="5" ' + M + ' stroke-width="2.5"/>' +
+      '<path d="M120 21V44" ' + M + ' stroke-width="2"/>' +
+      '<path d="M52 52L62 44H178L188 52" ' + M + ' stroke-width="4"/>' +
+      '<rect x="92" y="116" width="56" height="9" rx="3" ' + M + '/>' +
+      '<path d="M88 104H152" ' + M + ' stroke-width="7" opacity=".6"/>' +
+      HEAD(120, 64, 10) +
+      '<path d="M106 82H134L130 114H110Z" ' + B + ' stroke-width="5"/>' +
+      '<path d="M106 84L84 76L70 48M134 84L156 76L170 48" ' + B + ' stroke-width="5"/>' +
+      '<path d="M112 125L108 138M128 125L132 138" ' + B + ' stroke-width="5"/>' +
+      '<path d="M204 40V78" ' + A + '/>' +
+      '<path d="M36 40V78" ' + A + '/>',
+      'Pulley frente: pessoa sentada puxa a barra larga até o peito'),
+
+    remada: svg(
+      FLOOR +
+      '<rect x="12" y="38" width="26" height="100" rx="3" ' + M + '/>' +
+      '<circle cx="44" cy="112" r="5" ' + M + ' stroke-width="2.5"/>' +
+      '<path d="M60 104L66 134" ' + M + ' stroke-width="5"/>' +
+      '<path d="M62 122H222M140 122V138M210 122V138" ' + M + '/>' +
+      '<path d="M49 111L136 100" ' + M + ' stroke-width="2"/>' +
+      '<path d="M152 118L150 72" ' + B + '/>' + HEAD(150, 58) +
+      '<path d="M152 118L112 104L70 114" ' + B + '/>' +
+      '<path d="M150 76L172 96L140 100" ' + B + ' stroke-width="5"/>' +
+      '<path d="M96 84H126" ' + A + '/>',
+      'Remada sentada: pessoa sentada puxa o cabo baixo em direção ao abdômen'),
+
+    elevacao: svg(
+      FLOOR +
+      HEAD(120, 24, 10) +
+      '<path d="M104 40H136L132 88H108Z" ' + B + ' stroke-width="5"/>' +
+      '<path d="M112 88L108 138M128 88L132 138" ' + B + ' stroke-width="5"/>' +
+      '<path d="M104 44L96 86M136 44L144 86" ' + G + '/>' +
+      '<path d="M104 44L64 50M136 44L176 50" ' + B + ' stroke-width="5"/>' +
+      '<path d="M56 42V58M62 42V58M178 42V58M184 42V58" ' + M + ' stroke-width="4"/>' +
+      '<path d="M88 92Q62 84 58 66" ' + A + '/>' +
+      '<path d="M152 92Q178 84 182 66" ' + A + '/>',
+      'Elevação lateral: braços sobem pelos lados até a altura dos ombros'),
+
+    rosca: svg(
+      FLOOR +
+      HEAD(112, 24) +
+      '<path d="M112 38L114 88" ' + B + '/>' +
+      '<path d="M114 88L108 138M114 88L124 138" ' + B + ' stroke-width="5"/>' +
+      '<path d="M114 76L140 98" ' + G + '/>' +
+      '<path d="M112 42L114 76L138 52" ' + B + ' stroke-width="5"/>' +
+      '<path d="M132 44L146 58M136 40L150 54" ' + M + ' stroke-width="4"/>' +
+      '<path d="M156 100Q170 78 156 56" ' + A + '/>',
+      'Rosca direta: cotovelo parado ao lado do corpo, halter sobe até o ombro'),
+
+    triceps: svg(
+      FLOOR +
+      '<rect x="196" y="8" width="24" height="130" rx="3" ' + M + '/>' +
+      '<circle cx="192" cy="22" r="5" ' + M + ' stroke-width="2.5"/>' +
+      '<path d="M188 25L160 90" ' + M + ' stroke-width="2"/>' +
+      HEAD(124, 26) +
+      '<path d="M128 40L124 90" ' + B + '/>' +
+      '<path d="M124 90L116 138M124 90L136 138" ' + B + ' stroke-width="5"/>' +
+      '<path d="M134 74L156 58" ' + G + '/>' +
+      '<path d="M130 44L134 74L160 92" ' + B + ' stroke-width="5"/>' +
+      '<path d="M154 86L168 96" ' + M + ' stroke-width="5"/>' +
+      '<path d="M174 58V96" ' + A + '/>',
+      'Tríceps pulley: cotovelo colado ao corpo, empurra o cabo para baixo'),
+
+    prancha: svg(
+      '<rect x="24" y="128" width="200" height="8" rx="4" ' + M + ' stroke-width="2" opacity=".6"/>' +
+      HEAD(52, 96, 8) +
+      '<path d="M66 102L198 120" ' + B + '/>' +
+      '<path d="M68 104L68 126L44 126" ' + B + ' stroke-width="5"/>' +
+      '<path d="M198 120L204 126" ' + B + ' stroke-width="5"/>' +
+      '<path d="M48 82L204 104" ' + M + ' stroke-width="2" stroke-dasharray="4 6"/>' +
+      '<text x="120" y="152" text-anchor="middle" fill="currentColor" stroke="none" font-size="11" font-family="inherit">cabeça, quadril e pés na mesma linha</text>',
+      'Prancha ventral: apoiado nos antebraços e pontas dos pés, corpo reto', '0 74 240 84'),
+
+    deadbug: svg(
+      FLOOR +
+      HEAD(20, 131, 7) +
+      '<path d="M32 134H72" ' + B + ' stroke-width="5"/>' +
+      '<path d="M38 132V98M34 132L12 116" ' + B + ' stroke-width="4"/>' +
+      '<path d="M72 134V106H94M72 134L110 128" ' + B + ' stroke-width="4"/>' +
+      '<text x="60" y="82" text-anchor="middle" fill="currentColor" stroke="none" font-size="11" font-family="inherit">dead bug</text>' +
+      '<path d="M120 60V140" stroke="currentColor" stroke-width="1" opacity=".35"/>' +
+      HEAD(138, 100, 7) +
+      '<path d="M148 104H194" ' + B + ' stroke-width="5"/>' +
+      '<path d="M152 104V138M152 104L130 84" ' + B + ' stroke-width="4"/>' +
+      '<path d="M190 104V136H208M194 104L232 96" ' + B + ' stroke-width="4"/>' +
+      '<text x="180" y="82" text-anchor="middle" fill="currentColor" stroke="none" font-size="11" font-family="inherit">bird-dog</text>',
+      'Dead bug deitado de costas e bird-dog em quatro apoios, braço e perna opostos estendidos', '0 66 240 80')
+  };
+
+  var ICON = {
+    seat: '<path d="M7 18v-2M17 18v-2M5 12V8a3 3 0 0 1 3-3h8a3 3 0 0 1 3 3v4M4 12h16v4H4z"/>',
+    down: '<path d="M6 4h12M12 8v12M8 16l4 4 4-4"/>',
+    left: '<path d="M18 5v14M14 12H4M8 8l-4 4 4 4"/>',
+    both: '<path d="M3 12h18M7 8l-4 4 4 4M17 8l4 4-4 4"/>',
+    dumb: '<path d="M6.5 6.5v11M17.5 6.5v11M3.5 9v6M20.5 9v6M6.5 12h11"/>',
+    arrowdown: '<path d="M12 4v16M6 14l6 6 6-6"/>',
+    plank: '<circle cx="13" cy="4" r="1.6"/><path d="M8 20l3-6 3 1M12 9l-2 5M12 9l5 1 3 2M12 9l-4 2"/>',
+    pulse: '<path d="M3 12h4l2-5 4 10 2-5h6"/>'
+  };
+
+  var EX = {
+    main: [
+      { n: 1, t: 'g', name: 'Supino máquina', meta: '3x12 · descanso 60-90s', icon: 'seat', draw: 'supino',
+        setup: 'Ajuste o banco para a pegada ficar na linha do meio do peito.',
+        steps: ['Costas e cabeça apoiadas no encosto, pés firmes no chão.', 'Empurre até quase estender os braços, sem travar os cotovelos.', 'Volte devagar (2-3s) até sentir o peito alongar.'],
+        breath: 'Solte o ar ao empurrar, puxe ao voltar.' },
+      { n: 2, t: 'g', name: 'Pulley frente', meta: '3x12 · descanso 60-90s', icon: 'down', draw: 'pulley',
+        setup: 'Prenda as coxas sob o apoio acolchoado. Pegada um pouco mais larga que os ombros.',
+        steps: ['Peito aberto, tronco levemente inclinado para trás.', 'Puxe a barra até a parte de cima do peito, levando os cotovelos para baixo.', 'Suba controlando até os braços quase estenderem.'],
+        breath: 'Solte o ar ao puxar.' },
+      { n: 3, t: 'g', name: 'Remada sentada', meta: '3x12 · descanso 60-90s · novo', icon: 'left', draw: 'remada',
+        setup: 'Pés na plataforma, joelhos levemente dobrados. Pegador em V (triângulo).',
+        steps: ['Coluna reta, sem balançar o tronco para trás.', 'Puxe o pegador até o abdômen, juntando as escápulas.', 'Estenda os braços devagar, sem arredondar as costas.'],
+        breath: 'Solte o ar ao puxar. Exercício novo: comece leve e foque na postura.' },
+      { n: 4, t: 'p', name: 'Elevação lateral com halter', meta: '3x12 · descanso 45-60s', icon: 'both', draw: 'elevacao',
+        setup: 'Halteres leves. Esse exercício cansa rápido.',
+        steps: ['Em pé, cotovelos levemente dobrados.', 'Suba os braços pelos lados até a altura dos ombros, não acima.', 'Desça devagar, sem jogar o corpo.'],
+        breath: 'Solte o ar ao subir.' },
+      { n: 5, t: 'p', name: 'Rosca direta com halter', meta: '3x12 · descanso 45-60s', icon: 'dumb', draw: 'rosca',
+        setup: 'Palmas viradas para frente.',
+        steps: ['Cotovelos colados ao lado do corpo, parados.', 'Suba o halter dobrando só o cotovelo.', 'Desça até estender o braço, sem balançar o tronco.'],
+        breath: 'Solte o ar ao subir.' },
+      { n: 6, t: 'p', name: 'Tríceps pulley', meta: '3x12 · descanso 45-60s', icon: 'arrowdown', draw: 'triceps',
+        setup: 'Polia alta, barra reta ou corda. De frente para a máquina.',
+        steps: ['Cotovelos colados ao corpo, tronco levemente inclinado.', 'Empurre para baixo até estender os braços.', 'Suba só até o antebraço ficar paralelo ao chão.'],
+        breath: 'Solte o ar ao empurrar.' }
+    ],
+    core: [
+      { n: 7, t: 'c', name: 'Prancha ventral', meta: '3x20-40s · descanso 45s', icon: 'plank', draw: 'prancha',
+        setup: 'No colchonete, cotovelos embaixo dos ombros.',
+        steps: ['Apoie antebraços e pontas dos pés.', 'Contraia abdômen e glúteos, sem deixar o quadril cair ou subir.', 'Segure o tempo, olhando para o chão.'],
+        breath: 'Respire curto e contínuo. Não prenda o ar.' },
+      { n: 8, t: 'c', name: 'Dead bug ou bird-dog', meta: '3x10 por lado · descanso 45s', icon: 'pulse', draw: 'deadbug',
+        setup: 'Escolha um dos dois. No colchonete.',
+        steps: ['Dead bug: deitado de costas, braços para cima e joelhos a 90°. Estenda braço e perna opostos sem tirar a lombar do chão.', 'Bird-dog: em quatro apoios, estenda braço e perna opostos até ficarem na linha do corpo.', 'Volte devagar e troque o lado.'],
+        breath: 'Solte o ar ao estender.' }
+    ]
+  };
+
+  function icon(name) {
+    return '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ICON[name] + '</svg>';
+  }
+
+  function buildSheet(ex) {
+    var el = document.createElement('div');
+    el.className = 'sheet';
+    el.id = 'sheet-' + ex.n;
+    var html = '<button type="button" class="close" aria-label="Fechar">−</button>' +
+      DRAW[ex.draw].split('url(#ah)').join('url(#ah-' + ex.t + ')') +
+      '<div class="blk">Ajuste</div><p class="note">' + ex.setup + '</p>' +
+      '<div class="blk">Como fazer</div><ol class="steps">' + ex.steps.map(function (s) { return '<li>' + s + '</li>'; }).join('') + '</ol>' +
+      '<div class="blk">Respiração</div><p class="note warn">' + ex.breath + '</p>';
+    el.innerHTML = html;
+    return el;
+  }
+
+  function toggle(card, ex, btn) {
+    var open = card.querySelector('.sheet');
+    if (open) {
+      open.remove();
+      card.classList.remove('is-open');
+      btn.setAttribute('aria-expanded', 'false');
+      return;
+    }
+    var sheet = buildSheet(ex);
+    card.appendChild(sheet);
+    card.classList.add('is-open');
+    btn.setAttribute('aria-expanded', 'true');
+    sheet.querySelector('.close').addEventListener('click', function () { toggle(card, ex, btn); btn.focus(); });
+  }
+
+  function render(list, target) {
+    var root = document.getElementById(target);
+    list.forEach(function (ex) {
+      var card = document.createElement('div');
+      card.className = 'card t-' + ex.t;
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'row';
+      btn.setAttribute('aria-expanded', 'false');
+      btn.setAttribute('aria-controls', 'sheet-' + ex.n);
+      var meta = ex.meta.replace(/(\d)-(\d)/g, '$1\u2011$2');
+      btn.innerHTML = '<span class="badge">' + ex.n + '</span>' +
+        '<span class="text"><span class="name" style="display:block">' + ex.name + '</span><span class="meta" style="display:block">' + meta + '</span></span>' +
+        icon(ex.icon) +
+        '<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+      btn.addEventListener('click', function () { toggle(card, ex, btn); });
+      card.appendChild(btn);
+      root.appendChild(card);
+    });
+  }
+
+  render(EX.main, 'main-list');
+  render(EX.core, 'core-list');
+})();
+</script>
+</body>
+</html>
