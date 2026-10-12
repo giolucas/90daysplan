@@ -74,6 +74,9 @@
   .note { font-size: 0.92rem; line-height: 1.45; color: var(--fg); }
   .note.warn { color: var(--muted); }
 
+  .back { display: inline-block; color: var(--muted); font-size: 0.9rem; text-decoration: none; margin-bottom: 14px; }
+  .back:hover { color: var(--fg); }
+  .back:focus-visible { outline: 2px solid var(--g-ic); outline-offset: 2px; border-radius: 4px; }
   .divider { border: 0; border-top: 1px solid var(--line); margin: 22px 0 16px; }
   .tips { list-style: none; display: flex; flex-direction: column; gap: 10px; color: var(--muted); font-size: 1rem; }
   .tips li { display: flex; gap: 12px; align-items: center; }
@@ -84,6 +87,7 @@
 </head>
 <body>
 <main class="wrap">
+  <a class="back" href="./">← Plano 90 dias</a>
   <header>
     <div>
       <h1>Treino de braços e tronco</h1>
