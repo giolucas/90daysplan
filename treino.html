@@ -14,7 +14,6 @@
     --fg: #17181b; --muted: #62646b; --faint: #8b8d93;
     --g-bg: #cfe8dc; --g-fg: #1f5a42; --g-ic: #2f8a63;
     --p-bg: #dcd8fb; --p-fg: #3a3290; --p-ic: #5b51c9;
-    --c-bg: #f5d5c7; --c-fg: #7a2f16; --c-ic: #c2603d;
     --warm: #c98318; --walk: #3f74c9;
     --font: 'Figtree', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   }
@@ -23,7 +22,6 @@
     --fg: #f3f3f1; --muted: #a4a5ab; --faint: #75767d;
     --g-bg: #23463a; --g-fg: #bfe6d3; --g-ic: #7fcfa8;
     --p-bg: #3b3487; --p-fg: #d6d1ff; --p-ic: #aba2f2;
-    --c-bg: #6b2e1c; --c-fg: #f6c6b2; --c-ic: #e89a7d;
     --warm: #e3a24b; --walk: #8fb4ef; color-scheme: dark;
   } }
   :root[data-theme="dark"] {
@@ -31,7 +29,6 @@
     --fg: #f3f3f1; --muted: #a4a5ab; --faint: #75767d;
     --g-bg: #23463a; --g-fg: #bfe6d3; --g-ic: #7fcfa8;
     --p-bg: #3b3487; --p-fg: #d6d1ff; --p-ic: #aba2f2;
-    --c-bg: #6b2e1c; --c-fg: #f6c6b2; --c-ic: #e89a7d;
     --warm: #e3a24b; --walk: #8fb4ef; color-scheme: dark;
   }
 
@@ -43,7 +40,6 @@
   .hint { color: var(--faint); font-size: 0.8rem; margin-top: 8px; }
 
   .list { display: flex; flex-direction: column; gap: 10px; }
-  .section-label { color: var(--muted); font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; margin: 26px 0 12px; }
 
   .card { background: var(--card); border-radius: 16px; }
   .row { display: flex; align-items: center; gap: 12px; padding: 14px 16px; width: 100%; background: none; border: 0; color: inherit; font: inherit; text-align: left; }
@@ -58,7 +54,6 @@
 
   .t-g .badge { background: var(--g-bg); color: var(--g-fg); } .t-g .ic, .t-g .fig-accent { color: var(--g-ic); }
   .t-p .badge { background: var(--p-bg); color: var(--p-fg); } .t-p .ic, .t-p .fig-accent { color: var(--p-ic); }
-  .t-c .badge { background: var(--c-bg); color: var(--c-fg); } .t-c .ic, .t-c .fig-accent { color: var(--c-ic); }
 
   .chev { flex: 0 0 auto; width: 16px; height: 16px; color: var(--faint); transition: transform .2s ease; }
   .card.is-open .chev { transform: rotate(180deg); }
@@ -122,7 +117,7 @@
   <section class="today" aria-label="Checklist de hoje">
     <div class="today-top">
       <span class="today-label">Hoje · <strong id="today-date"></strong></span>
-      <span class="today-count" id="today-count">0<small>/10</small></span>
+      <span class="today-count" id="today-count">0<small>/8</small></span>
     </div>
     <div class="bar"><div class="bar-fill" id="bar-fill"></div></div>
     <button type="button" class="day-btn" id="day-btn">Marcar treino como concluído</button>
@@ -135,11 +130,6 @@
       <div class="text"><div class="name">Esteira 15 min</div><div class="meta">No começo, ritmo leve a moderado</div></div>
     </div></div>
     <div id="main-list" class="list"></div>
-  </div>
-
-  <div class="section-label">Core (no final)</div>
-  <div class="list">
-    <div id="core-list" class="list"></div>
     <div class="card" data-item="caminhada" data-name="Caminhada"><div class="row">
       <svg class="ic lead-ic" style="color:var(--walk)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="13" cy="4" r="1.6"/><path d="M11 21l2-6-2.5-2.5 1-4.5L14 10l3 1M9.5 11.5 8 8.5l3.5-.5M13 15l2.5 6"/></svg>
       <div class="text"><div class="name">Caminhada 20-30 min</div><div class="meta">Ritmo moderado, consegue conversar</div></div>
@@ -159,7 +149,7 @@
 (function () {
   /* Desenhos: máquina/chão em cinza (currentColor), corpo e parte que se move na cor do grupo (.fig-accent). */
   function mk(id, color) { return '<marker id="' + id + '" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" style="fill:var(' + color + ')"/></marker>'; }
-  var DEF = '<defs>' + mk('ah-g', '--g-ic') + mk('ah-p', '--p-ic') + mk('ah-c', '--c-ic') + '</defs>';
+  var DEF = '<defs>' + mk('ah-g', '--g-ic') + mk('ah-p', '--p-ic') + '</defs>';
   function svg(inner, label, vb) {
     return '<svg class="fig" viewBox="' + (vb || '0 0 240 150') + '" role="img" aria-label="' + label + '" fill="none" stroke-linecap="round" stroke-linejoin="round">' + DEF + inner + '</svg>';
   }
@@ -250,32 +240,7 @@
       '<path d="M130 44L134 74L160 92" ' + B + ' stroke-width="5"/>' +
       '<path d="M154 86L168 96" ' + M + ' stroke-width="5"/>' +
       '<path d="M174 58V96" ' + A + '/>',
-      'Tríceps pulley: cotovelo colado ao corpo, empurra o cabo para baixo'),
-
-    prancha: svg(
-      '<rect x="24" y="128" width="200" height="8" rx="4" ' + M + ' stroke-width="2" opacity=".6"/>' +
-      HEAD(52, 96, 8) +
-      '<path d="M66 102L198 120" ' + B + '/>' +
-      '<path d="M68 104L68 126L44 126" ' + B + ' stroke-width="5"/>' +
-      '<path d="M198 120L204 126" ' + B + ' stroke-width="5"/>' +
-      '<path d="M48 82L204 104" ' + M + ' stroke-width="2" stroke-dasharray="4 6"/>' +
-      '<text x="120" y="152" text-anchor="middle" fill="currentColor" stroke="none" font-size="11" font-family="inherit">cabeça, quadril e pés na mesma linha</text>',
-      'Prancha ventral: apoiado nos antebraços e pontas dos pés, corpo reto', '0 74 240 84'),
-
-    deadbug: svg(
-      FLOOR +
-      HEAD(20, 131, 7) +
-      '<path d="M32 134H72" ' + B + ' stroke-width="5"/>' +
-      '<path d="M38 132V98M34 132L12 116" ' + B + ' stroke-width="4"/>' +
-      '<path d="M72 134V106H94M72 134L110 128" ' + B + ' stroke-width="4"/>' +
-      '<text x="60" y="82" text-anchor="middle" fill="currentColor" stroke="none" font-size="11" font-family="inherit">dead bug</text>' +
-      '<path d="M120 60V140" stroke="currentColor" stroke-width="1" opacity=".35"/>' +
-      HEAD(138, 100, 7) +
-      '<path d="M148 104H194" ' + B + ' stroke-width="5"/>' +
-      '<path d="M152 104V138M152 104L130 84" ' + B + ' stroke-width="4"/>' +
-      '<path d="M190 104V136H208M194 104L232 96" ' + B + ' stroke-width="4"/>' +
-      '<text x="180" y="82" text-anchor="middle" fill="currentColor" stroke="none" font-size="11" font-family="inherit">bird-dog</text>',
-      'Dead bug deitado de costas e bird-dog em quatro apoios, braço e perna opostos estendidos', '0 66 240 80')
+      'Tríceps pulley: cotovelo colado ao corpo, empurra o cabo para baixo')
   };
 
   var ICON = {
@@ -284,9 +249,7 @@
     left: '<path d="M18 5v14M14 12H4M8 8l-4 4 4 4"/>',
     both: '<path d="M3 12h18M7 8l-4 4 4 4M17 8l4 4-4 4"/>',
     dumb: '<path d="M6.5 6.5v11M17.5 6.5v11M3.5 9v6M20.5 9v6M6.5 12h11"/>',
-    arrowdown: '<path d="M12 4v16M6 14l6 6 6-6"/>',
-    plank: '<circle cx="13" cy="4" r="1.6"/><path d="M8 20l3-6 3 1M12 9l-2 5M12 9l5 1 3 2M12 9l-4 2"/>',
-    pulse: '<path d="M3 12h4l2-5 4 10 2-5h6"/>'
+    arrowdown: '<path d="M12 4v16M6 14l6 6 6-6"/>'
   };
 
   var EX = {
@@ -315,16 +278,6 @@
         setup: 'Polia alta, barra reta ou corda. De frente para a máquina.',
         steps: ['Cotovelos colados ao corpo, tronco levemente inclinado.', 'Empurre para baixo até estender os braços.', 'Suba só até o antebraço ficar paralelo ao chão.'],
         breath: 'Solte o ar ao empurrar.' }
-    ],
-    core: [
-      { n: 7, t: 'c', name: 'Prancha ventral', meta: '3x20-40s · descanso 45s', icon: 'plank', draw: 'prancha',
-        setup: 'No colchonete, cotovelos embaixo dos ombros.',
-        steps: ['Apoie antebraços e pontas dos pés.', 'Contraia abdômen e glúteos, sem deixar o quadril cair ou subir.', 'Segure o tempo, olhando para o chão.'],
-        breath: 'Respire curto e contínuo. Não prenda o ar.' },
-      { n: 8, t: 'c', name: 'Dead bug ou bird-dog', meta: '3x10 por lado · descanso 45s', icon: 'pulse', draw: 'deadbug',
-        setup: 'Escolha um dos dois. No colchonete.',
-        steps: ['Dead bug: deitado de costas, braços para cima e joelhos a 90°. Estenda braço e perna opostos sem tirar a lombar do chão.', 'Bird-dog: em quatro apoios, estenda braço e perna opostos até ficarem na linha do corpo.', 'Volte devagar e troque o lado.'],
-        breath: 'Solte o ar ao estender.' }
     ]
   };
 
@@ -384,7 +337,6 @@
   }
 
   render(EX.main, 'main-list');
-  render(EX.core, 'core-list');
 
   /* Checklist do dia: marcações valem só para a data de hoje; dias concluídos ficam no histórico. */
   var PREFIX = 'treino-bracos-tronco:';
