@@ -4,16 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Plano 90 Dias</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: #0f1117; }
+  body { background: #121316; }
   button { font-family: inherit; }
   ::-webkit-scrollbar { display: none; }
-  :root { --g-ic: #22c55e; --p-ic: #a855f7; }
-  .fig { display: block; width: 100%; max-width: 340px; height: auto; margin: 6px auto 4px; color: #64748b; }
+  :root { --g-ic: #7fcfa8; --p-ic: #7fcfa8; }
+  .fig { display: block; width: 100%; max-width: 340px; height: auto; margin: 6px auto 4px; color: #75767d; }
   .t-g .fig-accent { color: var(--g-ic); }
   .t-p .fig-accent { color: var(--p-ic); }
 </style>
@@ -22,12 +24,35 @@
 <div id="root"></div>
 <script type="text/babel">
 
+// Marca verde e preta, igual à página do treino.
 const C = {
-  bg:"#0f1117",card:"#1a1d27",border:"#2a2d3a",
-  accent:"#f97316",aLight:"#fb923c",green:"#22c55e",
-  blue:"#3b82f6",purple:"#a855f7",text:"#f1f5f9",
-  muted:"#94a3b8",dim:"#64748b"
+  bg:"#121316",card:"#1c1d21",border:"#2c2d33",track:"#2c2d33",
+  accent:"#7fcfa8",aLight:"#a6e0c3",green:"#7fcfa8",
+  blue:"#7fcfa8",purple:"#7fcfa8",text:"#f3f3f1",
+  muted:"#a4a5ab",dim:"#75767d",onAccent:"#0d1a13"
 };
+
+const ICONS = {
+  dumbbell:'<path d="M6.5 6.5v11M17.5 6.5v11M3.5 9v6M20.5 9v6M6.5 12h11"/>',
+  treadmill:'<circle cx="11" cy="4" r="1.6"/><path d="M8 15l2-4.5 2 1.5 1 3M10 10.5l1.5-3 3 1.5M3 19h15l3-9M18 10h3"/>',
+  walk:'<circle cx="13" cy="4" r="1.6"/><path d="M11 21l2-6-2.5-2.5 1-4.5L14 10l3 1M9.5 11.5 8 8.5l3.5-.5M13 15l2.5 6"/>',
+  drop:'<path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/>',
+  moon:'<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>',
+  trend:'<path d="M3 17l6-6 4 4 8-8M15 7h6v6"/>',
+  egg:'<path d="M12 3c4 0 7 5.5 7 10.5a7 7 0 0 1-14 0C5 8.5 8 3 12 3z"/>',
+  ban:'<circle cx="12" cy="12" r="9"/><path d="M5.7 5.7l12.6 12.6"/>',
+  chart:'<path d="M4 20V11M10 20V5M16 20v-6M2 20h20"/>',
+  clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  wind:'<path d="M3 8h10a3 3 0 1 0-3-3M3 12h15a3 3 0 1 1-3 3M3 16h8"/>',
+  kit:'<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5h6v2M12 11v5M9.5 13.5h5"/>',
+  calendar:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+  target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>',
+  alert:'<path d="M12 3l9.5 17h-19z"/><path d="M12 10v4M12 17.5h.01"/>',
+  star:'<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>',
+};
+const Icon = ({n,size=18,color=C.accent}) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{flexShrink:0,display:"block"}} dangerouslySetInnerHTML={{__html:ICONS[n]}}/>
+);
 
 const weekMenu = [
   {day:"Segunda",meals:[
@@ -68,7 +93,7 @@ const weekMenu = [
   {day:"Sábado",meals:[
     {time:"08:00",name:"Café da manhã",items:["Omelete caprichado (4 ovos, tomate, cebola)","2 fatias pão integral","Suco de laranja natural (200ml)"]},
     {time:"11:00",name:"Lanche",items:["Mix de frutas com granola","Iogurte grego"]},
-    {time:"13:30",name:"Almoço livre",items:["⭐ Refeição livre controlada","Ex: churrasco + salada","Evite bebida alcoólica em excesso"]},
+    {time:"13:30",name:"Almoço livre",items:["Refeição livre controlada","Ex: churrasco + salada","Evite bebida alcoólica em excesso"]},
     {time:"19:00",name:"Jantar leve",items:["Sopa de legumes com frango","1 fatia pão integral"]},
   ]},
   {day:"Domingo",meals:[
@@ -79,12 +104,12 @@ const weekMenu = [
 ];
 
 const tips = [
-  {icon:"💧",title:"Hidratação",text:"3–3,5 litros de água/dia. Essencial para metabolismo e performance."},
-  {icon:"😴",title:"Sono",text:"7–9h de sono. É onde acontece 70% da recuperação muscular e regulação do cortisol (o hormônio da barriga)."},
-  {icon:"⏱️",title:"Progressão",text:"Aumente carga ou repetições a cada 2 semanas. Sem progressão = sem resultado."},
-  {icon:"🧬",title:"Proteína",text:"Alvo mínimo: 160–175g/dia. Para você (100kg), isso é crucial para preservar músculo enquanto perde gordura."},
-  {icon:"🚫",title:"Evite",text:"Açúcar refinado, ultra-processados, álcool em excesso e jejum extremo (corta músculo e aumenta cortisol)."},
-  {icon:"📊",title:"Progresso",text:"Meça cintura toda semana, peso na sexta de manhã em jejum. Tire foto do espelho a cada 4 semanas."},
+  {icon:"drop",title:"Hidratação",text:"3–3,5 litros de água/dia. Essencial para metabolismo e performance."},
+  {icon:"moon",title:"Sono",text:"7–9h de sono. É onde acontece 70% da recuperação muscular e regulação do cortisol (o hormônio da barriga)."},
+  {icon:"trend",title:"Progressão",text:"Aumente carga ou repetições a cada 2 semanas. Sem progressão = sem resultado."},
+  {icon:"egg",title:"Proteína",text:"Alvo mínimo: 160–175g/dia. Para você (100kg), isso é crucial para preservar músculo enquanto perde gordura."},
+  {icon:"ban",title:"Evite",text:"Açúcar refinado, ultra-processados, álcool em excesso e jejum extremo (corta músculo e aumenta cortisol)."},
+  {icon:"chart",title:"Progresso",text:"Meça cintura toda semana, peso na sexta de manhã em jejum. Tire foto do espelho a cada 4 semanas."},
 ];
 
 // Desenhos dos exercícios: máquina em cinza, corpo e movimento na cor do grupo (.fig-accent).
@@ -308,23 +333,23 @@ const EX_BRACOS = [
 // Treinos A/B. Cada item marcado vale só para a data de hoje; o treino entra no histórico
 // (e na contagem da semana) quando todos os itens do dia estão marcados.
 const TREINOS = {
-  bracos: { nome:"Braços e Tronco", emoji:"💪", key:"treino-bracos-tronco", sub:"3 séries de 10-12 reps", items:[
-    {id:"esteira", name:"Esteira 15 min", meta:"No começo, ritmo leve a moderado", emoji:"🏃"},
+  bracos: { nome:"Braços e Tronco" key:"treino-bracos-tronco", sub:"3 séries de 10-12 reps", items:[
+    {id:"esteira", name:"Esteira 15 min", meta:"No começo, ritmo leve a moderado", icon:"treadmill"},
     ...EX_BRACOS.map(e=>({...e, id:"ex"+e.n})),
-    {id:"caminhada", name:"Caminhada 20-30 min", meta:"Ritmo moderado, consegue conversar", emoji:"🚶"},
+    {id:"caminhada", name:"Caminhada 20-30 min", meta:"Ritmo moderado, consegue conversar", icon:"walk"},
   ]},
-  pernas: { nome:"Pernas", emoji:"🦵", key:"treino-pernas", sub:"3 séries de 12-15 reps", items:[
-    {id:"esteira", name:"Esteira 15 min", meta:"No começo, ritmo leve a moderado", emoji:"🏃"},
+  pernas: { nome:"Pernas" key:"treino-pernas", sub:"3 séries de 12-15 reps", items:[
+    {id:"esteira", name:"Esteira 15 min", meta:"No começo, ritmo leve a moderado", icon:"treadmill"},
     ...EX_PERNAS.map(e=>({...e, id:"ex"+e.n})),
-    {id:"caminhada", name:"Caminhada 20-30 min", meta:"Ritmo moderado, consegue conversar", emoji:"🚶"},
+    {id:"caminhada", name:"Caminhada 20-30 min", meta:"Ritmo moderado, consegue conversar", icon:"walk"},
   ]},
 };
 
 const DICAS_TREINO = [
-  "🕑 Treinar 2-3h após refeição grande",
-  "🌬️ Soltar o ar no esforço, sem prender",
-  "💊 Levar a bombinha de resgate",
-  "📈 Fez 12 reps nas 3 séries? Suba 2-5% a carga",
+  ["clock","Treinar 2-3h após refeição grande"],
+  ["wind","Soltar o ar no esforço, sem prender"],
+  ["kit","Levar a bombinha de resgate"],
+  ["trend","Fez 12 reps nas 3 séries? Suba 2-5% a carga"],
 ];
 
 const pad2 = n => (n<10?"0":"")+n;
@@ -371,14 +396,14 @@ function App() {
   };
 
   return (
-    <div style={{minHeight:"100vh",background:C.bg,color:C.text,fontFamily:"'Segoe UI',system-ui,sans-serif",maxWidth:480,margin:"0 auto",paddingBottom:80,position:"relative"}}>
+    <div style={{minHeight:"100vh",background:C.bg,color:C.text,fontFamily:"'Figtree',system-ui,-apple-system,'Segoe UI',sans-serif",maxWidth:480,margin:"0 auto",paddingBottom:80,position:"relative"}}>
 
-      {toast&&<div style={{position:"fixed",top:20,left:"50%",transform:"translateX(-50%)",background:C.green,color:"#fff",borderRadius:12,padding:"10px 20px",fontWeight:700,fontSize:14,zIndex:999,boxShadow:"0 4px 20px rgba(34,197,94,0.4)",whiteSpace:"nowrap"}}>🎉 Treino concluído! Mandou bem!</div>}
+      {toast&&<div style={{position:"fixed",top:20,left:"50%",transform:"translateX(-50%)",background:C.green,color:C.onAccent,borderRadius:12,padding:"10px 20px",fontWeight:700,fontSize:14,zIndex:999,boxShadow:"0 4px 20px rgba(127,207,168,0.35)",whiteSpace:"nowrap"}}>Treino concluído! Mandou bem!</div>}
 
       {/* Header */}
-      <div style={{background:"linear-gradient(135deg,#1a1d27 0%,#0f1117 100%)",borderBottom:`1px solid ${C.border}`,padding:"20px 16px 16px",position:"sticky",top:0,zIndex:50}}>
+      <div style={{background:C.bg,borderBottom:`1px solid ${C.border}`,padding:"20px 16px 16px",position:"sticky",top:0,zIndex:50}}>
         <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:4}}>
-          <div style={{width:36,height:36,borderRadius:10,background:`linear-gradient(135deg,${C.accent},${C.aLight})`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:18}}>🏋️</div>
+          <div style={{width:36,height:36,borderRadius:10,background:C.accent,display:"flex",alignItems:"center",justifyContent:"center"}}><Icon n="dumbbell" size={22} color={C.onAccent}/></div>
           <div style={{flex:1}}>
             <div style={{fontWeight:700,fontSize:16}}>Plano 90 Dias</div>
             <div style={{color:C.muted,fontSize:11}}>41 anos · 100kg · 1,95m · Recomposição Corporal</div>
@@ -400,8 +425,8 @@ function App() {
 
       {/* Tabs */}
       <div style={{display:"flex",background:C.card,margin:"12px 16px",borderRadius:10,border:`1px solid ${C.border}`,overflow:"hidden"}}>
-        {[{k:"cardapio",l:"🥗 Cardápio"},{k:"treino",l:"💪 Treino"},{k:"dicas",l:"⭐ Dicas"}].map(t=>(
-          <button key={t.k} onClick={()=>setTab(t.k)} style={{flex:1,padding:"10px 6px",background:tab===t.k?C.accent:"transparent",color:tab===t.k?"#fff":C.muted,border:"none",cursor:"pointer",fontWeight:tab===t.k?700:400,fontSize:12}}>
+        {[{k:"cardapio",l:"Cardápio"},{k:"treino",l:"Treino"},{k:"dicas",l:"Dicas"}].map(t=>(
+          <button key={t.k} onClick={()=>setTab(t.k)} style={{flex:1,padding:"10px 6px",background:tab===t.k?C.accent:"transparent",color:tab===t.k?C.onAccent:C.muted,border:"none",cursor:"pointer",fontWeight:tab===t.k?700:400,fontSize:12}}>
             {t.l}
           </button>
         ))}
@@ -411,7 +436,7 @@ function App() {
       {tab==="cardapio"&&(
         <div style={{display:"flex",gap:6,padding:"0 16px 12px",overflowX:"auto",scrollbarWidth:"none"}}>
           {labels.map((d,i)=>(
-            <button key={d} onClick={()=>{setDay(i);setExMeal(null);}} style={{flexShrink:0,padding:"6px 12px",borderRadius:20,border:`1px solid ${day===i?C.accent:C.border}`,background:day===i?C.accent:C.card,color:day===i?"#fff":C.muted,fontSize:12,fontWeight:600,cursor:"pointer"}}>
+            <button key={d} onClick={()=>{setDay(i);setExMeal(null);}} style={{flexShrink:0,padding:"6px 12px",borderRadius:20,border:`1px solid ${day===i?C.accent:C.border}`,background:day===i?C.accent:C.card,color:day===i?C.onAccent:C.muted,fontSize:12,fontWeight:600,cursor:"pointer"}}>
               {d}
             </button>
           ))}
@@ -426,7 +451,7 @@ function App() {
             <div key={i} onClick={()=>setExMeal(exMeal===i?null:i)} style={{background:C.card,border:`1px solid ${exMeal===i?C.accent:C.border}`,borderRadius:12,marginBottom:8,overflow:"hidden",cursor:"pointer"}}>
               <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"12px 14px"}}>
                 <div style={{display:"flex",alignItems:"center",gap:10}}>
-                  <div style={{background:exMeal===i?C.accent:"#2a2d3a",borderRadius:6,padding:"3px 7px",fontSize:11,fontWeight:600,color:exMeal===i?"#fff":C.dim}}>{meal.time}</div>
+                  <div style={{background:exMeal===i?C.accent:C.track,borderRadius:6,padding:"3px 7px",fontSize:11,fontWeight:600,color:exMeal===i?C.onAccent:C.dim}}>{meal.time}</div>
                   <div style={{fontWeight:600,fontSize:14}}>{meal.name}</div>
                 </div>
                 <div style={{color:C.dim}}>{exMeal===i?"▲":"▼"}</div>
@@ -444,8 +469,8 @@ function App() {
             </div>
           ))}
           {day===5&&(
-            <div style={{background:"#1a1d27",border:`1px solid ${C.accent}44`,borderRadius:10,padding:12}}>
-              <div style={{color:C.accent,fontWeight:700,fontSize:12,marginBottom:4}}>⭐ REFEED SEMANAL</div>
+            <div style={{background:C.card,border:`1px solid ${C.accent}44`,borderRadius:10,padding:12}}>
+              <div style={{color:C.accent,fontWeight:700,fontSize:12,marginBottom:4}}>REFEED SEMANAL</div>
               <div style={{color:C.muted,fontSize:12,lineHeight:1.6}}>Sábado é seu dia de maior flexibilidade. Uma refeição livre ajuda na adesão e pode auxiliar na regulação hormonal (leptina). Não precisa ser perfeito, mas evite exageros.</div>
             </div>
           )}
@@ -463,8 +488,8 @@ function App() {
             {Object.entries(TREINOS).map(([k,w])=>{
               const on=sel===k, dn=hist[k].includes(today);
               return(
-                <button key={k} onClick={()=>{setSel(k);setOpen(null);}} style={{flex:1,padding:"10px 8px",borderRadius:10,border:`1px solid ${on?C.accent:dn?C.green:C.border}`,background:on?C.accent:dn?C.green+"22":C.card,color:on?"#fff":dn?C.green:C.muted,fontWeight:700,fontSize:13,cursor:"pointer"}}>
-                  {dn&&"✓ "}{w.emoji} {w.nome}
+                <button key={k} onClick={()=>{setSel(k);setOpen(null);}} style={{flex:1,padding:"10px 8px",borderRadius:10,border:`1px solid ${on?C.accent:dn?C.green:C.border}`,background:on?C.accent:dn?C.green+"22":C.card,color:on?C.onAccent:dn?C.green:C.muted,fontWeight:700,fontSize:13,cursor:"pointer"}}>
+                  {dn&&"✓ "}{w.nome}
                 </button>
               );
             })}
@@ -472,7 +497,6 @@ function App() {
 
           {total===0?(
             <div style={{background:C.card,border:`1px dashed ${C.border}`,borderRadius:12,padding:"28px 16px",textAlign:"center"}}>
-              <div style={{fontSize:28,marginBottom:8}}>{t.emoji}</div>
               <div style={{fontWeight:700,fontSize:14}}>Treino de {t.nome.toLowerCase()} ainda sem exercícios</div>
               <div style={{color:C.muted,fontSize:12,marginTop:4}}>Os exercícios entram aqui assim que forem definidos.</div>
             </div>
@@ -492,7 +516,7 @@ function App() {
                 <div style={{color:C.dim,fontSize:10}}>itens</div>
               </div>
             </div>
-            <div style={{background:"#2a2d3a",borderRadius:6,height:6,overflow:"hidden",marginBottom:10}}>
+            <div style={{background:C.track,borderRadius:6,height:6,overflow:"hidden",marginBottom:10}}>
               <div style={{background:complete?C.green:C.accent,height:"100%",borderRadius:6,width:`${done/total*100}%`,transition:"width 0.3s ease"}}/>
             </div>
             <button onClick={()=>toggleAll(sel)} style={{width:"100%",padding:"8px",borderRadius:8,border:`1.5px solid ${complete?C.green:C.accent}`,background:complete?C.green+"22":"transparent",color:complete?C.green:C.accent,fontWeight:700,fontSize:13,cursor:"pointer"}}>
@@ -513,10 +537,10 @@ function App() {
               <div key={it.id} style={{background:C.card,border:`1px solid ${isOpen?gc:dn?C.green+"55":C.border}`,borderRadius:10,marginBottom:8,overflow:"hidden"}}>
                 <div style={{display:"flex",alignItems:"center",padding:"10px 12px",gap:10}}>
                   <button role="checkbox" aria-checked={dn} aria-label={`Feito: ${it.name}`} onClick={()=>toggleItem(sel,it.id)} style={{flexShrink:0,width:26,height:26,borderRadius:7,border:`2px solid ${dn?C.green:C.dim}`,background:dn?C.green:"transparent",display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",padding:0,transition:"all 0.15s"}}>
-                    {dn&&<span style={{color:"#fff",fontSize:14,lineHeight:1}}>✓</span>}
+                    {dn&&<span style={{color:C.onAccent,fontSize:14,lineHeight:1}}>✓</span>}
                   </button>
-                  <div onClick={toggleOpen} style={{flexShrink:0,width:36,height:36,borderRadius:"50%",background:isEx?gc+"22":"#2a2d3a",color:isEx?gc:C.text,display:"flex",alignItems:"center",justifyContent:"center",fontWeight:700,fontSize:isEx?15:18,opacity:dn?0.5:1,cursor:isEx?"pointer":"default"}}>
-                    {isEx?it.n:it.emoji}
+                  <div onClick={toggleOpen} style={{flexShrink:0,width:36,height:36,borderRadius:"50%",background:isEx?gc+"22":C.track,color:isEx?gc:C.text,display:"flex",alignItems:"center",justifyContent:"center",fontWeight:700,fontSize:isEx?15:18,opacity:dn?0.5:1,cursor:isEx?"pointer":"default"}}>
+                    {isEx?it.n:<Icon n={it.icon} size={18} color={dn?C.dim:C.accent}/>}
                   </div>
                   <div onClick={toggleOpen} style={{flex:1,minWidth:0,cursor:isEx?"pointer":"default"}}>
                     <div style={{fontWeight:600,fontSize:14,color:dn?C.dim:C.text,textDecoration:dn?"line-through":"none",lineHeight:1.3}}>{it.name}</div>
@@ -546,7 +570,7 @@ function App() {
           })}
 
           <div style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:10,padding:12,marginTop:4}}>
-            {DICAS_TREINO.map((d,k)=><div key={k} style={{color:C.muted,fontSize:12,lineHeight:1.9}}>{d}</div>)}
+            {DICAS_TREINO.map(([ic,d],k)=><div key={k} style={{display:"flex",alignItems:"center",gap:10,color:C.muted,fontSize:13,padding:"4px 0"}}><Icon n={ic} size={17}/>{d}</div>)}
           </div>
           </>
           )}
@@ -558,13 +582,13 @@ function App() {
       {tab==="dicas"&&(
         <div style={{padding:"0 16px"}}>
           <div style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:12,padding:"12px 14px",marginBottom:14}}>
-            <div style={{fontWeight:700,fontSize:13,marginBottom:8}}>📅 Semana atual</div>
+            <div style={{display:"flex",alignItems:"center",gap:8,fontWeight:700,fontSize:13,marginBottom:8}}><Icon n="calendar" size={16}/>Semana atual</div>
             <div style={{display:"flex",gap:6,justifyContent:"space-between"}}>
               {week.map((k,i)=>{
                 const n=doneOn(k), isToday=k===today;
                 return(
                   <div key={k} style={{flex:1,textAlign:"center"}}>
-                    <div style={{width:"100%",aspectRatio:"1",borderRadius:6,background:n?C.green+"33":"#2a2d3a",border:`1.5px solid ${n?C.green:isToday?C.accent:C.border}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,marginBottom:4}}>
+                    <div style={{width:"100%",aspectRatio:"1",borderRadius:6,background:n?C.green+"33":C.track,border:`1.5px solid ${n?C.green:isToday?C.accent:C.border}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,marginBottom:4}}>
                       {n?<span style={{color:C.green}}>{n>1?`✓${n}`:"✓"}</span>:<span style={{color:C.dim,fontSize:10}}>—</span>}
                     </div>
                     <div style={{fontSize:9,color:isToday?C.accent:C.dim}}>{labels[i]}</div>
@@ -575,8 +599,8 @@ function App() {
             <div style={{color:C.muted,fontSize:11,marginTop:8}}>{weekCount} {weekCount===1?"treino concluído":"treinos concluídos"} esta semana</div>
           </div>
 
-          <div style={{background:`linear-gradient(135deg,${C.accent}22,${C.purple}11)`,border:`1px solid ${C.accent}44`,borderRadius:14,padding:16,marginBottom:14}}>
-            <div style={{fontWeight:800,fontSize:16,marginBottom:6}}>🎯 Seu Objetivo</div>
+          <div style={{background:C.card,border:`1px solid ${C.accent}44`,borderRadius:14,padding:16,marginBottom:14}}>
+            <div style={{display:"flex",alignItems:"center",gap:8,fontWeight:800,fontSize:16,marginBottom:6}}><Icon n="target"/>Seu Objetivo</div>
             <div style={{color:C.muted,fontSize:13,lineHeight:1.7}}><strong style={{color:C.text}}>Déficit calórico moderado</strong> (~500 kcal/dia abaixo do gasto). Com treino de força + cardio estratégico, você pode perder <strong style={{color:C.accent}}>~1kg de gordura/semana</strong> enquanto preserva ou ganha músculo.</div>
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginTop:12}}>
               {[{l:"Meta 90 dias",v:"−8 a −12kg gordura"},{l:"Frequência",v:"5x/semana musculação"},{l:"Cardio",v:"2–3x/semana"},{l:"Revisão",v:"A cada 4 semanas"}].map(s=>(
@@ -590,7 +614,7 @@ function App() {
 
           {tips.map((tip,i)=>(
             <div key={i} style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:10,padding:"12px 14px",marginBottom:8,display:"flex",gap:12,alignItems:"flex-start"}}>
-              <div style={{fontSize:22,flexShrink:0}}>{tip.icon}</div>
+              <div style={{width:36,height:36,borderRadius:10,background:C.accent+"1a",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}><Icon n={tip.icon}/></div>
               <div>
                 <div style={{fontWeight:700,fontSize:13,marginBottom:4}}>{tip.title}</div>
                 <div style={{color:C.muted,fontSize:12,lineHeight:1.6}}>{tip.text}</div>
@@ -599,7 +623,7 @@ function App() {
           ))}
 
           <div style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:10,padding:14,marginTop:4,marginBottom:4}}>
-            <div style={{fontWeight:700,fontSize:13,marginBottom:8,color:C.accent}}>⚠️ Consulte um profissional</div>
+            <div style={{display:"flex",alignItems:"center",gap:8,fontWeight:700,fontSize:13,marginBottom:8,color:C.accent}}><Icon n="alert" size={16}/>Consulte um profissional</div>
             <div style={{color:C.muted,fontSize:12,lineHeight:1.6}}>Este plano é um guia geral. Para resultados seguros e personalizados, consulte um <strong style={{color:C.text}}>nutrólogo ou nutricionista</strong> e um <strong style={{color:C.text}}>educador físico</strong>. Exames de sangue periódicos (a cada 6 meses) são recomendados.</div>
           </div>
         </div>
