@@ -499,6 +499,24 @@ function App() {
         const past=hist[sel].filter(d=>d!==today);
         return (
         <div style={{padding:"0 16px"}}>
+          <div style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:12,padding:"12px 14px",marginBottom:12}}>
+            <div style={{display:"flex",alignItems:"center",gap:8,fontWeight:700,fontSize:13,marginBottom:8}}><Icon n="calendar" size={16}/>Semana atual</div>
+            <div style={{display:"flex",gap:6,justifyContent:"space-between"}}>
+              {week.map((k,i)=>{
+                const n=doneOn(k), isToday=k===today;
+                return(
+                  <div key={k} style={{flex:1,textAlign:"center"}}>
+                    <div style={{width:"100%",aspectRatio:"1",borderRadius:6,background:n?C.green+"33":C.track,border:`1.5px solid ${n?C.green:isToday?C.accent:C.border}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,marginBottom:4}}>
+                      {n?<span style={{color:C.green}}>{n>1?`✓${n}`:"✓"}</span>:<span style={{color:C.dim,fontSize:10}}>—</span>}
+                    </div>
+                    <div style={{fontSize:9,color:isToday?C.accent:C.dim}}>{labels[i]}</div>
+                  </div>
+                );
+              })}
+            </div>
+            <div style={{color:C.muted,fontSize:11,marginTop:8}}>{weekCount} {weekCount===1?"treino concluído":"treinos concluídos"} esta semana</div>
+          </div>
+
           <div style={{display:"flex",gap:8,marginBottom:12}}>
             {Object.entries(TREINOS).map(([k,w])=>{
               const on=sel===k, dn=hist[k].includes(today);
@@ -599,24 +617,6 @@ function App() {
       {/* DICAS */}
       {tab==="dicas"&&(
         <div style={{padding:"0 16px"}}>
-          <div style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:12,padding:"12px 14px",marginBottom:14}}>
-            <div style={{display:"flex",alignItems:"center",gap:8,fontWeight:700,fontSize:13,marginBottom:8}}><Icon n="calendar" size={16}/>Semana atual</div>
-            <div style={{display:"flex",gap:6,justifyContent:"space-between"}}>
-              {week.map((k,i)=>{
-                const n=doneOn(k), isToday=k===today;
-                return(
-                  <div key={k} style={{flex:1,textAlign:"center"}}>
-                    <div style={{width:"100%",aspectRatio:"1",borderRadius:6,background:n?C.green+"33":C.track,border:`1.5px solid ${n?C.green:isToday?C.accent:C.border}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,marginBottom:4}}>
-                      {n?<span style={{color:C.green}}>{n>1?`✓${n}`:"✓"}</span>:<span style={{color:C.dim,fontSize:10}}>—</span>}
-                    </div>
-                    <div style={{fontSize:9,color:isToday?C.accent:C.dim}}>{labels[i]}</div>
-                  </div>
-                );
-              })}
-            </div>
-            <div style={{color:C.muted,fontSize:11,marginTop:8}}>{weekCount} {weekCount===1?"treino concluído":"treinos concluídos"} esta semana</div>
-          </div>
-
           <div style={{background:C.card,border:`1px solid ${C.accent}44`,borderRadius:14,padding:16,marginBottom:14}}>
             <div style={{display:"flex",alignItems:"center",gap:8,fontWeight:800,fontSize:16,marginBottom:6}}><Icon n="target"/>Seu Objetivo</div>
             <div style={{color:C.muted,fontSize:13,lineHeight:1.7}}><strong style={{color:C.text}}>Déficit calórico moderado</strong> (~500 kcal/dia abaixo do gasto). Com treino de força + cardio estratégico, você pode perder <strong style={{color:C.accent}}>~1kg de gordura/semana</strong> enquanto preserva ou ganha músculo.</div>
