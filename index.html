@@ -265,6 +265,16 @@ var DRAW = {
     '<path d="M134 122V102" ' + A + '/>',
     'Ponte: deitado de costas, sobe o quadril até alinhar ombros, quadril e joelhos', '0 60 240 84'),
 
+  twist: svg(
+    '<rect x="20" y="128" width="200" height="8" rx="4" ' + M + ' stroke-width="2" opacity=".6"/>' +
+    HEAD(86, 72, 8) +
+    '<path d="M112 124L92 86" ' + B + '/>' +
+    '<path d="M112 124L146 98L172 110" ' + B + '/>' +
+    '<path d="M94 92L122 100" ' + B + ' stroke-width="4"/>' +
+    '<circle cx="128" cy="98" r="8" ' + M + ' stroke-width="3"/>' +
+    '<path d="M104 64Q128 48 152 64" class="fig-accent" stroke="currentColor" stroke-width="2.5" marker-start="url(#ah)" marker-end="url(#ah)"/>',
+    'Oblíquo twist: sentado com o tronco inclinado para trás, gira a bola de um lado ao outro', '0 40 240 104'),
+
   panturrilha: svg(
     FLOOR +
     '<rect x="172" y="10" width="24" height="128" rx="3" ' + M + '/>' +
@@ -280,24 +290,29 @@ var DRAW = {
     'Panturrilha na máquina: ombros sob as almofadas, sobe na ponta dos pés')
 };
 
+// Core no início, depois as máquinas: das que pedem mais (leg press) às menores (panturrilha).
 const EX_PERNAS = [
-  { n: 1, t: 'g', name: 'Leg press 45°', meta: '3x12 · descanso 60-90s · novo', draw: 'legpress',
-    setup: 'Costas e quadril bem apoiados no encosto. Pés no meio da plataforma, na largura dos ombros.',
-    steps: ['Destrave a plataforma e desça até os joelhos chegarem perto de 90°.', 'Empurre pelos calcanhares até quase estender as pernas, sem travar os joelhos.', 'Não deixe o quadril descolar do banco na descida.'],
-    breath: 'Solte o ar ao empurrar. Exercício novo: comece leve.' },
-  { n: 2, t: 'g', name: 'Cadeira extensora', meta: '3x12 · descanso 60s', draw: 'extensora',
-    setup: 'Seu ajuste: alavanca 1, perna 4, assento 6, carga 35. Joelho alinhado com o eixo da máquina.',
-    steps: ['Costas no encosto, mãos nas alças laterais.', 'Estenda os joelhos até as pernas ficarem retas.', 'Segure 1s no alto e desça devagar.'],
-    breath: 'Solte o ar ao subir.' },
-  { n: 3, t: 'g', name: 'Cadeira flexora', meta: '3x12 · descanso 60s', draw: 'flexora',
-    setup: 'Joelho alinhado com o eixo. Rolo logo acima do calcanhar e apoio da coxa bem firme.',
-    steps: ['Comece com as pernas estendidas.', 'Puxe o rolo para baixo e para trás dobrando os joelhos.', 'Volte devagar, sem deixar o peso bater.'],
-    breath: 'Solte o ar ao puxar.' },
-  { n: 4, t: 'p', name: 'Ponte (elevação de quadril)', meta: '3x15 · descanso 45-60s', draw: 'ponte',
+  { n: 1, sec: 'Core (no início)', t: 'p', name: 'Ponte (elevação de quadril)', meta: '3x15 · descanso 45-60s', draw: 'ponte',
     setup: 'No colchonete, barriga para cima, joelhos dobrados e pés na largura do quadril.',
     steps: ['Aperte o glúteo e suba o quadril até alinhar ombros, quadril e joelhos.', 'Segure 2s no alto.', 'Desça devagar sem relaxar totalmente no chão.'],
     breath: 'Solte o ar ao subir.' },
-  { n: 5, t: 'p', name: 'Panturrilha na máquina', meta: '3x15 · descanso 45s', draw: 'panturrilha',
+  { n: 2, t: 'p', name: 'Oblíquo twist', meta: '3x10 por lado · descanso 45s', draw: 'twist',
+    setup: 'No colchonete, sentado, joelhos dobrados. Segure uma bola ou anilha leve junto ao peito.',
+    steps: ['Incline o tronco para trás uns 45°, com a coluna reta.', 'Gire o tronco levando a bola de um lado ao outro, devagar.', 'Começando: deixe os pés apoiados no chão.'],
+    breath: 'Solte o ar a cada giro. Se o refluxo incomodar, faça com os pés no chão e menos inclinação.' },
+  { n: 3, sec: 'Pernas', t: 'g', name: 'Leg press 45°', meta: '3x12 · descanso 60-90s · novo', draw: 'legpress',
+    setup: 'Costas e quadril bem apoiados no encosto. Pés no meio da plataforma, na largura dos ombros.',
+    steps: ['Destrave a plataforma e desça até os joelhos chegarem perto de 90°.', 'Empurre pelos calcanhares até quase estender as pernas, sem travar os joelhos.', 'Não deixe o quadril descolar do banco na descida.'],
+    breath: 'Solte o ar ao empurrar. Exercício novo: comece leve.' },
+  { n: 4, t: 'g', name: 'Cadeira extensora', meta: '3x12 · descanso 60s', draw: 'extensora',
+    setup: 'Seu ajuste: alavanca 1, perna 4, assento 6, carga 35. Joelho alinhado com o eixo da máquina.',
+    steps: ['Costas no encosto, mãos nas alças laterais.', 'Estenda os joelhos até as pernas ficarem retas.', 'Segure 1s no alto e desça devagar.'],
+    breath: 'Solte o ar ao subir.' },
+  { n: 5, t: 'g', name: 'Cadeira flexora', meta: '3x12 · descanso 60s', draw: 'flexora',
+    setup: 'Joelho alinhado com o eixo. Rolo logo acima do calcanhar e apoio da coxa bem firme.',
+    steps: ['Comece com as pernas estendidas.', 'Puxe o rolo para baixo e para trás dobrando os joelhos.', 'Volte devagar, sem deixar o peso bater.'],
+    breath: 'Solte o ar ao puxar.' },
+  { n: 6, t: 'g', name: 'Panturrilha na máquina', meta: '3x15 · descanso 45s', draw: 'panturrilha',
     setup: 'Máquina 8 (tríceps sural). Ombros sob as almofadas, só a ponta dos pés no degrau.',
     steps: ['Deixe o calcanhar descer abaixo do degrau para alongar.', 'Suba na ponta dos pés o máximo que der.', 'Segure 1s no alto e desça devagar.'],
     breath: 'Solte o ar ao subir.' }
@@ -529,7 +544,9 @@ function App() {
             )}
           </div>
 
-          {t.items.map(it=>{
+          {t.items.map(it=>(<React.Fragment key={it.id}>
+            {it.sec&&<div style={{color:C.muted,fontSize:11,fontWeight:700,letterSpacing:1.2,textTransform:"uppercase",margin:"14px 2px 8px"}}>{it.sec}</div>}
+            {(()=>{
             const dn=!!c[it.id], isEx=!!it.n, isOpen=open===it.id;
             const gc=it.t==="p"?C.purple:C.green;
             const toggleOpen=()=>{ if(isEx) setOpen(isOpen?null:it.id); };
@@ -567,7 +584,8 @@ function App() {
                 )}
               </div>
             );
-          })}
+          })()}
+          </React.Fragment>))}
 
           <div style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:10,padding:12,marginTop:4}}>
             {DICAS_TREINO.map(([ic,d],k)=><div key={k} style={{display:"flex",alignItems:"center",gap:10,color:C.muted,fontSize:13,padding:"4px 0"}}><Icon n={ic} size={17}/>{d}</div>)}
