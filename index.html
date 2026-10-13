@@ -180,8 +180,103 @@ var DRAW = {
     '<path d="M130 44L134 74L160 92" ' + B + ' stroke-width="5"/>' +
     '<path d="M154 86L168 96" ' + M + ' stroke-width="5"/>' +
     '<path d="M174 58V96" ' + A + '/>',
-    'Tríceps pulley: cotovelo colado ao corpo, empurra o cabo para baixo')
+    'Tríceps pulley: cotovelo colado ao corpo, empurra o cabo para baixo'),
+
+  legpress: svg(
+    FLOOR +
+    '<path d="M20 132H222" ' + M + '/>' +
+    '<path d="M100 122L212 30M112 130L222 40" ' + M + ' stroke-width="2.5"/>' +
+    '<path d="M40 118L64 70" ' + M + ' stroke-width="9" opacity=".6"/>' +
+    '<path d="M40 120H100M70 120V132" ' + M + ' stroke-width="7" opacity=".6"/>' +
+    '<path d="M150 46L178 82" ' + M + ' stroke-width="9"/>' +
+    HEAD(60, 60) +
+    '<path d="M66 74L86 114" ' + B + '/>' +
+    '<path d="M86 114L118 74L160 66" ' + B + '/>' +
+    '<path d="M184 94L206 76" ' + A + '/>',
+    'Leg press 45°: costas apoiadas, empurra a plataforma pela diagonal'),
+
+  extensora: svg(
+    FLOOR +
+    '<rect x="14" y="30" width="26" height="108" rx="4" ' + M + '/>' +
+    '<path d="M20 52h14M20 64h14M20 76h14M20 88h14" ' + M + ' stroke-width="2"/>' +
+    '<path d="M40 40L122 100" ' + M + ' stroke-width="2"/>' +
+    '<path d="M72 100L78 46" ' + M + ' stroke-width="9" opacity=".6"/>' +
+    '<path d="M70 106H124M100 110V138" ' + M + ' stroke-width="7" opacity=".6"/>' +
+    '<path d="M126 104L130 136" ' + G + '/>' +
+    HEAD(90, 40) +
+    '<path d="M88 54L92 100L126 102L172 86" ' + B + '/>' +
+    '<path d="M90 60L104 100" ' + B + ' stroke-width="4"/>' +
+    '<path d="M126 104L164 92" ' + M + '/>' +
+    '<circle cx="168" cy="92" r="6" ' + M + ' stroke-width="3"/>' +
+    '<circle cx="126" cy="104" r="4" fill="currentColor" stroke="none"/>' +
+    '<path d="M150 134Q176 124 182 100" ' + A + '/>',
+    'Cadeira extensora: sentado, estende os joelhos levantando o rolo'),
+
+  flexora: svg(
+    FLOOR +
+    '<rect x="14" y="30" width="26" height="108" rx="4" ' + M + '/>' +
+    '<path d="M20 52h14M20 64h14M20 76h14M20 88h14" ' + M + ' stroke-width="2"/>' +
+    '<path d="M40 40L122 100" ' + M + ' stroke-width="2"/>' +
+    '<path d="M72 100L78 46" ' + M + ' stroke-width="9" opacity=".6"/>' +
+    '<path d="M70 106H124M100 110V138" ' + M + ' stroke-width="7" opacity=".6"/>' +
+    '<path d="M126 102L174 92" ' + G + '/>' +
+    HEAD(90, 40) +
+    '<path d="M88 54L92 100L126 102L140 134" ' + B + '/>' +
+    '<path d="M90 60L104 100" ' + B + ' stroke-width="4"/>' +
+    '<path d="M98 88L126 90" ' + M + ' stroke-width="7" opacity=".6"/>' +
+    '<path d="M126 104L146 124" ' + M + '/>' +
+    '<circle cx="148" cy="128" r="6" ' + M + ' stroke-width="3"/>' +
+    '<circle cx="126" cy="104" r="4" fill="currentColor" stroke="none"/>' +
+    '<path d="M186 98Q186 122 166 132" ' + A + '/>',
+    'Cadeira flexora: sentado, puxa o rolo para baixo dobrando os joelhos'),
+
+  ponte: svg(
+    '<rect x="20" y="128" width="200" height="8" rx="4" ' + M + ' stroke-width="2" opacity=".6"/>' +
+    '<path d="M56 125L118 124" ' + G + '/>' +
+    HEAD(40, 119, 8) +
+    '<path d="M54 124L120 96L150 86L160 124" ' + B + '/>' +
+    '<path d="M160 124H172" ' + B + ' stroke-width="5"/>' +
+    '<path d="M58 125H98" ' + B + ' stroke-width="4"/>' +
+    '<path d="M134 122V102" ' + A + '/>',
+    'Ponte: deitado de costas, sobe o quadril até alinhar ombros, quadril e joelhos', '0 60 240 84'),
+
+  panturrilha: svg(
+    FLOOR +
+    '<rect x="172" y="10" width="24" height="128" rx="3" ' + M + '/>' +
+    '<path d="M134 32H172" ' + M + '/>' +
+    '<path d="M108 34H138" ' + M + ' stroke-width="8" opacity=".6"/>' +
+    '<rect x="100" y="126" width="40" height="12" rx="2" ' + M + '/>' +
+    HEAD(120, 22) +
+    '<path d="M120 38L121 88L120 114" ' + B + '/>' +
+    '<path d="M120 114L132 124" ' + B + ' stroke-width="5"/>' +
+    '<path d="M121 44L134 40" ' + B + ' stroke-width="4"/>' +
+    '<path d="M118 120L118 132" ' + G + '/>' +
+    '<path d="M96 126V102" ' + A + '/>',
+    'Panturrilha na máquina: ombros sob as almofadas, sobe na ponta dos pés')
 };
+
+const EX_PERNAS = [
+  { n: 1, t: 'g', name: 'Leg press 45°', meta: '3x12 · descanso 60-90s · novo', draw: 'legpress',
+    setup: 'Costas e quadril bem apoiados no encosto. Pés no meio da plataforma, na largura dos ombros.',
+    steps: ['Destrave a plataforma e desça até os joelhos chegarem perto de 90°.', 'Empurre pelos calcanhares até quase estender as pernas, sem travar os joelhos.', 'Não deixe o quadril descolar do banco na descida.'],
+    breath: 'Solte o ar ao empurrar. Exercício novo: comece leve.' },
+  { n: 2, t: 'g', name: 'Cadeira extensora', meta: '3x12 · descanso 60s', draw: 'extensora',
+    setup: 'Seu ajuste: alavanca 1, perna 4, assento 6, carga 35. Joelho alinhado com o eixo da máquina.',
+    steps: ['Costas no encosto, mãos nas alças laterais.', 'Estenda os joelhos até as pernas ficarem retas.', 'Segure 1s no alto e desça devagar.'],
+    breath: 'Solte o ar ao subir.' },
+  { n: 3, t: 'g', name: 'Cadeira flexora', meta: '3x12 · descanso 60s', draw: 'flexora',
+    setup: 'Joelho alinhado com o eixo. Rolo logo acima do calcanhar e apoio da coxa bem firme.',
+    steps: ['Comece com as pernas estendidas.', 'Puxe o rolo para baixo e para trás dobrando os joelhos.', 'Volte devagar, sem deixar o peso bater.'],
+    breath: 'Solte o ar ao puxar.' },
+  { n: 4, t: 'p', name: 'Ponte (elevação de quadril)', meta: '3x15 · descanso 45-60s', draw: 'ponte',
+    setup: 'No colchonete, barriga para cima, joelhos dobrados e pés na largura do quadril.',
+    steps: ['Aperte o glúteo e suba o quadril até alinhar ombros, quadril e joelhos.', 'Segure 2s no alto.', 'Desça devagar sem relaxar totalmente no chão.'],
+    breath: 'Solte o ar ao subir.' },
+  { n: 5, t: 'p', name: 'Panturrilha na máquina', meta: '3x15 · descanso 45s', draw: 'panturrilha',
+    setup: 'Máquina 8 (tríceps sural). Ombros sob as almofadas, só a ponta dos pés no degrau.',
+    steps: ['Deixe o calcanhar descer abaixo do degrau para alongar.', 'Suba na ponta dos pés o máximo que der.', 'Segure 1s no alto e desça devagar.'],
+    breath: 'Solte o ar ao subir.' }
+];
 
 const EX_BRACOS = [
     { n: 1, t: 'g', name: 'Supino máquina', meta: '3x12 · descanso 60-90s', icon: 'seat', draw: 'supino',
@@ -218,7 +313,11 @@ const TREINOS = {
     ...EX_BRACOS.map(e=>({...e, id:"ex"+e.n})),
     {id:"caminhada", name:"Caminhada 20-30 min", meta:"Ritmo moderado, consegue conversar", emoji:"🚶"},
   ]},
-  pernas: { nome:"Pernas", emoji:"🦵", key:"treino-pernas", sub:"", items:[] },
+  pernas: { nome:"Pernas", emoji:"🦵", key:"treino-pernas", sub:"3 séries de 12-15 reps", items:[
+    {id:"esteira", name:"Esteira 15 min", meta:"No começo, ritmo leve a moderado", emoji:"🏃"},
+    ...EX_PERNAS.map(e=>({...e, id:"ex"+e.n})),
+    {id:"caminhada", name:"Caminhada 20-30 min", meta:"Ritmo moderado, consegue conversar", emoji:"🚶"},
+  ]},
 };
 
 const DICAS_TREINO = [
