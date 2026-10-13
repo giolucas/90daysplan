@@ -12,6 +12,10 @@
   body { background: #0f1117; }
   button { font-family: inherit; }
   ::-webkit-scrollbar { display: none; }
+  :root { --g-ic: #22c55e; --p-ic: #a855f7; }
+  .fig { display: block; width: 100%; max-width: 340px; height: auto; margin: 6px auto 4px; color: #64748b; }
+  .t-g .fig-accent { color: var(--g-ic); }
+  .t-p .fig-accent { color: var(--p-ic); }
 </style>
 </head>
 <body>
@@ -24,130 +28,6 @@ const C = {
   blue:"#3b82f6",purple:"#a855f7",text:"#f1f5f9",
   muted:"#94a3b8",dim:"#64748b"
 };
-
-const Icons = {
-  barbell: (color) => (
-    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-      <rect x="2" y="16" width="4" height="4" rx="1" fill={color} opacity="0.9"/>
-      <rect x="6" y="14" width="3" height="8" rx="1" fill={color}/>
-      <rect x="9" y="17" width="18" height="2" rx="1" fill={color} opacity="0.7"/>
-      <rect x="27" y="14" width="3" height="8" rx="1" fill={color}/>
-      <rect x="30" y="16" width="4" height="4" rx="1" fill={color} opacity="0.9"/>
-    </svg>
-  ),
-  dumbbell: (color) => (
-    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-      <rect x="3" y="15" width="5" height="6" rx="2" fill={color} opacity="0.9"/>
-      <rect x="8" y="17" width="5" height="2" rx="1" fill={color} opacity="0.7"/>
-      <rect x="13" y="15" width="4" height="6" rx="2" fill={color}/>
-      <rect x="19" y="15" width="4" height="6" rx="2" fill={color}/>
-      <rect x="23" y="17" width="5" height="2" rx="1" fill={color} opacity="0.7"/>
-      <rect x="28" y="15" width="5" height="6" rx="2" fill={color} opacity="0.9"/>
-    </svg>
-  ),
-  machine: (color) => (
-    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-      <rect x="6" y="6" width="24" height="20" rx="3" stroke={color} strokeWidth="2" fill="none"/>
-      <rect x="10" y="10" width="16" height="8" rx="2" fill={color} opacity="0.3"/>
-      <rect x="14" y="26" width="3" height="5" rx="1" fill={color} opacity="0.7"/>
-      <rect x="19" y="26" width="3" height="5" rx="1" fill={color} opacity="0.7"/>
-      <circle cx="18" cy="14" r="3" fill={color} opacity="0.8"/>
-    </svg>
-  ),
-  cable: (color) => (
-    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-      <rect x="14" y="2" width="8" height="20" rx="2" stroke={color} strokeWidth="2" fill="none"/>
-      <path d="M18 22 Q10 28 8 34" stroke={color} strokeWidth="2" strokeLinecap="round" fill="none"/>
-      <circle cx="8" cy="34" r="2" fill={color}/>
-      <rect x="16" y="6" width="4" height="3" rx="1" fill={color} opacity="0.5"/>
-      <rect x="16" y="11" width="4" height="3" rx="1" fill={color} opacity="0.5"/>
-      <rect x="16" y="16" width="4" height="3" rx="1" fill={color} opacity="0.5"/>
-    </svg>
-  ),
-  legpress: (color) => (
-    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-      <rect x="2" y="20" width="32" height="6" rx="2" fill={color} opacity="0.3" stroke={color} strokeWidth="1.5"/>
-      <path d="M8 20 L14 8" stroke={color} strokeWidth="2.5" strokeLinecap="round"/>
-      <path d="M14 8 L22 8" stroke={color} strokeWidth="2.5" strokeLinecap="round"/>
-      <circle cx="22" cy="8" r="3" fill={color} opacity="0.8"/>
-      <rect x="4" y="26" width="5" height="8" rx="2" fill={color} opacity="0.6"/>
-    </svg>
-  ),
-  treadmill: (color) => (
-    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-      <rect x="4" y="22" width="28" height="5" rx="2" fill={color} opacity="0.4" stroke={color} strokeWidth="1.5"/>
-      <path d="M8 22 L12 10" stroke={color} strokeWidth="2" strokeLinecap="round"/>
-      <path d="M12 10 L24 10" stroke={color} strokeWidth="2"/>
-      <path d="M24 10 L28 22" stroke={color} strokeWidth="2" strokeLinecap="round"/>
-      <circle cx="8" cy="28" r="3" stroke={color} strokeWidth="1.5" fill="none"/>
-      <circle cx="28" cy="28" r="3" stroke={color} strokeWidth="1.5" fill="none"/>
-    </svg>
-  ),
-  mat: (color) => (
-    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-      <rect x="4" y="12" width="28" height="12" rx="4" fill={color} opacity="0.3" stroke={color} strokeWidth="1.5"/>
-      <path d="M8 18 L28 18" stroke={color} strokeWidth="1.5" strokeDasharray="3 2" opacity="0.6"/>
-      <path d="M4 16 Q6 12 8 16" stroke={color} strokeWidth="1.5" fill="none" opacity="0.5"/>
-      <path d="M28 16 Q30 12 32 16" stroke={color} strokeWidth="1.5" fill="none" opacity="0.5"/>
-    </svg>
-  ),
-  foam: (color) => (
-    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-      <ellipse cx="18" cy="20" rx="14" ry="8" fill={color} opacity="0.3" stroke={color} strokeWidth="1.5"/>
-      <ellipse cx="18" cy="16" rx="14" ry="8" fill={color} opacity="0.5" stroke={color} strokeWidth="1.5"/>
-      <line x1="10" y1="13" x2="10" y2="19" stroke={color} strokeWidth="1" opacity="0.5"/>
-      <line x1="14" y1="11" x2="14" y2="21" stroke={color} strokeWidth="1" opacity="0.5"/>
-      <line x1="18" y1="10" x2="18" y2="22" stroke={color} strokeWidth="1" opacity="0.5"/>
-      <line x1="22" y1="11" x2="22" y2="21" stroke={color} strokeWidth="1" opacity="0.5"/>
-      <line x1="26" y1="13" x2="26" y2="19" stroke={color} strokeWidth="1" opacity="0.5"/>
-    </svg>
-  ),
-  pullupbar: (color) => (
-    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-      <rect x="2" y="8" width="32" height="4" rx="2" fill={color} opacity="0.8"/>
-      <rect x="4" y="4" width="4" height="8" rx="2" fill={color} opacity="0.6"/>
-      <rect x="28" y="4" width="4" height="8" rx="2" fill={color} opacity="0.6"/>
-      <path d="M14 12 L14 24" stroke={color} strokeWidth="2" strokeLinecap="round" opacity="0.7"/>
-      <path d="M22 12 L22 24" stroke={color} strokeWidth="2" strokeLinecap="round" opacity="0.7"/>
-      <path d="M12 24 Q14 28 16 24" stroke={color} strokeWidth="1.5" fill="none" opacity="0.5"/>
-      <path d="M20 24 Q22 28 24 24" stroke={color} strokeWidth="1.5" fill="none" opacity="0.5"/>
-    </svg>
-  ),
-  hipthrust: (color) => (
-    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-      <rect x="2" y="24" width="12" height="8" rx="2" fill={color} opacity="0.4" stroke={color} strokeWidth="1.5"/>
-      <path d="M14 28 Q18 20 26 20" stroke={color} strokeWidth="2.5" strokeLinecap="round" fill="none"/>
-      <path d="M26 20 L32 26" stroke={color} strokeWidth="2.5" strokeLinecap="round"/>
-      <circle cx="20" cy="14" r="4" fill={color} opacity="0.7"/>
-      <rect x="16" y="19" width="8" height="3" rx="1" fill={color} opacity="0.5"/>
-    </svg>
-  ),
-  bodyweight: (color) => (
-    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-      <circle cx="18" cy="7" r="4" fill={color} opacity="0.9"/>
-      <path d="M18 11 L18 22" stroke={color} strokeWidth="2.5" strokeLinecap="round"/>
-      <path d="M18 15 L11 20" stroke={color} strokeWidth="2.5" strokeLinecap="round"/>
-      <path d="M18 15 L25 20" stroke={color} strokeWidth="2.5" strokeLinecap="round"/>
-      <path d="M18 22 L13 32" stroke={color} strokeWidth="2.5" strokeLinecap="round"/>
-      <path d="M18 22 L23 32" stroke={color} strokeWidth="2.5" strokeLinecap="round"/>
-    </svg>
-  ),
-};
-
-function getIcon(name) {
-  const n = name.toLowerCase();
-  if (n.includes("barra") && !n.includes("haltere") && !n.includes("pulley")) return "barbell";
-  if (n.includes("haltere") || n.includes("halter")) return "dumbbell";
-  if (n.includes("pulley") || n.includes("polia") || n.includes("cable")) return "cable";
-  if (n.includes("leg press") || n.includes("hack squat")) return "legpress";
-  if (n.includes("cadeira") || n.includes("máquina") || n.includes("mesa") || n.includes("peck deck") || n.includes("panturrilha")) return "machine";
-  if (n.includes("hip thrust") || n.includes("pélvica")) return "hipthrust";
-  if (n.includes("puxada") || n.includes("pullover")) return "pullupbar";
-  if (n.includes("esteira") || n.includes("elíptico") || n.includes("bicicleta")) return "treadmill";
-  if (n.includes("prancha") || n.includes("crunch") || n.includes("abdominal") || n.includes("elevação de pernas")) return "mat";
-  if (n.includes("foam roller") || n.includes("alongamento")) return "foam";
-  return "bodyweight";
-}
 
 const weekMenu = [
   {day:"Segunda",meals:[
@@ -198,58 +78,6 @@ const weekMenu = [
   ]},
 ];
 
-const workouts = [
-  {day:"Segunda",label:"PEITO + TRÍCEPS",color:"#f97316",exercises:[
-    {name:"Supino reto com barra",sets:"4x10-12",rest:"90s",tip:"Escápulas retraídas, barra desce no esterno"},
-    {name:"Supino inclinado com halteres",sets:"3x12",rest:"75s",tip:"Ângulo 30-45°, foco na parte superior"},
-    {name:"Crucifixo na máquina (peck deck)",sets:"3x15",rest:"60s",tip:"Controle o movimento de volta"},
-    {name:"Tríceps pulley corda",sets:"4x12",rest:"60s",tip:"Cotovelo fixo ao lado do corpo"},
-    {name:"Tríceps testa com barra",sets:"3x12",rest:"75s",tip:"Não abra os cotovelos"},
-    {name:"Mergulho no banco",sets:"3x falha",rest:"60s",tip:"Pernas esticadas para intensificar"},
-  ]},
-  {day:"Terça",label:"COSTAS + BÍCEPS",color:"#3b82f6",exercises:[
-    {name:"Puxada frontal aberta",sets:"4x10-12",rest:"90s",tip:"Puxe com o cotovelo, não com a mão"},
-    {name:"Remada curvada com barra",sets:"4x10",rest:"90s",tip:"Coluna neutra, core ativado"},
-    {name:"Remada unilateral com haltere",sets:"3x12",rest:"75s",tip:"Apoio no banco, rotação do torso"},
-    {name:"Pullover na polia",sets:"3x15",rest:"60s",tip:"Sente o alongamento do grande dorsal"},
-    {name:"Rosca direta com barra",sets:"4x12",rest:"60s",tip:"Sem embalar o corpo"},
-    {name:"Rosca martelo com haltere",sets:"3x12",rest:"60s",tip:"Cotovelo fixo, foco no braquial"},
-  ]},
-  {day:"Quarta",label:"PERNAS (FOCO QUADRÍCEPS)",color:"#22c55e",exercises:[
-    {name:"Agachamento livre",sets:"4x10-12",rest:"120s",tip:"Desça até 90°+, joelhos alinhados"},
-    {name:"Leg press 45°",sets:"4x12-15",rest:"90s",tip:"Pés na largura dos ombros"},
-    {name:"Cadeira extensora",sets:"3x15",rest:"60s",tip:"Isometria de 1s no topo"},
-    {name:"Hack squat ou afundo",sets:"3x12 cada",rest:"75s",tip:"Passada longa, joelho não passa a ponta do pé"},
-    {name:"Panturrilha em pé (máquina)",sets:"4x20",rest:"45s",tip:"Amplitude completa, pause no fundo"},
-  ]},
-  {day:"Quinta",label:"OMBRO + ABDÔMEN",color:"#a855f7",exercises:[
-    {name:"Desenvolvimento com halteres",sets:"4x10-12",rest:"90s",tip:"Cuidado com a lombar, core firme"},
-    {name:"Elevação lateral",sets:"4x15",rest:"60s",tip:"Leve inclinação para frente, cotovelo levemente flexionado"},
-    {name:"Elevação frontal alternada",sets:"3x12",rest:"60s",tip:"Até a altura dos ombros"},
-    {name:"Encolhimento com halteres",sets:"3x15",rest:"60s",tip:"Pausa no topo"},
-    {name:"Prancha abdominal",sets:"4x45s",rest:"30s",tip:"Core contraído, não levante o quadril"},
-    {name:"Crunch bicicleta",sets:"3x20",rest:"30s",tip:"Cotovelo toca o joelho oposto"},
-    {name:"Abdominal infra (elevação de pernas)",sets:"3x15",rest:"45s",tip:"Lombar colada no chão"},
-  ]},
-  {day:"Sexta",label:"PERNAS (FOCO POSTERIOR + GLÚTEO)",color:"#10b981",exercises:[
-    {name:"Stiff com barra",sets:"4x12",rest:"90s",tip:"Coluna neutra, sente o alongamento do isquio"},
-    {name:"Cadeira flexora",sets:"4x12-15",rest:"75s",tip:"Não solte rápido na volta"},
-    {name:"Mesa flexora",sets:"3x12",rest:"75s",tip:"Alternativa à cadeira"},
-    {name:"Agachamento sumô com haltere",sets:"3x15",rest:"75s",tip:"Pés bem abertos, foco no glúteo"},
-    {name:"Elevação pélvica (hip thrust)",sets:"4x15",rest:"75s",tip:"Isometria de 2s no topo"},
-    {name:"Panturrilha sentado (máquina)",sets:"3x20",rest:"45s",tip:"Foco no sóleo"},
-  ]},
-  {day:"Sábado",label:"CARDIO + MOBILIDADE",color:"#f59e0b",exercises:[
-    {name:"Esteira — caminhada rápida ou corrida leve",sets:"30-40 min",rest:"—",tip:"Zona de queima de gordura: 65-75% FC máx (~118-135 bpm)"},
-    {name:"Elíptico ou bicicleta ergométrica",sets:"20 min (opcional)",rest:"—",tip:"Bom para recuperação ativa"},
-    {name:"Alongamento geral + foam roller",sets:"15 min",rest:"—",tip:"Foco em quadríceps, isquio, panturrilha, lombar"},
-  ]},
-  {day:"Domingo",label:"DESCANSO ATIVO",color:"#64748b",exercises:[
-    {name:"Caminhada leve 30 min (opcional)",sets:"—",rest:"—",tip:"Ao ar livre de preferência"},
-    {name:"Alongamento e respiração",sets:"15 min",rest:"—",tip:"Yoga, pilates leve ou simples alongamento"},
-  ]},
-];
-
 const tips = [
   {icon:"💧",title:"Hidratação",text:"3–3,5 litros de água/dia. Essencial para metabolismo e performance."},
   {icon:"😴",title:"Sono",text:"7–9h de sono. É onde acontece 70% da recuperação muscular e regulação do cortisol (o hormônio da barriga)."},
@@ -259,46 +87,188 @@ const tips = [
   {icon:"📊",title:"Progresso",text:"Meça cintura toda semana, peso na sexta de manhã em jejum. Tire foto do espelho a cada 4 semanas."},
 ];
 
-const SK = "plano90_progress";
-const load = () => { try { const r=localStorage.getItem(SK); return r?JSON.parse(r):{}; } catch{return{};} };
-const save = d => { try{localStorage.setItem(SK,JSON.stringify(d));}catch{} };
-const exK = (d,i) => `ex_${d}_${i}`;
-const dayK = d => `day_${d}`;
+// Desenhos dos exercícios: máquina em cinza, corpo e movimento na cor do grupo (.fig-accent).
+function mk(id, color) { return '<marker id="' + id + '" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" style="fill:var(' + color + ')"/></marker>'; }
+var DEF = '<defs>' + mk('ah-g', '--g-ic') + mk('ah-p', '--p-ic') + '</defs>';
+function svg(inner, label, vb) {
+  return '<svg class="fig" viewBox="' + (vb || '0 0 240 150') + '" role="img" aria-label="' + label + '" fill="none" stroke-linecap="round" stroke-linejoin="round">' + DEF + inner + '</svg>';
+}
+var M = 'stroke="currentColor" stroke-width="3"';            // máquina
+var B = 'class="fig-accent" stroke="currentColor" stroke-width="6"'; // corpo
+var A = 'class="fig-accent" stroke="currentColor" stroke-width="2.5" marker-end="url(#ah)"'; // seta de movimento
+var G = 'class="fig-accent" stroke="currentColor" stroke-width="4" stroke-dasharray="3 6" opacity=".55"'; // posição inicial
+var HEAD = function (x, y, r) { return '<circle class="fig-accent" cx="' + x + '" cy="' + y + '" r="' + (r || 9) + '" fill="currentColor" stroke="none"/>'; };
+var FLOOR = '<path d="M10 140H230" stroke="currentColor" stroke-width="2" opacity=".5"/>';
+
+var DRAW = {
+  supino: svg(
+    FLOOR +
+    '<rect x="18" y="22" width="28" height="116" rx="4" ' + M + '/>' +
+    '<path d="M24 44h16M24 56h16M24 68h16M24 80h16" ' + M + ' stroke-width="2"/>' +
+    '<path d="M46 132H200" ' + M + '/>' +
+    '<path d="M68 100l6-60" ' + M + ' stroke-width="9" opacity=".6"/>' +
+    '<path d="M66 108h50M90 108v24" ' + M + ' stroke-width="7" opacity=".6"/>' +
+    '<path d="M40 26Q110 4 150 58" ' + M + '/>' +
+    '<path d="M150 50v18" ' + M + ' stroke-width="7"/>' +
+    '<path d="M84 100L88 54" ' + B + '/>' + HEAD(91, 40) +
+    '<path d="M88 58L120 66L148 60" ' + B + ' stroke-width="5"/>' +
+    '<path d="M86 102H124L126 134" ' + B + '/>' +
+    '<path d="M162 59H192" ' + A + '/>',
+    'Supino máquina: pessoa sentada empurra as alavancas para frente'),
+
+  pulley: svg(
+    FLOOR +
+    '<rect x="110" y="8" width="20" height="130" rx="3" ' + M + '/>' +
+    '<circle cx="120" cy="16" r="5" ' + M + ' stroke-width="2.5"/>' +
+    '<path d="M120 21V44" ' + M + ' stroke-width="2"/>' +
+    '<path d="M52 52L62 44H178L188 52" ' + M + ' stroke-width="4"/>' +
+    '<rect x="92" y="116" width="56" height="9" rx="3" ' + M + '/>' +
+    '<path d="M88 104H152" ' + M + ' stroke-width="7" opacity=".6"/>' +
+    HEAD(120, 64, 10) +
+    '<path d="M106 82H134L130 114H110Z" ' + B + ' stroke-width="5"/>' +
+    '<path d="M106 84L84 76L70 48M134 84L156 76L170 48" ' + B + ' stroke-width="5"/>' +
+    '<path d="M112 125L108 138M128 125L132 138" ' + B + ' stroke-width="5"/>' +
+    '<path d="M204 40V78" ' + A + '/>' +
+    '<path d="M36 40V78" ' + A + '/>',
+    'Pulley frente: pessoa sentada puxa a barra larga até o peito'),
+
+  remada: svg(
+    FLOOR +
+    '<rect x="12" y="38" width="26" height="100" rx="3" ' + M + '/>' +
+    '<circle cx="44" cy="112" r="5" ' + M + ' stroke-width="2.5"/>' +
+    '<path d="M60 104L66 134" ' + M + ' stroke-width="5"/>' +
+    '<path d="M62 122H222M140 122V138M210 122V138" ' + M + '/>' +
+    '<path d="M49 111L136 100" ' + M + ' stroke-width="2"/>' +
+    '<path d="M152 118L150 72" ' + B + '/>' + HEAD(150, 58) +
+    '<path d="M152 118L112 104L70 114" ' + B + '/>' +
+    '<path d="M150 76L172 96L140 100" ' + B + ' stroke-width="5"/>' +
+    '<path d="M96 84H126" ' + A + '/>',
+    'Remada sentada: pessoa sentada puxa o cabo baixo em direção ao abdômen'),
+
+  elevacao: svg(
+    FLOOR +
+    HEAD(120, 24, 10) +
+    '<path d="M104 40H136L132 88H108Z" ' + B + ' stroke-width="5"/>' +
+    '<path d="M112 88L108 138M128 88L132 138" ' + B + ' stroke-width="5"/>' +
+    '<path d="M104 44L96 86M136 44L144 86" ' + G + '/>' +
+    '<path d="M104 44L64 50M136 44L176 50" ' + B + ' stroke-width="5"/>' +
+    '<path d="M56 42V58M62 42V58M178 42V58M184 42V58" ' + M + ' stroke-width="4"/>' +
+    '<path d="M88 92Q62 84 58 66" ' + A + '/>' +
+    '<path d="M152 92Q178 84 182 66" ' + A + '/>',
+    'Elevação lateral: braços sobem pelos lados até a altura dos ombros'),
+
+  rosca: svg(
+    FLOOR +
+    HEAD(112, 24) +
+    '<path d="M112 38L114 88" ' + B + '/>' +
+    '<path d="M114 88L108 138M114 88L124 138" ' + B + ' stroke-width="5"/>' +
+    '<path d="M114 76L140 98" ' + G + '/>' +
+    '<path d="M112 42L114 76L138 52" ' + B + ' stroke-width="5"/>' +
+    '<path d="M132 44L146 58M136 40L150 54" ' + M + ' stroke-width="4"/>' +
+    '<path d="M156 100Q170 78 156 56" ' + A + '/>',
+    'Rosca direta: cotovelo parado ao lado do corpo, halter sobe até o ombro'),
+
+  triceps: svg(
+    FLOOR +
+    '<rect x="196" y="8" width="24" height="130" rx="3" ' + M + '/>' +
+    '<circle cx="192" cy="22" r="5" ' + M + ' stroke-width="2.5"/>' +
+    '<path d="M188 25L160 90" ' + M + ' stroke-width="2"/>' +
+    HEAD(124, 26) +
+    '<path d="M128 40L124 90" ' + B + '/>' +
+    '<path d="M124 90L116 138M124 90L136 138" ' + B + ' stroke-width="5"/>' +
+    '<path d="M134 74L156 58" ' + G + '/>' +
+    '<path d="M130 44L134 74L160 92" ' + B + ' stroke-width="5"/>' +
+    '<path d="M154 86L168 96" ' + M + ' stroke-width="5"/>' +
+    '<path d="M174 58V96" ' + A + '/>',
+    'Tríceps pulley: cotovelo colado ao corpo, empurra o cabo para baixo')
+};
+
+const EX_BRACOS = [
+    { n: 1, t: 'g', name: 'Supino máquina', meta: '3x12 · descanso 60-90s', icon: 'seat', draw: 'supino',
+      setup: 'Ajuste o banco para a pegada ficar na linha do meio do peito.',
+      steps: ['Costas e cabeça apoiadas no encosto, pés firmes no chão.', 'Empurre até quase estender os braços, sem travar os cotovelos.', 'Volte devagar (2-3s) até sentir o peito alongar.'],
+      breath: 'Solte o ar ao empurrar, puxe ao voltar.' },
+    { n: 2, t: 'g', name: 'Pulley frente', meta: '3x12 · descanso 60-90s', icon: 'down', draw: 'pulley',
+      setup: 'Prenda as coxas sob o apoio acolchoado. Pegada um pouco mais larga que os ombros.',
+      steps: ['Peito aberto, tronco levemente inclinado para trás.', 'Puxe a barra até a parte de cima do peito, levando os cotovelos para baixo.', 'Suba controlando até os braços quase estenderem.'],
+      breath: 'Solte o ar ao puxar.' },
+    { n: 3, t: 'g', name: 'Remada sentada', meta: '3x12 · descanso 60-90s · novo', icon: 'left', draw: 'remada',
+      setup: 'Pés na plataforma, joelhos levemente dobrados. Pegador em V (triângulo).',
+      steps: ['Coluna reta, sem balançar o tronco para trás.', 'Puxe o pegador até o abdômen, juntando as escápulas.', 'Estenda os braços devagar, sem arredondar as costas.'],
+      breath: 'Solte o ar ao puxar. Exercício novo: comece leve e foque na postura.' },
+    { n: 4, t: 'p', name: 'Elevação lateral com halter', meta: '3x12 · descanso 45-60s', icon: 'both', draw: 'elevacao',
+      setup: 'Halteres leves. Esse exercício cansa rápido.',
+      steps: ['Em pé, cotovelos levemente dobrados.', 'Suba os braços pelos lados até a altura dos ombros, não acima.', 'Desça devagar, sem jogar o corpo.'],
+      breath: 'Solte o ar ao subir.' },
+    { n: 5, t: 'p', name: 'Rosca direta com halter', meta: '3x12 · descanso 45-60s', icon: 'dumb', draw: 'rosca',
+      setup: 'Palmas viradas para frente.',
+      steps: ['Cotovelos colados ao lado do corpo, parados.', 'Suba o halter dobrando só o cotovelo.', 'Desça até estender o braço, sem balançar o tronco.'],
+      breath: 'Solte o ar ao subir.' },
+    { n: 6, t: 'p', name: 'Tríceps pulley', meta: '3x12 · descanso 45-60s', icon: 'arrowdown', draw: 'triceps',
+      setup: 'Polia alta, barra reta ou corda. De frente para a máquina.',
+      steps: ['Cotovelos colados ao corpo, tronco levemente inclinado.', 'Empurre para baixo até estender os braços.', 'Suba só até o antebraço ficar paralelo ao chão.'],
+      breath: 'Solte o ar ao empurrar.' }
+];
+
+// Treinos A/B. Cada item marcado vale só para a data de hoje; o treino entra no histórico
+// (e na contagem da semana) quando todos os itens do dia estão marcados.
+const TREINOS = {
+  bracos: { nome:"Braços e Tronco", emoji:"💪", key:"treino-bracos-tronco", sub:"3 séries de 10-12 reps", items:[
+    {id:"esteira", name:"Esteira 15 min", meta:"No começo, ritmo leve a moderado", emoji:"🏃"},
+    ...EX_BRACOS.map(e=>({...e, id:"ex"+e.n})),
+    {id:"caminhada", name:"Caminhada 20-30 min", meta:"Ritmo moderado, consegue conversar", emoji:"🚶"},
+  ]},
+  pernas: { nome:"Pernas", emoji:"🦵", key:"treino-pernas", sub:"", items:[] },
+};
+
+const DICAS_TREINO = [
+  "🕑 Treinar 2-3h após refeição grande",
+  "🌬️ Soltar o ar no esforço, sem prender",
+  "💊 Levar a bombinha de resgate",
+  "📈 Fez 12 reps nas 3 séries? Suba 2-5% a carga",
+];
+
+const pad2 = n => (n<10?"0":"")+n;
+const dateKey = d => `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`;
+const fmtDate = k => { const [y,m,d]=k.split("-").map(Number); return new Date(y,m-1,d).toLocaleDateString("pt-BR",{weekday:"short",day:"2-digit",month:"2-digit"}); };
+const lsGet = (k,f) => { try { const v=localStorage.getItem(k); return v?JSON.parse(v):f; } catch { return f; } };
+const lsSet = (k,v) => { try { localStorage.setItem(k,JSON.stringify(v)); } catch {} };
+const weekDates = () => { const n=new Date(); const mon=new Date(n.getFullYear(),n.getMonth(),n.getDate()-((n.getDay()+6)%7)); return Array.from({length:7},(_,i)=>dateKey(new Date(mon.getFullYear(),mon.getMonth(),mon.getDate()+i))); };
 
 function App() {
-  const [tab, setTab] = React.useState("cardapio");
+  const [tab, setTab] = React.useState(()=>location.hash==="#treino"?"treino":"cardapio");
   const [day, setDay] = React.useState(0);
   const [exMeal, setExMeal] = React.useState(null);
-  const [exEx, setExEx] = React.useState(null);
-  const [prog, setProg] = React.useState(load);
+  const [sel, setSel] = React.useState("bracos");
+  const [open, setOpen] = React.useState(null);
+  const today = dateKey(new Date());
+  const [checks, setChecks] = React.useState(()=>Object.fromEntries(Object.entries(TREINOS).map(([k,t])=>[k,lsGet(`${t.key}:dia:${today}`,{})])));
+  const [hist, setHist] = React.useState(()=>Object.fromEntries(Object.entries(TREINOS).map(([k,t])=>[k,lsGet(`${t.key}:historico`,[])])));
   const [toast, setToast] = React.useState(false);
 
   const labels = ["Seg","Ter","Qua","Qui","Sex","Sáb","Dom"];
   const menu = weekMenu[day];
-  const wk = workouts[day];
 
-  const exDone = (d,i) => !!prog[exK(d,i)];
-  const dayDone = d => !!prog[dayK(d)];
-  const doneCount = d => workouts[d].exercises.filter((_,i)=>exDone(d,i)).length;
-  const totalCount = d => workouts[d].exercises.length;
-  const weekDone = labels.filter((_,i)=>dayDone(i)).length;
+  const week = weekDates();
+  const doneOn = k => Object.values(hist).filter(h=>h.includes(k)).length;
+  const weekCount = week.reduce((n,k)=>n+doneOn(k),0);
 
   const celebrate = () => { setToast(true); setTimeout(()=>setToast(false),2500); };
 
-  const toggleEx = (d,i) => {
-    const k=exK(d,i);
-    const n={...prog,[k]:!prog[k]};
-    const allDone=workouts[d].exercises.every((_,j)=>j===i?!prog[k]:!!n[exK(d,j)]);
-    if(allDone&&!n[dayK(d)]){n[dayK(d)]=true;celebrate();}
-    setProg(n);save(n);
+  const saveWorkout = (w, next) => {
+    const t=TREINOS[w];
+    const complete=t.items.length>0&&t.items.every(it=>next[it.id]);
+    const was=hist[w].includes(today);
+    const h=hist[w].filter(d=>d!==today); if(complete) h.push(today); h.sort();
+    lsSet(`${t.key}:dia:${today}`,next); lsSet(`${t.key}:historico`,h);
+    setChecks({...checks,[w]:next}); setHist({...hist,[w]:h});
+    if(complete&&!was) celebrate();
   };
-
-  const toggleDay = d => {
-    const dn=dayDone(d);
-    const n={...prog,[dayK(d)]:!dn};
-    workouts[d].exercises.forEach((_,i)=>{n[exK(d,i)]=!dn;});
-    if(!dn)celebrate();
-    setProg(n);save(n);
+  const toggleItem = (w,id) => { const n={...checks[w]}; if(n[id]) delete n[id]; else n[id]=true; saveWorkout(w,n); };
+  const toggleAll = w => {
+    const t=TREINOS[w], all=t.items.every(it=>checks[w][it.id]), n={};
+    if(!all) t.items.forEach(it=>{n[it.id]=true;});
+    saveWorkout(w,n);
   };
 
   return (
@@ -315,8 +285,8 @@ function App() {
             <div style={{color:C.muted,fontSize:11}}>41 anos · 100kg · 1,95m · Recomposição Corporal</div>
           </div>
           <div style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:8,padding:"4px 10px",textAlign:"center"}}>
-            <div style={{color:C.accent,fontWeight:800,fontSize:15}}>{weekDone}<span style={{fontSize:11,color:C.dim}}>/7</span></div>
-            <div style={{color:C.dim,fontSize:9}}>esta semana</div>
+            <div style={{color:C.accent,fontWeight:800,fontSize:15}}>{weekCount}</div>
+            <div style={{color:C.dim,fontSize:9}}>{weekCount===1?"treino":"treinos"} na semana</div>
           </div>
         </div>
         <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:8,marginTop:12}}>
@@ -339,17 +309,13 @@ function App() {
       </div>
 
       {/* Day selector */}
-      {(tab==="cardapio"||tab==="treino")&&(
+      {tab==="cardapio"&&(
         <div style={{display:"flex",gap:6,padding:"0 16px 12px",overflowX:"auto",scrollbarWidth:"none"}}>
-          {labels.map((d,i)=>{
-            const dn=dayDone(i),pt=!dn&&doneCount(i)>0;
-            return(
-              <button key={d} onClick={()=>{setDay(i);setExMeal(null);setExEx(null);}} style={{flexShrink:0,padding:"6px 12px",borderRadius:20,border:`1px solid ${day===i?C.accent:dn?C.green:pt?C.accent+"88":C.border}`,background:day===i?C.accent:dn?C.green+"22":C.card,color:day===i?"#fff":dn?C.green:C.muted,fontSize:12,fontWeight:600,cursor:"pointer",position:"relative"}}>
-                {dn&&<span style={{fontSize:8,marginRight:3}}>✓</span>}{d}
-                {pt&&<span style={{position:"absolute",top:2,right:2,width:6,height:6,borderRadius:"50%",background:C.accent}}/>}
-              </button>
-            );
-          })}
+          {labels.map((d,i)=>(
+            <button key={d} onClick={()=>{setDay(i);setExMeal(null);}} style={{flexShrink:0,padding:"6px 12px",borderRadius:20,border:`1px solid ${day===i?C.accent:C.border}`,background:day===i?C.accent:C.card,color:day===i?"#fff":C.muted,fontSize:12,fontWeight:600,cursor:"pointer"}}>
+              {d}
+            </button>
+          ))}
         </div>
       )}
 
@@ -388,76 +354,106 @@ function App() {
       )}
 
       {/* TREINO */}
-      {tab==="treino"&&(
+      {tab==="treino"&&(()=>{
+        const t=TREINOS[sel], c=checks[sel], total=t.items.length;
+        const done=t.items.filter(it=>c[it.id]).length, complete=total>0&&done===total;
+        const past=hist[sel].filter(d=>d!==today);
+        return (
         <div style={{padding:"0 16px"}}>
-          <a href="treino.html" style={{display:"flex",alignItems:"center",gap:12,background:C.card,border:`1px solid ${C.border}`,borderRadius:12,padding:"12px 14px",marginBottom:12,textDecoration:"none"}}>
-            <div style={{fontSize:22}}>🏋️</div>
-            <div style={{flex:1,minWidth:0}}>
-              <div style={{color:C.text,fontWeight:700,fontSize:14}}>Treino de braços e tronco</div>
-              <div style={{color:C.muted,fontSize:12,marginTop:2}}>6 exercícios com desenho da máquina</div>
+          <div style={{display:"flex",gap:8,marginBottom:12}}>
+            {Object.entries(TREINOS).map(([k,w])=>{
+              const on=sel===k, dn=hist[k].includes(today);
+              return(
+                <button key={k} onClick={()=>{setSel(k);setOpen(null);}} style={{flex:1,padding:"10px 8px",borderRadius:10,border:`1px solid ${on?C.accent:dn?C.green:C.border}`,background:on?C.accent:dn?C.green+"22":C.card,color:on?"#fff":dn?C.green:C.muted,fontWeight:700,fontSize:13,cursor:"pointer"}}>
+                  {dn&&"✓ "}{w.emoji} {w.nome}
+                </button>
+              );
+            })}
+          </div>
+
+          {total===0?(
+            <div style={{background:C.card,border:`1px dashed ${C.border}`,borderRadius:12,padding:"28px 16px",textAlign:"center"}}>
+              <div style={{fontSize:28,marginBottom:8}}>{t.emoji}</div>
+              <div style={{fontWeight:700,fontSize:14}}>Treino de {t.nome.toLowerCase()} ainda sem exercícios</div>
+              <div style={{color:C.muted,fontSize:12,marginTop:4}}>Os exercícios entram aqui assim que forem definidos.</div>
             </div>
-            <div style={{color:C.muted,fontSize:18}}>›</div>
-          </a>
-          <div style={{background:C.card,border:`1px solid ${wk.color}55`,borderRadius:12,padding:"12px 14px",marginBottom:12,borderLeft:`3px solid ${wk.color}`}}>
+          ):(
+          <>
+          <div style={{background:C.card,border:`1px solid ${complete?C.green+"55":C.border}`,borderRadius:12,padding:"12px 14px",marginBottom:12}}>
             <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:8}}>
               <div>
-                <div style={{color:wk.color,fontWeight:800,fontSize:15}}>{wk.label}</div>
-                <div style={{color:C.muted,fontSize:12,marginTop:2}}>{wk.exercises.length} exercícios · SmartFit</div>
+                <div style={{color:C.accent,fontWeight:800,fontSize:15}}>{t.nome.toUpperCase()}</div>
+                <div style={{color:C.muted,fontSize:12,marginTop:2}}>Hoje · {fmtDate(today)} · {t.sub}</div>
               </div>
               <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:4}}>
-                <div style={{background:dayDone(day)?C.green+"22":C.card,border:`1.5px solid ${dayDone(day)?C.green:wk.color}`,borderRadius:10,padding:"4px 12px",minWidth:56,textAlign:"center"}}>
-                  <span style={{color:dayDone(day)?C.green:wk.color,fontWeight:800,fontSize:18}}>{doneCount(day)}</span>
-                  <span style={{color:C.dim,fontSize:14}}>/{totalCount(day)}</span>
+                <div style={{background:complete?C.green+"22":C.card,border:`1.5px solid ${complete?C.green:C.accent}`,borderRadius:10,padding:"4px 12px",minWidth:56,textAlign:"center"}}>
+                  <span style={{color:complete?C.green:C.accent,fontWeight:800,fontSize:18}}>{done}</span>
+                  <span style={{color:C.dim,fontSize:14}}>/{total}</span>
                 </div>
-                <div style={{color:C.dim,fontSize:10}}>exercícios</div>
+                <div style={{color:C.dim,fontSize:10}}>itens</div>
               </div>
             </div>
             <div style={{background:"#2a2d3a",borderRadius:6,height:6,overflow:"hidden",marginBottom:10}}>
-              <div style={{background:dayDone(day)?C.green:wk.color,height:"100%",borderRadius:6,width:`${(doneCount(day)/totalCount(day))*100}%`,transition:"width 0.3s ease"}}/>
+              <div style={{background:complete?C.green:C.accent,height:"100%",borderRadius:6,width:`${done/total*100}%`,transition:"width 0.3s ease"}}/>
             </div>
-            <button onClick={()=>toggleDay(day)} style={{width:"100%",padding:"8px",borderRadius:8,border:`1.5px solid ${dayDone(day)?C.green:wk.color}`,background:dayDone(day)?C.green+"22":"transparent",color:dayDone(day)?C.green:wk.color,fontWeight:700,fontSize:13,cursor:"pointer"}}>
-              {dayDone(day)?"✓ Treino concluído — desfazer":"Marcar treino como concluído"}
+            <button onClick={()=>toggleAll(sel)} style={{width:"100%",padding:"8px",borderRadius:8,border:`1.5px solid ${complete?C.green:C.accent}`,background:complete?C.green+"22":"transparent",color:complete?C.green:C.accent,fontWeight:700,fontSize:13,cursor:"pointer"}}>
+              {complete?"✓ Treino de hoje concluído — desfazer":"Marcar treino como concluído"}
             </button>
+            {hist[sel].length>0&&(
+              <div style={{color:C.dim,fontSize:11,textAlign:"center",marginTop:8}}>
+                {[past.length>0&&`Último antes de hoje: ${fmtDate(past[past.length-1])}`,`${hist[sel].length} ${hist[sel].length===1?"treino concluído":"treinos concluídos"}`].filter(Boolean).join(" · ")}
+              </div>
+            )}
           </div>
 
-          {wk.exercises.map((ex,i)=>{
-            const dn=exDone(day,i);
-            const iconType=getIcon(ex.name);
-            const iconColor=dn?C.dim:wk.color;
+          {t.items.map(it=>{
+            const dn=!!c[it.id], isEx=!!it.n, isOpen=open===it.id;
+            const gc=it.t==="p"?C.purple:C.green;
+            const toggleOpen=()=>{ if(isEx) setOpen(isOpen?null:it.id); };
             return(
-              <div key={i} style={{background:C.card,border:`1px solid ${exEx===i?wk.color:dn?C.green+"55":C.border}`,borderRadius:10,marginBottom:8,overflow:"hidden"}}>
-                <div style={{display:"flex",alignItems:"center",padding:"10px 12px",gap:8}}>
-                  <div onClick={e=>{e.stopPropagation();toggleEx(day,i);}} style={{flexShrink:0,width:24,height:24,borderRadius:6,border:`2px solid ${dn?C.green:C.dim}`,background:dn?C.green:"transparent",display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",transition:"all 0.15s"}}>
-                    {dn&&<span style={{color:"#fff",fontSize:13,lineHeight:1}}>✓</span>}
+              <div key={it.id} style={{background:C.card,border:`1px solid ${isOpen?gc:dn?C.green+"55":C.border}`,borderRadius:10,marginBottom:8,overflow:"hidden"}}>
+                <div style={{display:"flex",alignItems:"center",padding:"10px 12px",gap:10}}>
+                  <button role="checkbox" aria-checked={dn} aria-label={`Feito: ${it.name}`} onClick={()=>toggleItem(sel,it.id)} style={{flexShrink:0,width:26,height:26,borderRadius:7,border:`2px solid ${dn?C.green:C.dim}`,background:dn?C.green:"transparent",display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",padding:0,transition:"all 0.15s"}}>
+                    {dn&&<span style={{color:"#fff",fontSize:14,lineHeight:1}}>✓</span>}
+                  </button>
+                  <div onClick={toggleOpen} style={{flexShrink:0,width:36,height:36,borderRadius:"50%",background:isEx?gc+"22":"#2a2d3a",color:isEx?gc:C.text,display:"flex",alignItems:"center",justifyContent:"center",fontWeight:700,fontSize:isEx?15:18,opacity:dn?0.5:1,cursor:isEx?"pointer":"default"}}>
+                    {isEx?it.n:it.emoji}
                   </div>
-                  <div style={{flexShrink:0,width:40,height:40,borderRadius:8,background:dn?"#1e2030":`${wk.color}15`,border:`1px solid ${dn?C.border:wk.color+"33"}`,display:"flex",alignItems:"center",justifyContent:"center"}}>
-                    {Icons[iconType](iconColor)}
+                  <div onClick={toggleOpen} style={{flex:1,minWidth:0,cursor:isEx?"pointer":"default"}}>
+                    <div style={{fontWeight:600,fontSize:14,color:dn?C.dim:C.text,textDecoration:dn?"line-through":"none",lineHeight:1.3}}>{it.name}</div>
+                    <div style={{color:C.muted,fontSize:12,marginTop:3}}>{it.meta}</div>
                   </div>
-                  <div style={{flex:1}} onClick={()=>setExEx(exEx===i?null:i)}>
-                    <div style={{fontWeight:600,fontSize:13,color:dn?C.dim:C.text,textDecoration:dn?"line-through":"none",lineHeight:1.3}}>{ex.name}</div>
-                    <div style={{display:"flex",gap:6,marginTop:4,flexWrap:"wrap"}}>
-                      <span style={{background:`${wk.color}22`,color:wk.color,borderRadius:5,padding:"2px 7px",fontSize:11,fontWeight:600}}>{ex.sets}</span>
-                      {ex.rest!=="—"&&<span style={{background:"#2a2d3a",color:C.dim,borderRadius:5,padding:"2px 7px",fontSize:11}}>⏱ {ex.rest}</span>}
-                    </div>
-                  </div>
-                  <div onClick={()=>setExEx(exEx===i?null:i)} style={{color:C.dim,cursor:"pointer",fontSize:16}}>💡</div>
+                  {isEx&&(
+                    <button onClick={toggleOpen} aria-expanded={isOpen} aria-label={isOpen?"Fechar ficha":"Ver máquina e execução"} style={{flexShrink:0,background:"none",border:"none",color:C.dim,fontSize:13,cursor:"pointer",padding:6}}>
+                      {isOpen?"▲":"▼"}
+                    </button>
+                  )}
                 </div>
-                {exEx===i&&(
-                  <div style={{padding:"8px 14px 12px",borderTop:`1px solid ${C.border}`,color:C.muted,fontSize:12,lineHeight:1.6}}>
-                    <span style={{color:wk.color}}>Dica: </span>{ex.tip}
+                {isOpen&&(
+                  <div className={`t-${it.t}`} style={{padding:"4px 14px 14px",borderTop:`1px solid ${C.border}`}}>
+                    <div dangerouslySetInnerHTML={{__html:DRAW[it.draw].split("url(#ah)").join(`url(#ah-${it.t})`)}}/>
+                    <div style={{color:gc,fontSize:11,fontWeight:700,letterSpacing:1,marginTop:8}}>AJUSTE</div>
+                    <div style={{fontSize:13,lineHeight:1.5,marginTop:3}}>{it.setup}</div>
+                    <div style={{color:gc,fontSize:11,fontWeight:700,letterSpacing:1,marginTop:10}}>COMO FAZER</div>
+                    <ol style={{paddingLeft:18,marginTop:3}}>
+                      {it.steps.map((st,k)=><li key={k} style={{fontSize:13,lineHeight:1.5,marginBottom:2}}>{st}</li>)}
+                    </ol>
+                    <div style={{color:gc,fontSize:11,fontWeight:700,letterSpacing:1,marginTop:10}}>RESPIRAÇÃO</div>
+                    <div style={{color:C.muted,fontSize:13,lineHeight:1.5,marginTop:3}}>{it.breath}</div>
                   </div>
                 )}
               </div>
             );
           })}
 
-          {day<5&&(
-            <div style={{background:"#1a1d27",border:`1px solid ${C.border}`,borderRadius:10,padding:12,marginTop:4}}>
-              <div style={{color:C.muted,fontSize:12,lineHeight:1.6}}>🔥 <strong style={{color:C.text}}>Aquecimento:</strong> 5 min de elíptico + 2 séries leves (50% da carga) de cada exercício principal antes de começar.</div>
-            </div>
+          <div style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:10,padding:12,marginTop:4}}>
+            {DICAS_TREINO.map((d,k)=><div key={k} style={{color:C.muted,fontSize:12,lineHeight:1.9}}>{d}</div>)}
+          </div>
+          </>
           )}
         </div>
-      )}
+        );
+      })()}
 
       {/* DICAS */}
       {tab==="dicas"&&(
@@ -465,22 +461,19 @@ function App() {
           <div style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:12,padding:"12px 14px",marginBottom:14}}>
             <div style={{fontWeight:700,fontSize:13,marginBottom:8}}>📅 Semana atual</div>
             <div style={{display:"flex",gap:6,justifyContent:"space-between"}}>
-              {labels.map((d,i)=>{
-                const dn=dayDone(i),pt=!dn&&doneCount(i)>0;
+              {week.map((k,i)=>{
+                const n=doneOn(k), isToday=k===today;
                 return(
-                  <div key={d} style={{flex:1,textAlign:"center"}}>
-                    <div style={{width:"100%",aspectRatio:"1",borderRadius:6,background:dn?C.green+"33":pt?C.accent+"22":"#2a2d3a",border:`1.5px solid ${dn?C.green:pt?C.accent+"88":C.border}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,marginBottom:4}}>
-                      {dn?<span style={{color:C.green}}>✓</span>:pt?<span style={{color:C.accent,fontSize:10}}>{doneCount(i)}/{totalCount(i)}</span>:<span style={{color:C.dim,fontSize:10}}>—</span>}
+                  <div key={k} style={{flex:1,textAlign:"center"}}>
+                    <div style={{width:"100%",aspectRatio:"1",borderRadius:6,background:n?C.green+"33":"#2a2d3a",border:`1.5px solid ${n?C.green:isToday?C.accent:C.border}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,marginBottom:4}}>
+                      {n?<span style={{color:C.green}}>{n>1?`✓${n}`:"✓"}</span>:<span style={{color:C.dim,fontSize:10}}>—</span>}
                     </div>
-                    <div style={{fontSize:9,color:C.dim}}>{d}</div>
+                    <div style={{fontSize:9,color:isToday?C.accent:C.dim}}>{labels[i]}</div>
                   </div>
                 );
               })}
             </div>
-            <div style={{marginTop:10,background:"#2a2d3a",borderRadius:6,height:6,overflow:"hidden"}}>
-              <div style={{background:C.green,height:"100%",borderRadius:6,width:`${(weekDone/7)*100}%`,transition:"width 0.3s"}}/>
-            </div>
-            <div style={{color:C.muted,fontSize:11,marginTop:6}}>{weekDone} de 7 dias concluídos esta semana</div>
+            <div style={{color:C.muted,fontSize:11,marginTop:8}}>{weekCount} {weekCount===1?"treino concluído":"treinos concluídos"} esta semana</div>
           </div>
 
           <div style={{background:`linear-gradient(135deg,${C.accent}22,${C.purple}11)`,border:`1px solid ${C.accent}44`,borderRadius:14,padding:16,marginBottom:14}}>
