@@ -14,10 +14,11 @@
   body { background: #121316; }
   button { font-family: inherit; }
   ::-webkit-scrollbar { display: none; }
-  :root { --g-ic: #7fcfa8; --p-ic: #7fcfa8; }
+  :root { --g-ic: #7fcfa8; --p-ic: #7fcfa8; --c-ic: #aba2f2; }
   .fig { display: block; width: 100%; max-width: 340px; height: auto; margin: 6px auto 4px; color: #75767d; }
   .t-g .fig-accent { color: var(--g-ic); }
   .t-p .fig-accent { color: var(--p-ic); }
+  .t-c .fig-accent { color: var(--c-ic); }
 </style>
 </head>
 <body>
@@ -28,7 +29,7 @@
 const C = {
   bg:"#121316",card:"#1c1d21",border:"#2c2d33",track:"#2c2d33",
   accent:"#7fcfa8",aLight:"#a6e0c3",green:"#7fcfa8",
-  blue:"#7fcfa8",purple:"#7fcfa8",text:"#f3f3f1",
+  blue:"#7fcfa8",purple:"#7fcfa8",core:"#aba2f2",text:"#f3f3f1",
   muted:"#a4a5ab",dim:"#75767d",onAccent:"#0d1a13"
 };
 
@@ -113,7 +114,7 @@ const tips = [
 
 // Desenhos dos exercícios: máquina em cinza, corpo e movimento na cor do grupo (.fig-accent).
 function mk(id, color) { return '<marker id="' + id + '" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" style="fill:var(' + color + ')"/></marker>'; }
-var DEF = '<defs>' + mk('ah-g', '--g-ic') + mk('ah-p', '--p-ic') + '</defs>';
+var DEF = '<defs>' + mk('ah-g', '--g-ic') + mk('ah-p', '--p-ic') + mk('ah-c', '--c-ic') + '</defs>';
 function svg(inner, label, vb) {
   return '<svg class="fig" viewBox="' + (vb || '0 0 240 150') + '" role="img" aria-label="' + label + '" fill="none" stroke-linecap="round" stroke-linejoin="round">' + DEF + inner + '</svg>';
 }
@@ -274,6 +275,32 @@ var DRAW = {
     '<path d="M104 64Q128 48 152 64" class="fig-accent" stroke="currentColor" stroke-width="2.5" marker-start="url(#ah)" marker-end="url(#ah)"/>',
     'Oblíquo twist: sentado com o tronco inclinado para trás, gira a bola de um lado ao outro', '0 40 240 104'),
 
+  abdutora: svg(
+    FLOOR +
+    '<rect x="90" y="30" width="60" height="64" rx="6" ' + M + ' opacity=".5"/>' +
+    '<path d="M80 100H160M120 104V138" ' + M + ' stroke-width="7" opacity=".6"/>' +
+    HEAD(120, 42) +
+    '<path d="M106 56H134L132 94H108Z" ' + B + ' stroke-width="5"/>' +
+    '<path d="M106 60L94 94M134 60L146 94" ' + B + ' stroke-width="4"/>' +
+    '<path d="M112 100L108 112L106 138M128 100L132 112L134 138" ' + G + '/>' +
+    '<path d="M112 100L82 112L78 138M128 100L158 112L162 138" ' + B + ' stroke-width="5"/>' +
+    '<path d="M68 104V122M172 104V122" ' + M + ' stroke-width="7"/>' +
+    '<path d="M68 124H48" ' + A + '/>' + '<path d="M172 124H192" ' + A + '/>',
+    'Cadeira abdutora: sentado, abre os joelhos empurrando as almofadas para fora'),
+
+  adutora: svg(
+    FLOOR +
+    '<rect x="90" y="30" width="60" height="64" rx="6" ' + M + ' opacity=".5"/>' +
+    '<path d="M80 100H160M120 104V138" ' + M + ' stroke-width="7" opacity=".6"/>' +
+    HEAD(120, 42) +
+    '<path d="M106 56H134L132 94H108Z" ' + B + ' stroke-width="5"/>' +
+    '<path d="M106 60L94 94M134 60L146 94" ' + B + ' stroke-width="4"/>' +
+    '<path d="M112 100L82 112L78 138M128 100L158 112L162 138" ' + G + '/>' +
+    '<path d="M112 100L110 112L108 138M128 100L130 112L132 138" ' + B + ' stroke-width="5"/>' +
+    '<path d="M118 104V122M122 104V122" ' + M + ' stroke-width="3"/>' +
+    '<path d="M50 124H72" ' + A + '/>' + '<path d="M190 124H168" ' + A + '/>',
+    'Cadeira adutora: sentado, fecha os joelhos apertando as almofadas para dentro'),
+
   panturrilha: svg(
     FLOOR +
     '<rect x="172" y="10" width="24" height="128" rx="3" ' + M + '/>' +
@@ -289,13 +316,13 @@ var DRAW = {
     'Panturrilha na máquina: ombros sob as almofadas, sobe na ponta dos pés')
 };
 
-// Core no início, depois as máquinas: das que pedem mais (leg press) às menores (panturrilha).
+// Core no tapetinho primeiro; depois as máquinas, das que pedem mais (leg press) às menores (panturrilha).
 const EX_PERNAS = [
-  { n: 1, sec: 'Core (no início)', t: 'p', name: 'Ponte (elevação de quadril)', meta: '3x15 · descanso 45-60s', draw: 'ponte',
+  { n: 1, sec: 'Core no tapetinho', t: 'c', name: 'Ponte (elevação de quadril)', meta: '3x15 · descanso 45-60s', draw: 'ponte',
     setup: 'No colchonete, barriga para cima, joelhos dobrados e pés na largura do quadril.',
     steps: ['Aperte o glúteo e suba o quadril até alinhar ombros, quadril e joelhos.', 'Segure 2s no alto.', 'Desça devagar sem relaxar totalmente no chão.'],
     breath: 'Solte o ar ao subir.' },
-  { n: 2, t: 'p', name: 'Oblíquo twist', meta: '3x10 por lado · descanso 45s', draw: 'twist',
+  { n: 2, t: 'c', name: 'Oblíquo twist', meta: '3x10 por lado · descanso 45s', draw: 'twist',
     setup: 'No colchonete, sentado, joelhos dobrados. Segure uma bola ou anilha leve junto ao peito.',
     steps: ['Incline o tronco para trás uns 45°, com a coluna reta.', 'Gire o tronco levando a bola de um lado ao outro, devagar.', 'Começando: deixe os pés apoiados no chão.'],
     breath: 'Solte o ar a cada giro. Se o refluxo incomodar, faça com os pés no chão e menos inclinação.' },
@@ -311,7 +338,15 @@ const EX_PERNAS = [
     setup: 'Joelho alinhado com o eixo. Rolo logo acima do calcanhar e apoio da coxa bem firme.',
     steps: ['Comece com as pernas estendidas.', 'Puxe o rolo para baixo e para trás dobrando os joelhos.', 'Volte devagar, sem deixar o peso bater.'],
     breath: 'Solte o ar ao puxar.' },
-  { n: 6, t: 'g', name: 'Panturrilha na máquina', meta: '3x15 · descanso 45s', draw: 'panturrilha',
+  { n: 6, t: 'g', name: 'Cadeira abdutora', meta: '3x15 · descanso 45-60s · novo', draw: 'abdutora',
+    setup: 'Costas no encosto, almofadas do lado de fora dos joelhos. Comece com pouca carga.',
+    steps: ['Abra os joelhos empurrando as almofadas para fora.', 'Segure 1s com as pernas abertas.', 'Feche devagar, sem deixar o peso bater.'],
+    breath: 'Solte o ar ao abrir.' },
+  { n: 7, t: 'g', name: 'Cadeira adutora', meta: '3x15 · descanso 45-60s · novo', draw: 'adutora',
+    setup: 'Mesma máquina ou a do lado. Almofadas do lado de dentro dos joelhos, abertura confortável.',
+    steps: ['Feche os joelhos apertando as almofadas para dentro.', 'Segure 1s com as pernas fechadas.', 'Abra devagar até sentir alongar, sem forçar.'],
+    breath: 'Solte o ar ao fechar.' },
+  { n: 8, t: 'g', name: 'Panturrilha na máquina', meta: '3x15 · descanso 45s', draw: 'panturrilha',
     setup: 'Máquina 8 (tríceps sural). Ombros sob as almofadas, só a ponta dos pés no degrau.',
     steps: ['Deixe o calcanhar descer abaixo do degrau para alongar.', 'Suba na ponta dos pés o máximo que der.', 'Segure 1s no alto e desça devagar.'],
     breath: 'Solte o ar ao subir.' }
@@ -563,7 +598,7 @@ function App() {
             {it.sec&&<div style={{color:C.muted,fontSize:11,fontWeight:700,letterSpacing:1.2,textTransform:"uppercase",margin:"14px 2px 8px"}}>{it.sec}</div>}
             {(()=>{
             const dn=!!c[it.id], isEx=!!it.n, isOpen=open===it.id;
-            const gc=it.t==="p"?C.purple:C.green;
+            const gc=it.t==="c"?C.core:C.green;
             const toggleOpen=()=>{ if(isEx) setOpen(isOpen?null:it.id); };
             return(
               <div key={it.id} style={{background:C.card,border:`1px solid ${isOpen?gc:dn?C.green+"55":C.border}`,borderRadius:10,marginBottom:8,overflow:"hidden"}}>
