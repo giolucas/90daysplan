@@ -275,31 +275,28 @@ var DRAW = {
     '<path d="M104 64Q128 48 152 64" class="fig-accent" stroke="currentColor" stroke-width="2.5" marker-start="url(#ah)" marker-end="url(#ah)"/>',
     'Oblíquo twist: sentado com o tronco inclinado para trás, gira a bola de um lado ao outro', '0 40 240 104'),
 
-  abdutora: svg(
+  goblet: svg(
     FLOOR +
-    '<rect x="90" y="30" width="60" height="64" rx="6" ' + M + ' opacity=".5"/>' +
-    '<path d="M80 100H160M120 104V138" ' + M + ' stroke-width="7" opacity=".6"/>' +
-    HEAD(120, 42) +
-    '<path d="M106 56H134L132 94H108Z" ' + B + ' stroke-width="5"/>' +
-    '<path d="M106 60L94 94M134 60L146 94" ' + B + ' stroke-width="4"/>' +
-    '<path d="M112 100L108 112L106 138M128 100L132 112L134 138" ' + G + '/>' +
-    '<path d="M112 100L82 112L78 138M128 100L158 112L162 138" ' + B + ' stroke-width="5"/>' +
-    '<path d="M68 104V122M172 104V122" ' + M + ' stroke-width="7"/>' +
-    '<path d="M68 124H48" ' + A + '/>' + '<path d="M172 124H192" ' + A + '/>',
-    'Cadeira abdutora: sentado, abre os joelhos empurrando as almofadas para fora'),
+    '<path d="M62 108H98M66 108V138M94 108V138" ' + M + ' stroke-width="5" opacity=".6"/>' +
+    '<path d="M118 58L118 96L118 138" ' + G + '/>' +
+    HEAD(122, 48) +
+    '<path d="M102 100L118 62" ' + B + '/>' +
+    '<path d="M102 100L136 102L130 138L144 138" ' + B + ' stroke-width="5"/>' +
+    '<path d="M118 66L130 84L132 72" ' + B + ' stroke-width="4"/>' +
+    '<rect x="128" y="60" width="9" height="20" rx="2" ' + M + ' stroke-width="3"/>' +
+    '<path d="M160 122V80" ' + A + '/>',
+    'Agachamento goblet: halter junto ao peito, senta para trás até o banco e sobe'),
 
-  adutora: svg(
+  stiff: svg(
     FLOOR +
-    '<rect x="90" y="30" width="60" height="64" rx="6" ' + M + ' opacity=".5"/>' +
-    '<path d="M80 100H160M120 104V138" ' + M + ' stroke-width="7" opacity=".6"/>' +
-    HEAD(120, 42) +
-    '<path d="M106 56H134L132 94H108Z" ' + B + ' stroke-width="5"/>' +
-    '<path d="M106 60L94 94M134 60L146 94" ' + B + ' stroke-width="4"/>' +
-    '<path d="M112 100L82 112L78 138M128 100L158 112L162 138" ' + G + '/>' +
-    '<path d="M112 100L110 112L108 138M128 100L130 112L132 138" ' + B + ' stroke-width="5"/>' +
-    '<path d="M118 104V122M122 104V122" ' + M + ' stroke-width="3"/>' +
-    '<path d="M50 124H72" ' + A + '/>' + '<path d="M190 124H168" ' + A + '/>',
-    'Cadeira adutora: sentado, fecha os joelhos apertando as almofadas para dentro'),
+    '<path d="M110 80L112 38" ' + G + '/>' +
+    HEAD(168, 78) +
+    '<path d="M110 80L154 80" ' + B + '/>' +
+    '<path d="M110 80L116 108L114 138L128 138" ' + B + ' stroke-width="5"/>' +
+    '<path d="M150 82L148 116" ' + B + ' stroke-width="4"/>' +
+    '<rect x="138" y="116" width="20" height="8" rx="2" ' + M + ' stroke-width="3"/>' +
+    '<path d="M196 104Q204 56 150 40" ' + A + '/>',
+    'Stiff com halteres: quadril para trás, halteres descem rente às pernas, coluna reta'),
 
   panturrilha: svg(
     FLOOR +
@@ -330,22 +327,22 @@ const EX_PERNAS = [
     setup: 'Costas e quadril bem apoiados no encosto. Pés no meio da plataforma, na largura dos ombros.',
     steps: ['Destrave a plataforma e desça até os joelhos chegarem perto de 90°.', 'Empurre pelos calcanhares até quase estender as pernas, sem travar os joelhos.', 'Não deixe o quadril descolar do banco na descida.'],
     breath: 'Solte o ar ao empurrar. Exercício novo: comece leve.' },
-  { n: 4, t: 'g', name: 'Cadeira extensora', meta: '3x12 · descanso 60s', draw: 'extensora',
+  { n: 4, t: 'g', name: 'Agachamento goblet no banco', meta: '3x12 · descanso 60-90s · novo', draw: 'goblet',
+    setup: 'Halter na vertical junto ao peito. Banco atrás de você na altura do joelho, pés na largura dos ombros.',
+    steps: ['Sente para trás até encostar de leve no banco, com o peito aberto.', 'Suba empurrando pelos calcanhares, joelhos na direção dos pés.', 'Primeiro treino: faça só com o peso do corpo.'],
+    breath: 'Solte o ar ao subir.' },
+  { n: 5, t: 'g', name: 'Stiff com halteres', meta: '3x12 · descanso 60s · novo', draw: 'stiff',
+    setup: 'Halteres leves, um em cada mão, na frente das coxas. Joelhos levemente dobrados.',
+    steps: ['Leve o quadril para trás, descendo os halteres rente às pernas.', 'Desça até sentir alongar atrás da coxa, com a coluna sempre reta.', 'Suba apertando o glúteo.'],
+    breath: 'Solte o ar ao subir. Carga leve: o foco é a postura.' },
+  { n: 6, t: 'g', name: 'Cadeira extensora', meta: '3x12 · descanso 60s', draw: 'extensora',
     setup: 'Seu ajuste: alavanca 1, perna 4, assento 6, carga 35. Joelho alinhado com o eixo da máquina.',
     steps: ['Costas no encosto, mãos nas alças laterais.', 'Estenda os joelhos até as pernas ficarem retas.', 'Segure 1s no alto e desça devagar.'],
     breath: 'Solte o ar ao subir.' },
-  { n: 5, t: 'g', name: 'Cadeira flexora', meta: '3x12 · descanso 60s', draw: 'flexora',
+  { n: 7, t: 'g', name: 'Cadeira flexora', meta: '3x12 · descanso 60s', draw: 'flexora',
     setup: 'Joelho alinhado com o eixo. Rolo logo acima do calcanhar e apoio da coxa bem firme.',
     steps: ['Comece com as pernas estendidas.', 'Puxe o rolo para baixo e para trás dobrando os joelhos.', 'Volte devagar, sem deixar o peso bater.'],
     breath: 'Solte o ar ao puxar.' },
-  { n: 6, t: 'g', name: 'Cadeira abdutora', meta: '3x15 · descanso 45-60s · novo', draw: 'abdutora',
-    setup: 'Costas no encosto, almofadas do lado de fora dos joelhos. Comece com pouca carga.',
-    steps: ['Abra os joelhos empurrando as almofadas para fora.', 'Segure 1s com as pernas abertas.', 'Feche devagar, sem deixar o peso bater.'],
-    breath: 'Solte o ar ao abrir.' },
-  { n: 7, t: 'g', name: 'Cadeira adutora', meta: '3x15 · descanso 45-60s · novo', draw: 'adutora',
-    setup: 'Mesma máquina ou a do lado. Almofadas do lado de dentro dos joelhos, abertura confortável.',
-    steps: ['Feche os joelhos apertando as almofadas para dentro.', 'Segure 1s com as pernas fechadas.', 'Abra devagar até sentir alongar, sem forçar.'],
-    breath: 'Solte o ar ao fechar.' },
   { n: 8, t: 'g', name: 'Panturrilha na máquina', meta: '3x15 · descanso 45s', draw: 'panturrilha',
     setup: 'Máquina 8 (tríceps sural). Ombros sob as almofadas, só a ponta dos pés no degrau.',
     steps: ['Deixe o calcanhar descer abaixo do degrau para alongar.', 'Suba na ponta dos pés o máximo que der.', 'Segure 1s no alto e desça devagar.'],
