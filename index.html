@@ -387,6 +387,19 @@ const lsGet = (k,f) => { try { const v=localStorage.getItem(k); return v?JSON.pa
 const lsSet = (k,v) => { try { localStorage.setItem(k,JSON.stringify(v)); } catch {} };
 const weekDates = () => { const n=new Date(); const mon=new Date(n.getFullYear(),n.getMonth(),n.getDate()-((n.getDay()+6)%7)); return Array.from({length:7},(_,i)=>dateKey(new Date(mon.getFullYear(),mon.getMonth(),mon.getDate()+i))); };
 
+// Correção única: o treino de Braços de segunda (12/10) ficou gravado como terça (13/10).
+(() => {
+  const FLAG="fix:bracos-13-para-12", K="treino-bracos-tronco";
+  if (lsGet(FLAG,false)) return;
+  const h=lsGet(`${K}:historico`,[]);
+  if (h.includes("2026-10-13") && !h.includes("2026-10-12")) {
+    lsSet(`${K}:historico`, h.filter(d=>d!=="2026-10-13").concat("2026-10-12").sort());
+    const dia=lsGet(`${K}:dia:2026-10-13`,null);
+    if (dia) { lsSet(`${K}:dia:2026-10-12`,dia); try { localStorage.removeItem(`${K}:dia:2026-10-13`); } catch {} }
+  }
+  lsSet(FLAG,true);
+})();
+
 function App() {
   const [tab, setTab] = React.useState(()=>location.hash==="#treino"?"treino":"cardapio");
   const [day, setDay] = React.useState(0);
