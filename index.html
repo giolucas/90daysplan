@@ -275,18 +275,6 @@ var DRAW = {
     '<path d="M104 64Q128 48 152 64" class="fig-accent" stroke="currentColor" stroke-width="2.5" marker-start="url(#ah)" marker-end="url(#ah)"/>',
     'Oblíquo twist: sentado com o tronco inclinado para trás, gira a bola de um lado ao outro', '0 40 240 104'),
 
-  goblet: svg(
-    FLOOR +
-    '<path d="M62 108H98M66 108V138M94 108V138" ' + M + ' stroke-width="5" opacity=".6"/>' +
-    '<path d="M118 58L118 96L118 138" ' + G + '/>' +
-    HEAD(122, 48) +
-    '<path d="M102 100L118 62" ' + B + '/>' +
-    '<path d="M102 100L136 102L130 138L144 138" ' + B + ' stroke-width="5"/>' +
-    '<path d="M118 66L130 84L132 72" ' + B + ' stroke-width="4"/>' +
-    '<rect x="128" y="60" width="9" height="20" rx="2" ' + M + ' stroke-width="3"/>' +
-    '<path d="M160 122V80" ' + A + '/>',
-    'Agachamento goblet: halter junto ao peito, senta para trás até o banco e sobe'),
-
   stiff: svg(
     FLOOR +
     '<path d="M110 80L112 38" ' + G + '/>' +
@@ -327,23 +315,19 @@ const EX_PERNAS = [
     setup: 'Costas e quadril bem apoiados no encosto. Pés no meio da plataforma, na largura dos ombros.',
     steps: ['Destrave a plataforma e desça até os joelhos chegarem perto de 90°.', 'Empurre pelos calcanhares até quase estender as pernas, sem travar os joelhos.', 'Não deixe o quadril descolar do banco na descida.'],
     breath: 'Solte o ar ao empurrar. Exercício novo: comece leve.' },
-  { n: 4, t: 'g', name: 'Agachamento goblet no banco', meta: '3x12 · descanso 60-90s · novo', draw: 'goblet',
-    setup: 'Halter na vertical junto ao peito. Banco atrás de você na altura do joelho, pés na largura dos ombros.',
-    steps: ['Sente para trás até encostar de leve no banco, com o peito aberto.', 'Suba empurrando pelos calcanhares, joelhos na direção dos pés.', 'Primeiro treino: faça só com o peso do corpo.'],
-    breath: 'Solte o ar ao subir.' },
-  { n: 5, t: 'g', name: 'Stiff com halteres', meta: '3x12 · descanso 60s · novo', draw: 'stiff',
+  { n: 4, id: 'ex5', t: 'g', name: 'Stiff com halteres', meta: '3x12 · descanso 60s · novo', draw: 'stiff',
     setup: 'Halteres leves, um em cada mão, na frente das coxas. Joelhos levemente dobrados.',
     steps: ['Leve o quadril para trás, descendo os halteres rente às pernas.', 'Desça até sentir alongar atrás da coxa, com a coluna sempre reta.', 'Suba apertando o glúteo.'],
     breath: 'Solte o ar ao subir. Carga leve: o foco é a postura.' },
-  { n: 6, t: 'g', name: 'Cadeira extensora', meta: '3x12 · descanso 60s', draw: 'extensora',
+  { n: 5, id: 'ex6', t: 'g', name: 'Cadeira extensora', meta: '3x12 · descanso 60s', draw: 'extensora',
     setup: 'Seu ajuste: alavanca 1, perna 4, assento 6, carga 35. Joelho alinhado com o eixo da máquina.',
     steps: ['Costas no encosto, mãos nas alças laterais.', 'Estenda os joelhos até as pernas ficarem retas.', 'Segure 1s no alto e desça devagar.'],
     breath: 'Solte o ar ao subir.' },
-  { n: 7, t: 'g', name: 'Cadeira flexora', meta: '3x12 · descanso 60s', draw: 'flexora',
+  { n: 6, id: 'ex7', t: 'g', name: 'Cadeira flexora', meta: '3x12 · descanso 60s', draw: 'flexora',
     setup: 'Joelho alinhado com o eixo. Rolo logo acima do calcanhar e apoio da coxa bem firme.',
     steps: ['Comece com as pernas estendidas.', 'Puxe o rolo para baixo e para trás dobrando os joelhos.', 'Volte devagar, sem deixar o peso bater.'],
     breath: 'Solte o ar ao puxar.' },
-  { n: 8, t: 'g', name: 'Panturrilha na máquina', meta: '3x15 · descanso 45s', draw: 'panturrilha',
+  { n: 7, id: 'ex8', t: 'g', name: 'Panturrilha na máquina', meta: '3x15 · descanso 45s', draw: 'panturrilha',
     setup: 'Máquina 8 (tríceps sural). Ombros sob as almofadas, só a ponta dos pés no degrau.',
     steps: ['Deixe o calcanhar descer abaixo do degrau para alongar.', 'Suba na ponta dos pés o máximo que der.', 'Segure 1s no alto e desça devagar.'],
     breath: 'Solte o ar ao subir.' }
@@ -385,7 +369,7 @@ const TREINOS = {
   ]},
   pernas: { nome:"Pernas", key:"treino-pernas", sub:"3 séries de 12-15 reps", items:[
     {id:"esteira", name:"Esteira 15 min", meta:"No começo, ritmo leve a moderado", icon:"treadmill"},
-    ...EX_PERNAS.map(e=>({...e, id:"ex"+e.n})),
+    ...EX_PERNAS.map(e=>({...e, id:e.id||"ex"+e.n})),
   ]},
 };
 
