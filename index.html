@@ -363,11 +363,11 @@ const EX_BRACOS = [
 // Treinos A/B. Cada item marcado vale só para a data de hoje; o treino entra no histórico
 // (e na contagem da semana) quando todos os itens do dia estão marcados.
 const TREINOS = {
-  bracos: { nome:"Braços e Tronco", key:"treino-bracos-tronco", sub:"3 séries de 10-12 reps", items:[
+  bracos: { nome:"Braços e Tronco", sigla:"B", key:"treino-bracos-tronco", sub:"3 séries de 10-12 reps", items:[
     {id:"esteira", name:"Esteira 15 min", meta:"No começo, ritmo leve a moderado", icon:"treadmill"},
     ...EX_BRACOS.map(e=>({...e, id:"ex"+e.n})),
   ]},
-  pernas: { nome:"Pernas", key:"treino-pernas", sub:"3 séries de 12-15 reps", items:[
+  pernas: { nome:"Pernas", sigla:"P", key:"treino-pernas", sub:"3 séries de 12-15 reps", items:[
     {id:"esteira", name:"Esteira 15 min", meta:"No começo, ritmo leve a moderado", icon:"treadmill"},
     ...EX_PERNAS.map(e=>({...e, id:e.id||"ex"+e.n})),
   ]},
@@ -403,6 +403,7 @@ function App() {
 
   const week = weekDates();
   const doneOn = k => Object.values(hist).filter(h=>h.includes(k)).length;
+  const siglasOn = k => Object.entries(TREINOS).filter(([w])=>hist[w].includes(k)).map(([,t])=>t.sigla).join(" ");
   const weekCount = week.reduce((n,k)=>n+doneOn(k),0);
 
   const celebrate = () => { setToast(true); setTimeout(()=>setToast(false),2500); };
@@ -449,6 +450,28 @@ function App() {
             </div>
           ))}
         </div>
+      </div>
+
+      {/* Semana atual: vale para todas as abas */}
+      <div style={{padding:"12px 16px 0"}}>
+            <div style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:12,padding:"12px 14px",marginBottom:0}}>
+              <div style={{display:"flex",alignItems:"center",gap:8,fontWeight:700,fontSize:13,marginBottom:8}}><Icon n="calendar" size={16}/>Semana atual</div>
+              <div style={{display:"flex",gap:6,justifyContent:"space-between"}}>
+                {week.map((k,i)=>{
+                  const n=doneOn(k), isToday=k===today;
+                  return(
+                    <div key={k} style={{flex:1,textAlign:"center"}}>
+                      <div style={{width:"100%",aspectRatio:"1",borderRadius:6,background:n?C.green+"33":C.track,border:`1.5px solid ${n?C.green:isToday?C.accent:C.border}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,marginBottom:4}}>
+                        {n?<span style={{color:C.green,fontWeight:800,fontSize:n>1?11:14}}>{siglasOn(k)}</span>:<span style={{color:C.dim,fontSize:10}}>—</span>}
+                      </div>
+                      <div style={{fontSize:9,color:isToday?C.accent:C.dim}}>{labels[i]}</div>
+                    </div>
+                  );
+                })}
+              </div>
+              <div style={{color:C.muted,fontSize:11,marginTop:8}}>{weekCount} {weekCount===1?"treino concluído":"treinos concluídos"} na semana · B braços · P pernas</div>
+            </div>
+
       </div>
 
       {/* Tabs */}
@@ -512,24 +535,6 @@ function App() {
         const past=hist[sel].filter(d=>d!==today);
         return (
         <div style={{padding:"0 16px"}}>
-          <div style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:12,padding:"12px 14px",marginBottom:12}}>
-            <div style={{display:"flex",alignItems:"center",gap:8,fontWeight:700,fontSize:13,marginBottom:8}}><Icon n="calendar" size={16}/>Semana atual</div>
-            <div style={{display:"flex",gap:6,justifyContent:"space-between"}}>
-              {week.map((k,i)=>{
-                const n=doneOn(k), isToday=k===today;
-                return(
-                  <div key={k} style={{flex:1,textAlign:"center"}}>
-                    <div style={{width:"100%",aspectRatio:"1",borderRadius:6,background:n?C.green+"33":C.track,border:`1.5px solid ${n?C.green:isToday?C.accent:C.border}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,marginBottom:4}}>
-                      {n?<span style={{color:C.green}}>{n>1?`✓${n}`:"✓"}</span>:<span style={{color:C.dim,fontSize:10}}>—</span>}
-                    </div>
-                    <div style={{fontSize:9,color:isToday?C.accent:C.dim}}>{labels[i]}</div>
-                  </div>
-                );
-              })}
-            </div>
-            <div style={{color:C.muted,fontSize:11,marginTop:8}}>{weekCount} {weekCount===1?"treino concluído":"treinos concluídos"} esta semana</div>
-          </div>
-
           <div style={{display:"flex",gap:8,marginBottom:12}}>
             {Object.entries(TREINOS).map(([k,w])=>{
               const on=sel===k, dn=hist[k].includes(today);
