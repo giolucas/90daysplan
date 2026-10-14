@@ -382,11 +382,11 @@ const EX_BRACOS = [
 // Treinos A/B. Cada item marcado vale só para a data de hoje; o treino entra no histórico
 // (e na contagem da semana) quando todos os itens do dia estão marcados.
 const TREINOS = {
-  bracos: { nome:"Braços e Tronco" key:"treino-bracos-tronco", sub:"3 séries de 10-12 reps", items:[
+  bracos: { nome:"Braços e Tronco", key:"treino-bracos-tronco", sub:"3 séries de 10-12 reps", items:[
     {id:"esteira", name:"Esteira 15 min", meta:"No começo, ritmo leve a moderado", icon:"treadmill"},
     ...EX_BRACOS.map(e=>({...e, id:"ex"+e.n})),
   ]},
-  pernas: { nome:"Pernas" key:"treino-pernas", sub:"3 séries de 12-15 reps", items:[
+  pernas: { nome:"Pernas", key:"treino-pernas", sub:"3 séries de 12-15 reps", items:[
     {id:"esteira", name:"Esteira 15 min", meta:"No começo, ritmo leve a moderado", icon:"treadmill"},
     ...EX_PERNAS.map(e=>({...e, id:"ex"+e.n})),
   ]},
