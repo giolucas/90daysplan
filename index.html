@@ -275,6 +275,26 @@ var DRAW = {
     '<path d="M104 64Q128 48 152 64" class="fig-accent" stroke="currentColor" stroke-width="2.5" marker-start="url(#ah)" marker-end="url(#ah)"/>',
     'Oblíquo twist: sentado com o tronco inclinado para trás, gira a bola de um lado ao outro', '0 40 240 104'),
 
+  abdreto: svg(
+    '<rect x="24" y="128" width="200" height="8" rx="4" ' + M + ' stroke-width="2" opacity=".6"/>' +
+    '<path d="M130 125L80 125" ' + G + '/>' +
+    HEAD(80, 100, 8) +
+    '<path d="M130 124L90 108" ' + B + '/>' +
+    '<path d="M130 124L158 96L176 124L190 124" ' + B + ' stroke-width="5"/>' +
+    '<path d="M94 110L110 104" ' + B + ' stroke-width="4"/>' +
+    '<path d="M66 122Q58 106 70 92" ' + A + '/>',
+    'Abdominal reto: deitado de costas, joelhos dobrados, tira as escápulas do chão', '0 64 240 80'),
+
+  prancha: svg(
+    '<rect x="24" y="128" width="200" height="8" rx="4" ' + M + ' stroke-width="2" opacity=".6"/>' +
+    HEAD(52, 96, 8) +
+    '<path d="M66 102L198 120" ' + B + '/>' +
+    '<path d="M68 104L68 126L44 126" ' + B + ' stroke-width="5"/>' +
+    '<path d="M198 120L204 126" ' + B + ' stroke-width="5"/>' +
+    '<path d="M48 82L204 104" ' + M + ' stroke-width="2" stroke-dasharray="4 6"/>' +
+    '<text x="120" y="152" text-anchor="middle" fill="currentColor" stroke="none" font-size="11" font-family="inherit">cabeça, quadril e pés na mesma linha</text>',
+    'Prancha ventral: apoiado nos antebraços e pontas dos pés, corpo reto', '0 74 240 84'),
+
   stiff: svg(
     FLOOR +
     '<path d="M110 80L112 38" ' + G + '/>' +
@@ -334,27 +354,35 @@ const EX_PERNAS = [
 ];
 
 const EX_BRACOS = [
-    { n: 1, t: 'g', name: 'Supino máquina', meta: '3x12 · descanso 60-90s', icon: 'seat', draw: 'supino',
+    { n: 1, sec: 'Core no tapetinho', id: 'abd', t: 'c', name: 'Abdominal reto', meta: '3x15 · descanso 45s', draw: 'abdreto',
+      setup: 'No colchonete, barriga para cima, joelhos dobrados e pés no chão. Mãos cruzadas no peito ou atrás da cabeça, sem puxar o pescoço.',
+      steps: ['Contraia o abdômen e tire as escápulas do chão.', 'Suba só até a parte de cima das costas descolar; a lombar fica no chão.', 'Desça devagar, sem deitar a cabeça.'],
+      breath: 'Solte o ar ao subir. Com refluxo, faça longe das refeições.' },
+    { n: 2, id: 'prancha', t: 'c', name: 'Prancha ventral', meta: '3x20-40s · descanso 45s', draw: 'prancha',
+      setup: 'No colchonete, cotovelos embaixo dos ombros.',
+      steps: ['Apoie antebraços e pontas dos pés.', 'Contraia abdômen e glúteos, sem deixar o quadril cair ou subir.', 'Segure o tempo, olhando para o chão.'],
+      breath: 'Respire curto e contínuo. Não prenda o ar.' },
+    { n: 3, sec: 'Braços e tronco', id: 'ex1', t: 'g', name: 'Supino máquina', meta: '3x12 · descanso 60-90s', icon: 'seat', draw: 'supino',
       setup: 'Ajuste o banco para a pegada ficar na linha do meio do peito.',
       steps: ['Costas e cabeça apoiadas no encosto, pés firmes no chão.', 'Empurre até quase estender os braços, sem travar os cotovelos.', 'Volte devagar (2-3s) até sentir o peito alongar.'],
       breath: 'Solte o ar ao empurrar, puxe ao voltar.' },
-    { n: 2, t: 'g', name: 'Pulley frente', meta: '3x12 · descanso 60-90s', icon: 'down', draw: 'pulley',
+    { n: 4, id: 'ex2', t: 'g', name: 'Pulley frente', meta: '3x12 · descanso 60-90s', icon: 'down', draw: 'pulley',
       setup: 'Prenda as coxas sob o apoio acolchoado. Pegada um pouco mais larga que os ombros.',
       steps: ['Peito aberto, tronco levemente inclinado para trás.', 'Puxe a barra até a parte de cima do peito, levando os cotovelos para baixo.', 'Suba controlando até os braços quase estenderem.'],
       breath: 'Solte o ar ao puxar.' },
-    { n: 3, t: 'g', name: 'Remada sentada', meta: '3x12 · descanso 60-90s · novo', icon: 'left', draw: 'remada',
+    { n: 5, id: 'ex3', t: 'g', name: 'Remada sentada', meta: '3x12 · descanso 60-90s · novo', icon: 'left', draw: 'remada',
       setup: 'Pés na plataforma, joelhos levemente dobrados. Pegador em V (triângulo).',
       steps: ['Coluna reta, sem balançar o tronco para trás.', 'Puxe o pegador até o abdômen, juntando as escápulas.', 'Estenda os braços devagar, sem arredondar as costas.'],
       breath: 'Solte o ar ao puxar. Exercício novo: comece leve e foque na postura.' },
-    { n: 4, t: 'p', name: 'Elevação lateral com halter', meta: '3x12 · descanso 45-60s', icon: 'both', draw: 'elevacao',
+    { n: 6, id: 'ex4', t: 'p', name: 'Elevação lateral com halter', meta: '3x12 · descanso 45-60s', icon: 'both', draw: 'elevacao',
       setup: 'Halteres leves. Esse exercício cansa rápido.',
       steps: ['Em pé, cotovelos levemente dobrados.', 'Suba os braços pelos lados até a altura dos ombros, não acima.', 'Desça devagar, sem jogar o corpo.'],
       breath: 'Solte o ar ao subir.' },
-    { n: 5, t: 'p', name: 'Rosca direta com halter', meta: '3x12 · descanso 45-60s', icon: 'dumb', draw: 'rosca',
+    { n: 7, id: 'ex5', t: 'p', name: 'Rosca direta com halter', meta: '3x12 · descanso 45-60s', icon: 'dumb', draw: 'rosca',
       setup: 'Palmas viradas para frente.',
       steps: ['Cotovelos colados ao lado do corpo, parados.', 'Suba o halter dobrando só o cotovelo.', 'Desça até estender o braço, sem balançar o tronco.'],
       breath: 'Solte o ar ao subir.' },
-    { n: 6, t: 'p', name: 'Tríceps pulley', meta: '3x12 · descanso 45-60s', icon: 'arrowdown', draw: 'triceps',
+    { n: 8, id: 'ex6', t: 'p', name: 'Tríceps pulley', meta: '3x12 · descanso 45-60s', icon: 'arrowdown', draw: 'triceps',
       setup: 'Polia alta, barra reta ou corda. De frente para a máquina.',
       steps: ['Cotovelos colados ao corpo, tronco levemente inclinado.', 'Empurre para baixo até estender os braços.', 'Suba só até o antebraço ficar paralelo ao chão.'],
       breath: 'Solte o ar ao empurrar.' }
@@ -365,7 +393,7 @@ const EX_BRACOS = [
 const TREINOS = {
   bracos: { nome:"Braços e Tronco", sigla:"B", key:"treino-bracos-tronco", sub:"3 séries de 10-12 reps", items:[
     {id:"esteira", name:"Esteira 15 min", meta:"No começo, ritmo leve a moderado", icon:"treadmill"},
-    ...EX_BRACOS.map(e=>({...e, id:"ex"+e.n})),
+    ...EX_BRACOS.map(e=>({...e, id:e.id||"ex"+e.n})),
   ]},
   pernas: { nome:"Pernas", sigla:"P", key:"treino-pernas", sub:"3 séries de 12-15 reps", items:[
     {id:"esteira", name:"Esteira 15 min", meta:"No começo, ritmo leve a moderado", icon:"treadmill"},
