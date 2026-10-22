@@ -434,7 +434,7 @@ function App() {
   const [sel, setSel] = React.useState("bracos");
   const MK = "cardapio:dia:";
   const [open, setOpen] = React.useState(null);
-  const today = dateKey(new Date());
+  const [today, setToday] = React.useState(()=>dateKey(new Date()));
   // Dia que está sendo marcado: hoje por padrão; tocar num dia da semana permite marcar dias passados.
   const [dia, setDia] = React.useState(today);
   const [weekOff, setWeekOff] = React.useState(0);
@@ -442,7 +442,30 @@ function App() {
   const [meals, setMeals] = React.useState(()=>lsGet(MK+today,{}));
   const [checks, setChecks] = React.useState(()=>loadChecks(today));
   const escolherDia = d => { if(d>today) return; setDia(d); setChecks(loadChecks(d)); setMeals(lsGet(MK+d,{})); setOpen(null); };
-  const [hist, setHist] = React.useState(()=>Object.fromEntries(Object.entries(TREINOS).map(([k,t])=>[k,lsGet(`${t.key}:historico`,[])])));
+  const loadHist = () => Object.fromEntries(Object.entries(TREINOS).map(([k,t])=>[k,lsGet(`${t.key}:historico`,[])]));
+  const [hist, setHist] = React.useState(loadHist);
+
+  // A aba do celular fica aberta por dias: ao voltar para a página, confere a data.
+  // Se o dia virou e você estava marcando "hoje", passa para o novo hoje; e sempre relê o que está salvo.
+  const ref = React.useRef({}); ref.current = {today, dia};
+  React.useEffect(()=>{
+    const sync = () => {
+      const agora=dateKey(new Date()), {today:t0, dia:d0}=ref.current;
+      const alvo = (agora!==t0 && d0===t0) ? agora : d0;
+      if (agora!==t0) setToday(agora);
+      if (alvo!==d0) { setDia(alvo); setWeekOff(0); setOpen(null); }
+      setChecks(loadChecks(alvo)); setMeals(lsGet(MK+alvo,{})); setHist(loadHist());
+    };
+    const vis = () => { if (document.visibilityState==="visible") sync(); };
+    document.addEventListener("visibilitychange",vis); window.addEventListener("focus",sync); window.addEventListener("pageshow",sync);
+    const iv=setInterval(sync,60000);
+    return () => { document.removeEventListener("visibilitychange",vis); window.removeEventListener("focus",sync); window.removeEventListener("pageshow",sync); clearInterval(iv); };
+  },[]);
+
+  // Treino começado mas não concluído naquele dia: [sigla, feitos, total]
+  const parcialOn = k => Object.entries(TREINOS).filter(([w])=>!hist[w].includes(k)).map(([w,t])=>{
+    const c=lsGet(`${t.key}:dia:${k}`,{}); return [t.sigla, t.items.filter(it=>c[it.id]).length, t.items.length];
+  }).filter(([,f])=>f>0);
   const [toast, setToast] = React.useState(false);
 
   const labels = ["Seg","Ter","Qua","Qui","Sex","Sáb","Dom"];
@@ -520,18 +543,18 @@ function App() {
               </div>
               <div style={{display:"flex",gap:6,justifyContent:"space-between"}}>
                 {week.map((k,i)=>{
-                  const n=doneOn(k), isToday=k===today, isSel=k===dia, futuro=k>today;
+                  const n=doneOn(k), isToday=k===today, isSel=k===dia, futuro=k>today, parc=n?[]:parcialOn(k);
                   return(
                     <button key={k} disabled={futuro} onClick={()=>escolherDia(k)} aria-label={`Marcar ${fmtDate(k)}`} style={{flex:1,textAlign:"center",background:"none",border:"none",padding:0,cursor:futuro?"default":"pointer",opacity:futuro?0.45:1,font:"inherit"}}>
-                      <div style={{width:"100%",aspectRatio:"1",borderRadius:6,background:n?C.green+"33":C.track,border:`${isSel?2.5:1.5}px solid ${isSel?C.text:n?C.green:isToday?C.accent:C.border}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,marginBottom:4}}>
-                        {n?<span style={{color:C.green,fontWeight:800,fontSize:n>1?11:14}}>{siglasOn(k)}</span>:<span style={{color:C.dim,fontSize:10}}>—</span>}
+                      <div style={{width:"100%",aspectRatio:"1",borderRadius:6,background:n?C.green+"33":C.track,border:`${isSel?2.5:1.5}px ${parc.length&&!isSel?"dashed":"solid"} ${isSel?C.text:n?C.green:parc.length?C.muted:isToday?C.accent:C.border}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,marginBottom:4}}>
+                        {n?<span style={{color:C.green,fontWeight:800,fontSize:n>1?11:14}}>{siglasOn(k)}</span>:parc.length?<span style={{display:"flex",flexDirection:"column",alignItems:"center",lineHeight:1.1}}><span style={{color:C.muted,fontWeight:800,fontSize:12}}>{parc.map(p=>p[0]).join(" ")}</span><span style={{color:C.dim,fontSize:8}}>{parc[0][1]}/{parc[0][2]}</span></span>:<span style={{color:C.dim,fontSize:10}}>—</span>}
                       </div>
                       <div style={{fontSize:9,color:isSel?C.text:isToday?C.accent:C.dim,fontWeight:isSel?700:400}}>{labels[i]}</div>
                     </button>
                   );
                 })}
               </div>
-              <div style={{color:C.muted,fontSize:11,marginTop:8}}>{weekCount} {weekCount===1?"treino concluído":"treinos concluídos"} na semana · B braços · P pernas · toque num dia para marcar</div>
+              <div style={{color:C.muted,fontSize:11,marginTop:8}}>{weekCount} {weekCount===1?"treino concluído":"treinos concluídos"} na semana · B braços · P pernas · tracejado = incompleto · toque num dia para marcar</div>
               {dia!==today&&(
                 <div style={{display:"flex",alignItems:"center",gap:8,marginTop:10,background:C.accent+"1a",border:`1px solid ${C.accent}55`,borderRadius:8,padding:"8px 10px"}}>
                   <div style={{flex:1,fontSize:12,color:C.text}}>Marcando <strong>{fmtDate(dia)}</strong> no treino e no cardápio</div>
